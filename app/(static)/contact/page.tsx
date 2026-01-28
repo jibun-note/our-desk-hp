@@ -10,7 +10,7 @@ export default function ContactPage() {
     return (
         <>
             {/* ヒーローセクション */}
-            <HeroSection title="Contact" description="ご質問やご相談がございましたら、お気軽にご連絡ください" />
+            <HeroSection title="Contact" description="お問い合わせはこちら" />
             {/* コンテンツエリア */}
             <div className="min-h-screen flex items-center justify-center bg-white">
                 <div className="text-center">

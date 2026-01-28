@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import SplitText from '@/components/ui/SplitText'
 import Particles from '@/components/ui/Particles'
 
@@ -22,13 +21,13 @@ export default function Home() {
                             <source src="/eye-catch-movie.mp4" type="video/mp4" />
                         </video>
                         {/* コンテンツ - 動画要素内に配置 */}
-                        <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-8 pointer-events-none">
+                        <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
                             <div className="max-w-2xl pointer-events-auto">
                                 <h1 className="text-xl md:text-4xl font-bold text-right text-balance text-gray-800">
                                     <div className="block">
                                         <SplitText
                                             text="OurDeskが提供するのは、"
-                                            delay={50}
+                                            delay={70}
                                             duration={1.2}
                                             ease="power3.out"
                                             splitType="chars"
@@ -42,7 +41,7 @@ export default function Home() {
                                     <div className="block">
                                         <SplitText
                                             text="業務に追われる会社を、"
-                                            delay={50}
+                                            delay={70}
                                             duration={1.2}
                                             ease="power3.out"
                                             splitType="chars"
@@ -56,7 +55,7 @@ export default function Home() {
                                     <div className="block">
                                         <SplitText
                                             text="「働きたい」人材が支える仕組み。"
-                                            delay={50}
+                                            delay={70}
                                             duration={1.2}
                                             ease="power3.out"
                                             splitType="chars"

@@ -57,8 +57,8 @@ export default function Header() {
                         whileTap={{ scale: 0.96 }}
                         transition={{ duration: 0.15, ease: 'easeOut' }}
                     >
-                        <Link href="/" className="flex items-center">
-                            <div className="relative size-20 md:size-32">
+                        <Link href="/" className="flex items-center gap-3">
+                            <div className="relative size-20 md:size-32 shrink-0">
                                 <Image
                                     src="/OurDesk_logo.png"
                                     alt="OurDesk株式会社"
@@ -66,6 +66,9 @@ export default function Header() {
                                     className="object-contain"
                                 />
                             </div>
+                            <h3 className="hidden md:block text-gray-800 text-base md:text-lg font-semibold text-balance">
+                                OurDesk株式会社
+                            </h3>
                         </Link>
                     </motion.div>
 

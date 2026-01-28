@@ -10,20 +10,20 @@ interface HeroSectionProps {
 
 export default function HeroSection({ title, description }: HeroSectionProps) {
     return (
-        <section className="relative text-white py-12 px-4 md:py-20 md:px-6 overflow-hidden">
-            {/* ベース背景 - ダークグレーから始まる */}
-            <div className="absolute inset-0 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900" />
+        <section className="relative text-white py-8 px-4 md:py-16 md:px-6 overflow-hidden">
+            {/* ベース背景 - ミディアムグレーで明るめに */}
+            <div className="absolute inset-0 bg-gradient-to-br from-gray-600 via-gray-500 to-gray-600" />
 
-            {/* グラデーションオーバーレイ - プライマリカラーを重ねる */}
-            <div className="absolute inset-0 bg-gradient-to-br from-primary-700/40 via-primary-500/30 to-primary-600/40" />
+            {/* グラデーションオーバーレイ - イエロー〜オレンジを混ぜる */}
+            <div className="absolute inset-0 bg-gradient-to-br from-primary-700/45 via-primary-500/45 to-primary-600/50" />
 
-            {/* 追加のグラデーションレイヤー - 深みを出す */}
-            <div className="absolute inset-0 bg-gradient-to-t from-gray-900/60 via-transparent to-transparent" />
+            {/* 軽いシャドウ（暗くしすぎない） */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent" />
 
-            {/* 光の効果 */}
+            {/* 光の効果 - オレンジとイエロー */}
             <div className="absolute inset-0">
-                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/20 rounded-full blur-3xl" />
-                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-600/20 rounded-full blur-3xl" />
+                <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-700/30 rounded-full blur-3xl" />
+                <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-primary-500/25 rounded-full blur-3xl" />
             </div>
 
             <div className="container mx-auto max-w-4xl relative z-10">
@@ -76,7 +76,10 @@ export default function HeroSection({ title, description }: HeroSectionProps) {
                     {[0, 1, 2].map((i) => (
                         <motion.div
                             key={i}
-                            className="w-2 h-2 bg-white rounded-full"
+                            className={cn(
+                                'w-2 h-2 rounded-full',
+                                i === 1 ? 'bg-primary-700' : 'bg-white'
+                            )}
                             initial={{ scale: 0, opacity: 0 }}
                             animate={{ scale: 1, opacity: 1 }}
                             transition={{
