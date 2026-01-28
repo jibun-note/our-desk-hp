@@ -3,6 +3,13 @@
 @tailwind utilities;
 
 body {
-  color: #333333;
-  background: #ffffff;
+    color: #333333;
+    background: #ffffff;
+}
+
+/* prefers-reduced-motion対応: 動画を非表示 */
+@media (prefers-reduced-motion: reduce) {
+    video[aria-hidden="true"] {
+        display: none;
+    }
 }

@@ -8,6 +8,9 @@ Next.js 16、TypeScript、Tailwind CSSを使用したSSG（Static Site Generatio
 - **TypeScript**: 型安全性を確保
 - **Tailwind CSS**: ユーティリティファーストのCSSフレームワーク
 - **SSG**: 静的サイト生成による高速なパフォーマンス
+- **GSAP**: アニメーションライブラリ
+- **Three.js**: 3Dグラフィックス（@react-three/fiber）
+- **tsparticles**: パーティクルエフェクト
 
 ## セットアップ
 
@@ -44,25 +47,27 @@ npm run build
 #### デプロイ手順
 
 1. **ビルドの実行**
-   ```bash
-   npm run build
-   ```
+     ```bash
+     npm run build
+     ```
 
 2. **FTPでアップロード**
-   - `out`ディレクトリ内の**すべてのファイルとフォルダ**を選択
-   - ロリポップの`public_html`ディレクトリにアップロード
-   - 既存のファイルがある場合は、事前にバックアップを取ることを推奨
+     - `out`ディレクトリ内の**すべてのファイルとフォルダ**を選択
+     - ロリポップの`public_html`ディレクトリにアップロード
+     - 既存のファイルがある場合は、事前にバックアップを取ることを推奨
 
 3. **アップロード後の確認**
-   - トップページ（`/`）が正しく表示されるか確認
-   - 各ページ（`/about/`、`/services/`、`/contact/`）が正しく表示されるか確認
-   - 画像やCSSが正しく読み込まれているか確認
+     - トップページ（`/`）が正しく表示されるか確認
+     - 各ページ（`/about-us/`、`/company/`、`/service/`、`/recruit/`、`/contact/`、`/privacy/`）が正しく表示されるか確認
+     - 画像やCSSが正しく読み込まれているか確認
+     - 動画ファイルが正しく読み込まれているか確認
 
 #### デプロイチェックリスト
 
 **ビルド前の確認事項**
 - [ ] すべてのコンテンツが最新であることを確認
-- [ ] ロゴファイルが`public`ディレクトリに配置されていることを確認
+- [ ] ロゴファイル（`OurDesk_logo.png`）が`public`ディレクトリに配置されていることを確認
+- [ ] 動画ファイル（`eye-catch-movie.mp4`）が`public`ディレクトリに配置されていることを確認
 - [ ] 開発サーバー（`npm run dev`）で動作確認
 
 **デプロイ後の確認事項**
@@ -101,38 +106,62 @@ our-desk-hp/
 ├── app/                    # Next.js App Router
 │   ├── layout.tsx         # ルートレイアウト
 │   ├── page.tsx           # トップページ
-│   ├── about/             # 会社概要ページ
-│   ├── services/          # サービスページ
-│   └── contact/           # お問い合わせページ
+│   ├── about-us/          # About usページ
+│   ├── company/           # Companyページ
+│   ├── service/           # Serviceページ
+│   ├── recruit/           # Recruitページ
+│   ├── contact/           # お問い合わせページ
+│   ├── privacy/           # プライバシーポリシーページ
+│   ├── not-found.tsx      # 404ページ
+│   └── globals.css        # グローバルスタイル
 ├── components/            # 再利用可能なコンポーネント
 │   ├── Header.tsx         # ヘッダー/ナビゲーション
 │   ├── Footer.tsx         # フッター
-│   └── Layout.tsx         # 共通レイアウト
-├── public/                # 静的ファイル（画像など）
+│   ├── Layout.tsx         # 共通レイアウト
+│   └── ui/                # UIコンポーネント
+│       └── SplitText.tsx  # テキスト分割アニメーション
+├── lib/                   # ユーティリティ関数
+│   └── utils.ts           # 共通ユーティリティ
+├── public/                # 静的ファイル（画像、動画など）
+│   ├── OurDesk_logo.png   # ロゴ画像
+│   ├── eye-catch-movie.mp4 # アイキャッチ動画
+│   └── .htaccess          # Apache設定ファイル
 └── ...設定ファイル
 ```
 
 ## ページ構成
 
 - **トップページ** (`/`): ヒーローセクション、特徴、CTA
-- **会社概要** (`/about`): 会社情報、理念、沿革
-- **サービス** (`/services`): サービス一覧
-- **お問い合わせ** (`/contact`): お問い合わせフォーム（現在は表示のみ）
+- **About us** (`/about-us/`): 会社について
+- **Company** (`/company/`): 会社情報、理念、沿革
+- **Service** (`/service/`): サービス一覧
+- **Recruit** (`/recruit/`): 採用情報
+- **Contact** (`/contact/`): お問い合わせフォーム（現在は表示のみ）
+- **Privacy Policy** (`/privacy/`): プライバシーポリシー
 
 ## カスタマイズ
 
 ### カラーテーマ
 
-`tailwind.config.ts`でカラーテーマをカスタマイズできます。デフォルトでは`primary`カラーが設定されています。
+`tailwind.config.ts`でカラーテーマをカスタマイズできます。デフォルトでは以下のカラーが設定されています：
+
+- **Primary**: イエロー（`#FDD000`）からオレンジ（`#F08300`）のグラデーション
+- **Gray**: グレースケール（`#f9f9f9`から`#1a1a1a`）
 
 ### コンテンツの編集
 
 各ページのコンテンツは`app`ディレクトリ内の各`page.tsx`ファイルで編集できます。
 
+### アニメーション
+
+GSAPを使用したアニメーションが実装されています。`components/ui/SplitText.tsx`などでテキストアニメーションを管理しています。
+
 ## 注意事項
 
 - お問い合わせフォームは現在表示のみの状態です。実際の送信機能を実装するには、バックエンドAPIまたはフォームサービス（Formspree、SendGrid等）の連携が必要です。
 - 画像最適化はSSGモードでは無効化されています（`next.config.ts`で設定）。必要に応じて調整してください。
+- `next.config.ts`で`trailingSlash: true`が設定されているため、すべてのURLに末尾スラッシュが付きます。
+- 3Dグラフィックスやパーティクルエフェクトを使用しているため、パフォーマンスに注意してください。
 
 ## ライセンス
 
