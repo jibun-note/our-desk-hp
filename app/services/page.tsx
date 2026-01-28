@@ -73,10 +73,10 @@ export default function ServicesPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ヒーローセクション */}
-      <section className="bg-gradient-to-br from-primary-600 to-primary-800 text-white py-16">
+      <section className="bg-gradient-to-br from-primary-500 to-primary-700 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">サービス</h1>
-          <p className="text-xl text-primary-100">
+          <p className="text-xl text-white">
             お客様のビジネスをサポートする各種サービス
           </p>
         </div>
@@ -91,11 +91,11 @@ export default function ServicesPage() {
                 key={index}
                 className="bg-white border border-gray-200 rounded-lg p-8 shadow-md hover:shadow-lg transition-shadow"
               >
-                <div className="text-primary-600 mb-4">{service.icon}</div>
-                <h3 className="text-2xl font-bold mb-4 text-gray-900">
+                <div className="text-primary-700 mb-4">{service.icon}</div>
+                <h3 className="text-2xl font-bold mb-4 text-gray-800">
                   {service.title}
                 </h3>
-                <p className="text-gray-700 leading-relaxed">
+                <p className="text-gray-600 leading-relaxed">
                   {service.description}
                 </p>
               </div>
@@ -104,12 +104,12 @@ export default function ServicesPage() {
 
           {/* CTA */}
           <div className="text-center">
-            <p className="text-lg text-gray-700 mb-6">
+            <p className="text-lg text-gray-600 mb-6">
               サービスに関するご質問やご相談がございましたら、お気軽にお問い合わせください。
             </p>
             <Link
               href="/contact"
-              className="inline-block bg-primary-600 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+              className="inline-block bg-primary-700 text-white px-8 py-3 rounded-lg font-semibold hover:bg-primary-800 transition-colors"
             >
               お問い合わせフォームへ
             </Link>

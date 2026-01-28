@@ -9,10 +9,10 @@ export default function ContactPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ヒーローセクション */}
-      <section className="bg-gradient-to-br from-primary-600 to-primary-800 text-white py-16">
+      <section className="bg-gradient-to-br from-primary-500 to-primary-700 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">お問い合わせ</h1>
-          <p className="text-xl text-primary-100">
+          <p className="text-xl text-white">
             ご質問やご相談がございましたら、お気軽にご連絡ください
           </p>
         </div>
@@ -27,7 +27,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="name"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm font-medium text-gray-600 mb-2"
                   >
                     お名前 <span className="text-red-500">*</span>
                   </label>
@@ -44,7 +44,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="email"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm font-medium text-gray-600 mb-2"
                   >
                     メールアドレス <span className="text-red-500">*</span>
                   </label>
@@ -61,7 +61,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="company"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm font-medium text-gray-600 mb-2"
                   >
                     会社名
                   </label>
@@ -77,7 +77,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="subject"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm font-medium text-gray-600 mb-2"
                   >
                     件名 <span className="text-red-500">*</span>
                   </label>
@@ -94,7 +94,7 @@ export default function ContactPage() {
                 <div>
                   <label
                     htmlFor="message"
-                    className="block text-sm font-medium text-gray-700 mb-2"
+                    className="block text-sm font-medium text-gray-600 mb-2"
                   >
                     お問い合わせ内容 <span className="text-red-500">*</span>
                   </label>
@@ -111,7 +111,7 @@ export default function ContactPage() {
                 <div className="pt-4">
                   <button
                     type="submit"
-                    className="w-full bg-primary-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-700 transition-colors"
+                    className="w-full bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-800 transition-colors"
                   >
                     送信する
                   </button>

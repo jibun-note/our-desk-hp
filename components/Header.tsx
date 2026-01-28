@@ -21,32 +21,32 @@ export default function Header() {
                 className="object-contain"
               />
             </div>
-            <span className="text-xl font-bold text-gray-900">OurDesk</span>
+            <span className="text-xl font-bold text-gray-800">OurDesk</span>
           </Link>
 
           {/* デスクトップメニュー */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
               href="/"
-              className="text-gray-700 hover:text-primary-600 transition-colors"
+              className="text-gray-800 hover:text-primary-500 transition-colors"
             >
               ホーム
             </Link>
             <Link
               href="/about"
-              className="text-gray-700 hover:text-primary-600 transition-colors"
+              className="text-gray-800 hover:text-primary-500 transition-colors"
             >
               会社概要
             </Link>
             <Link
               href="/services"
-              className="text-gray-700 hover:text-primary-600 transition-colors"
+              className="text-gray-800 hover:text-primary-500 transition-colors"
             >
               サービス
             </Link>
             <Link
               href="/contact"
-              className="bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors"
+              className="bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-800 transition-colors"
             >
               お問い合わせ
             </Link>
@@ -54,7 +54,7 @@ export default function Header() {
 
           {/* モバイルメニューボタン */}
           <button
-            className="md:hidden text-gray-700"
+            className="md:hidden text-gray-800"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="メニュー"
           >
@@ -88,28 +88,28 @@ export default function Header() {
           <div className="md:hidden py-4 border-t">
             <Link
               href="/"
-              className="block py-2 text-gray-700 hover:text-primary-600 transition-colors"
+              className="block py-2 text-gray-800 hover:text-primary-500 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               ホーム
             </Link>
             <Link
               href="/about"
-              className="block py-2 text-gray-700 hover:text-primary-600 transition-colors"
+              className="block py-2 text-gray-800 hover:text-primary-500 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               会社概要
             </Link>
             <Link
               href="/services"
-              className="block py-2 text-gray-700 hover:text-primary-600 transition-colors"
+              className="block py-2 text-gray-800 hover:text-primary-500 transition-colors"
               onClick={() => setIsMenuOpen(false)}
             >
               サービス
             </Link>
             <Link
               href="/contact"
-              className="block py-2 bg-primary-600 text-white px-4 py-2 rounded-lg hover:bg-primary-700 transition-colors mt-2"
+              className="block py-2 bg-primary-700 text-white px-4 rounded-lg hover:bg-primary-800 transition-colors mt-2"
               onClick={() => setIsMenuOpen(false)}
             >
               お問い合わせ

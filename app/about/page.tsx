@@ -9,10 +9,10 @@ export default function AboutPage() {
   return (
     <div className="min-h-screen bg-white">
       {/* ヒーローセクション */}
-      <section className="bg-gradient-to-br from-primary-600 to-primary-800 text-white py-16">
+      <section className="bg-gradient-to-br from-primary-500 to-primary-700 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl md:text-5xl font-bold mb-4">会社概要</h1>
-          <p className="text-xl text-primary-100">
+          <p className="text-xl text-white">
             OurDesk株式会社について
           </p>
         </div>
@@ -22,24 +22,24 @@ export default function AboutPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-gray-900">会社概要</h2>
+            <h2 className="text-3xl font-bold mb-8 text-gray-800">会社概要</h2>
             <div className="bg-gray-50 rounded-lg p-8 mb-8">
               <dl className="grid md:grid-cols-2 gap-6">
                 <div>
-                  <dt className="font-semibold text-gray-700 mb-2">会社名</dt>
-                  <dd className="text-gray-900">OurDesk株式会社</dd>
+                  <dt className="font-semibold text-gray-600 mb-2">会社名</dt>
+                  <dd className="text-gray-800">OurDesk株式会社</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-gray-700 mb-2">設立</dt>
-                  <dd className="text-gray-900">2024年</dd>
+                  <dt className="font-semibold text-gray-600 mb-2">設立</dt>
+                  <dd className="text-gray-800">2024年</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-gray-700 mb-2">所在地</dt>
-                  <dd className="text-gray-900">東京都</dd>
+                  <dt className="font-semibold text-gray-600 mb-2">所在地</dt>
+                  <dd className="text-gray-800">東京都</dd>
                 </div>
                 <div>
-                  <dt className="font-semibold text-gray-700 mb-2">事業内容</dt>
-                  <dd className="text-gray-900">ビジネスソリューションの提供</dd>
+                  <dt className="font-semibold text-gray-600 mb-2">事業内容</dt>
+                  <dd className="text-gray-800">ビジネスソリューションの提供</dd>
                 </div>
               </dl>
             </div>
@@ -51,8 +51,8 @@ export default function AboutPage() {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-gray-900">私たちの理念</h2>
-            <div className="space-y-6 text-gray-700">
+            <h2 className="text-3xl font-bold mb-8 text-gray-800">私たちの理念</h2>
+            <div className="space-y-6 text-gray-600">
               <p className="text-lg leading-relaxed">
                 OurDesk株式会社は、お客様のビジネスを次のレベルへ導くことを使命としています。
                 私たちは、最新のテクノロジーと豊富な経験を活かし、お客様に最適なソリューションを提供します。
@@ -70,11 +70,11 @@ export default function AboutPage() {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
-            <h2 className="text-3xl font-bold mb-8 text-gray-900">沿革</h2>
+            <h2 className="text-3xl font-bold mb-8 text-gray-800">沿革</h2>
             <div className="space-y-6">
-              <div className="border-l-4 border-primary-600 pl-6">
-                <div className="font-semibold text-gray-900 mb-2">2024年</div>
-                <div className="text-gray-700">OurDesk株式会社設立</div>
+              <div className="border-l-4 border-primary-700 pl-6">
+                <div className="font-semibold text-gray-800 mb-2">2024年</div>
+                <div className="text-gray-600">OurDesk株式会社設立</div>
               </div>
             </div>
           </div>
