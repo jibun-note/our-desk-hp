@@ -13,7 +13,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* ロゴ */}
           <Link href="/" className="flex items-center space-x-2">
-            <div className="relative w-10 h-10">
+            <div className="relative size-8 md:size-10">
               <Image
                 src="/OurDesk株式会社様_logo.png"
                 alt="OurDesk株式会社"
@@ -27,39 +27,45 @@ export default function Header() {
           {/* デスクトップメニュー */}
           <div className="hidden md:flex items-center space-x-6">
             <Link
-              href="/"
+              href="/service"
               className="text-gray-800 hover:text-primary-500 transition-colors"
             >
-              ホーム
+              Service
             </Link>
             <Link
-              href="/about"
+              href="/about-us"
               className="text-gray-800 hover:text-primary-500 transition-colors"
             >
-              会社概要
+              About us
             </Link>
             <Link
-              href="/services"
+              href="/company"
               className="text-gray-800 hover:text-primary-500 transition-colors"
             >
-              サービス
+              Company
+            </Link>
+            <Link
+              href="/recruit"
+              className="text-gray-800 hover:text-primary-500 transition-colors"
+            >
+              Recruit
             </Link>
             <Link
               href="/contact"
               className="bg-primary-700 text-white px-4 py-2 rounded-lg hover:bg-primary-800 transition-colors"
             >
-              お問い合わせ
+              Contact
             </Link>
           </div>
 
           {/* モバイルメニューボタン */}
           <button
-            className="md:hidden text-gray-800"
+            className="md:hidden text-gray-800 min-h-[44px] min-w-[44px] flex items-center justify-center"
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             aria-label="メニュー"
           >
             <svg
-              className="w-6 h-6"
+              className="size-6"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -87,32 +93,46 @@ export default function Header() {
         {isMenuOpen && (
           <div className="md:hidden py-4 border-t">
             <Link
-              href="/"
-              className="block py-2 text-gray-800 hover:text-primary-500 transition-colors"
+              href="/service"
+              className="block py-3 text-gray-800 hover:text-primary-500 transition-colors min-h-[44px] flex items-center"
               onClick={() => setIsMenuOpen(false)}
             >
-              ホーム
+              Service
             </Link>
             <Link
-              href="/about"
-              className="block py-2 text-gray-800 hover:text-primary-500 transition-colors"
+              href="/about-us"
+              className="block py-3 text-gray-800 hover:text-primary-500 transition-colors min-h-[44px] flex items-center"
               onClick={() => setIsMenuOpen(false)}
             >
-              会社概要
+              About us
             </Link>
             <Link
-              href="/services"
-              className="block py-2 text-gray-800 hover:text-primary-500 transition-colors"
+              href="/company"
+              className="block py-3 text-gray-800 hover:text-primary-500 transition-colors min-h-[44px] flex items-center"
               onClick={() => setIsMenuOpen(false)}
             >
-              サービス
+              Company
+            </Link>
+            <Link
+              href="/recruit"
+              className="block py-3 text-gray-800 hover:text-primary-500 transition-colors min-h-[44px] flex items-center"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Recruit
             </Link>
             <Link
               href="/contact"
-              className="block py-2 bg-primary-700 text-white px-4 rounded-lg hover:bg-primary-800 transition-colors mt-2"
+              className="block py-3 bg-primary-700 text-white px-4 rounded-lg hover:bg-primary-800 transition-colors mt-2 min-h-[44px] flex items-center"
               onClick={() => setIsMenuOpen(false)}
             >
-              お問い合わせ
+              Contact
+            </Link>
+            <Link
+              href="/privacy"
+              className="block py-3 text-gray-800 hover:text-primary-500 transition-colors min-h-[44px] flex items-center text-sm"
+              onClick={() => setIsMenuOpen(false)}
+            >
+              Privacy Policy
             </Link>
           </div>
         )}

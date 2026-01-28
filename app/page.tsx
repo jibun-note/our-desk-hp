@@ -1,132 +1,169 @@
 import Link from 'next/link'
-import Image from 'next/image'
 
 export default function Home() {
   return (
     <main className="min-h-screen">
-      {/* ヒーローセクション */}
-      <section className="relative bg-gradient-to-br from-primary-500 to-primary-700 text-white py-20 md:py-32">
-        <div className="container mx-auto px-4">
-          <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              OurDesk株式会社
-            </h1>
-            <p className="text-xl md:text-2xl mb-8 text-white">
-              あなたのビジネスを次のレベルへ
-            </p>
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Link
-                href="/about"
-                className="bg-white text-primary-700 px-8 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
-              >
-                会社概要
-              </Link>
-              <Link
-                href="/contact"
-                className="bg-transparent border-2 border-white text-white px-8 py-3 rounded-lg font-semibold hover:bg-white hover:text-primary-700 transition-colors"
-              >
-                お問い合わせ
-              </Link>
-            </div>
-          </div>
+      {/* セクション1: キャッチコピー */}
+      <section className="relative bg-primary-500 text-white py-12 px-4 md:py-20 md:px-6">
+        <div className="container mx-auto max-w-4xl">
+          <h1 className="text-2xl md:text-4xl font-bold text-center text-balance mb-6">
+            OurDeskが提供するのは、
+            <br />
+            業務に追われる会社を、
+            <br />
+            「働きたい」人材が支える仕組み。
+          </h1>
         </div>
       </section>
 
-      {/* 特徴セクション */}
-      <section className="py-20 bg-gray-50">
-        <div className="container mx-auto px-4">
-          <h2 className="text-3xl md:text-4xl font-bold text-center mb-12 text-gray-800">
-            私たちの強み
+      {/* セクション2: 「働きたい」を、ちゃんと育てる */}
+      <section className="py-8 px-4 md:py-16 md:px-6 bg-white">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance">
+            「働きたい」を、ちゃんと育てる。
           </h2>
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-primary-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 10V3L4 14h7v7l9-11h-7z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                スピード
-              </h3>
-              <p className="text-gray-600">
-                迅速な対応と効率的なサービス提供で、お客様のビジネスをサポートします。
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-primary-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                信頼性
-              </h3>
-              <p className="text-gray-600">
-                高い品質基準と確かな実績で、お客様に安心してご利用いただけます。
-              </p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <div className="w-12 h-12 bg-primary-50 rounded-lg flex items-center justify-center mb-4">
-                <svg
-                  className="w-6 h-6 text-primary-700"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"
-                  />
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-gray-800">
-                チームワーク
-              </h3>
-              <p className="text-gray-600">
-                お客様との密接な連携により、最適なソリューションを提供します。
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* CTAセクション */}
-      <section className="py-20 bg-primary-700 text-white">
-        <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl md:text-4xl font-bold mb-6">
-            お気軽にお問い合わせください
-          </h2>
-          <p className="text-xl mb-8 text-white">
-            ご質問やご相談がございましたら、お気軽にご連絡ください。
+          <p className="text-base md:text-lg text-gray-700 leading-relaxed text-pretty">
+            「働きたい」想いは、自然に生まれるものではありません。OurDeskは、その気持ちを育て、仕事につなげる仕組みをつくっています。
           </p>
-          <Link
-            href="/contact"
-            className="inline-block bg-white text-primary-700 px-8 py-3 rounded-lg font-semibold hover:bg-primary-50 transition-colors"
-          >
-            お問い合わせフォームへ
-          </Link>
+        </div>
+      </section>
+
+      {/* セクション3: OurDeskの強み */}
+      <section className="py-8 px-4 md:py-16 md:px-6 bg-gray-50">
+        <div className="container mx-auto max-w-6xl">
+          <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800 text-balance">
+            OurDeskの強み
+          </h2>
+          <p className="text-base md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-3xl mx-auto">
+            OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。
+          </p>
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-2xl font-bold text-primary-700 mb-3">①</div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
+                学びの場を提供
+              </h3>
+              <p className="text-gray-600 text-pretty">
+                女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-2xl font-bold text-primary-700 mb-3">②</div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
+                キャリア面談
+              </h3>
+              <p className="text-gray-600 text-pretty">
+                国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。
+              </p>
+            </div>
+            <div className="bg-white p-6 rounded-lg shadow-md">
+              <div className="text-2xl font-bold text-primary-700 mb-3">③</div>
+              <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
+                仕事につなげる
+              </h3>
+              <p className="text-gray-600 text-pretty">
+                その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* セクション4: OurDeskの人材育成方針 */}
+      <section className="py-8 px-4 md:py-16 md:px-6 bg-white">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance">
+            OurDeskの人材育成方針
+          </h2>
+          <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed text-pretty">
+            私たちが大切にしているのは、
+          </p>
+          <ul className="space-y-3 text-base md:text-lg text-gray-700">
+            <li className="flex items-start">
+              <span className="text-primary-700 mr-2">•</span>
+              <span className="text-pretty">働きたい</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-primary-700 mr-2">•</span>
+              <span className="text-pretty">人の力になりたい</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-primary-700 mr-2">•</span>
+              <span className="text-pretty">誰かを支える仕事がしたい</span>
+            </li>
+          </ul>
+          <p className="text-base md:text-lg text-gray-700 mt-6 leading-relaxed text-pretty">
+            そんな想いを持つ人たちです。
+            <br />
+            スキルだけでなく、「働く姿勢」や「想い」も大切に育てています。
+          </p>
+        </div>
+      </section>
+
+      {/* セクション5: 裏付け */}
+      <section className="py-8 px-4 md:py-16 md:px-6 bg-gray-50">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance">
+            裏付け
+          </h2>
+          <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed text-pretty">
+            OurDeskの仕組みの土台には、NEUGATEグループの人材育成ノウハウがあります。
+          </p>
+          <ul className="space-y-3 text-base md:text-lg text-gray-700">
+            <li className="flex items-start">
+              <span className="text-primary-700 mr-2">•</span>
+              <span className="text-pretty">グループ従業員 約100名</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-primary-700 mr-2">•</span>
+              <span className="text-pretty">定着率は常に90%以上</span>
+            </li>
+            <li className="flex items-start">
+              <span className="text-primary-700 mr-2">•</span>
+              <span className="text-pretty">人事支援・キャリア支援の実績多数</span>
+            </li>
+          </ul>
+          <p className="text-base md:text-lg text-gray-700 mt-6 leading-relaxed text-pretty">
+            長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。
+          </p>
+        </div>
+      </section>
+
+      {/* セクション6: OurDeskのミッション */}
+      <section className="py-8 px-4 md:py-16 md:px-6 bg-white">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance">
+            OurDeskのミッション
+          </h2>
+          <p className="text-base md:text-lg text-gray-700 mb-6 leading-relaxed text-pretty">
+            私たちは、「働きたい」という気持ちが、仕事につながる社会をつくりたいと考えています。
+            <br />
+            家庭やライフステージに左右されず、自分らしい働き方を選びながら、誰かの役に立てる。そんなキャリアの形を、一人ひとりと一緒につくっていく会社です。
+          </p>
+          <div className="mt-8">
+            <Link
+              href="/about-us"
+              className="inline-block bg-primary-700 text-white px-6 py-3 rounded-lg font-semibold hover:bg-primary-800 transition-colors"
+            >
+              MVVを見る →
+            </Link>
+          </div>
+        </div>
+      </section>
+
+      {/* セクション7: なぜ、女性のキャリア支援なのか */}
+      <section className="py-8 px-4 md:py-16 md:px-6 bg-gray-50">
+        <div className="container mx-auto max-w-4xl">
+          <h2 className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance">
+            なぜ、女性のキャリア支援なのか
+          </h2>
+          <p className="text-base md:text-lg text-gray-700 leading-relaxed text-pretty">
+            出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。
+            <br />
+            「働きたい気持ちはあるのに、選択肢が限られてしまう」そんな声を、私たちはたくさん聞いてきました。
+            <br />
+            だからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。
+          </p>
         </div>
       </section>
     </main>
