@@ -2,6 +2,7 @@
 
 import Link from 'next/link'
 import { useState, useEffect } from 'react'
+import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react'
 import { cn } from '@/lib/utils'
@@ -17,7 +18,12 @@ const menuItems = [
 export default function Header() {
     const [isMenuOpen, setIsMenuOpen] = useState(false)
     const [isScrolled, setIsScrolled] = useState(false)
+    const [mounted, setMounted] = useState(false)
     const { scrollY } = useScroll()
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     useMotionValueEvent(scrollY, 'change', (latest) => {
         setIsScrolled(latest > 10)
@@ -129,39 +135,45 @@ export default function Header() {
                     </motion.button>
                 </div>
 
-                {/* モバイルメニュー */}
-                <AnimatePresence>
-                    {isMenuOpen && (
-                        <motion.div
-                            className="md:hidden py-4 border-t overflow-hidden"
-                            initial={{ opacity: 0, x: '-100%' }}
-                            animate={{ opacity: 1, x: 0 }}
-                            exit={{ opacity: 0, x: '-100%' }}
-                            transition={{ duration: 0.35, ease: [0.4, 0, 0.2, 1] }}
-                        >
-                            {menuItems.map((item, index) => (
+                {/* モバイルメニュー（Portal で body 直下に描画し、動画の上にオーバーレイ表示） */}
+                {mounted &&
+                    createPortal(
+                        <AnimatePresence>
+                            {isMenuOpen && (
                                 <motion.div
-                                    key={item.href}
-                                    initial={{ opacity: 0, y: -10 }}
-                                    animate={{ opacity: 1, y: 0 }}
-                                    transition={{
-                                        duration: 0.3,
-                                        delay: index * 0.08,
-                                        ease: [0.4, 0, 0.2, 1],
-                                    }}
+                                    className="md:hidden fixed inset-0 top-16 z-40 overflow-auto bg-white/95 backdrop-blur-sm"
+                                    initial={{ opacity: 0 }}
+                                    animate={{ opacity: 1 }}
+                                    exit={{ opacity: 0 }}
+                                    transition={{ duration: 0.25, ease: [0.4, 0, 0.2, 1] }}
                                 >
-                                    <Link
-                                        href={item.href}
-                                        className="flex items-center py-3 text-gray-800 hover:text-primary-500 transition-colors duration-150 min-h-[44px]"
-                                        onClick={() => setIsMenuOpen(false)}
-                                    >
-                                        {item.label}
-                                    </Link>
+                                    <nav className="container mx-auto px-4 py-6">
+                                        {menuItems.map((item, index) => (
+                                            <motion.div
+                                                key={item.href}
+                                                initial={{ opacity: 0, y: -10 }}
+                                                animate={{ opacity: 1, y: 0 }}
+                                                transition={{
+                                                    duration: 0.3,
+                                                    delay: index * 0.08,
+                                                    ease: [0.4, 0, 0.2, 1],
+                                                }}
+                                            >
+                                                <Link
+                                                    href={item.href}
+                                                    className="flex items-center py-3 text-gray-800 hover:text-primary-500 transition-colors duration-150 min-h-[44px]"
+                                                    onClick={() => setIsMenuOpen(false)}
+                                                >
+                                                    {item.label}
+                                                </Link>
+                                            </motion.div>
+                                        ))}
+                                    </nav>
                                 </motion.div>
-                            ))}
-                        </motion.div>
+                            )}
+                        </AnimatePresence>,
+                        document.body
                     )}
-                </AnimatePresence>
             </nav>
         </motion.header>
     )
