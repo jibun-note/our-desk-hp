@@ -1,8 +1,30 @@
 import SplitText from '@/components/ui/SplitText'
 import Particles from '@/components/ui/Particles'
-import SlideUpSection from '@/components/ui/SlideUpSection'
-import GradientHeading from '@/components/ui/GradientHeading'
-import StackCardsSection from '@/components/StackCardsSection'
+import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSection'
+
+const stackCards: StackCardItem[] = [
+    {
+        title: 'OurDeskの人材育成方針',
+        content: '私たちが大切にしているのは、\n働きたい、人の力になりたい、誰かを支える仕事がしたい、そんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも大切に育てています。',
+        imageOrder: 'right',
+    },
+    {
+        title: 'OurDeskを支える基盤',
+        content: 'OurDeskの仕組みの土台には、NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名、定着率は常に90%以上、人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。',
+        imageOrder: 'left',
+    },
+    {
+        title: 'OurDeskのミッション',
+        content: '私たちは、「働きたい」という気持ちが、仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、自分らしい働き方を選びながら、誰かの役に立てる。そんなキャリアの形を、一人ひとりと一緒につくっていく会社です。',
+        imageOrder: 'right',
+    },
+    {
+        title: 'なぜ、女性のキャリア支援なのか',
+        titleClass: 'text-xl md:text-3xl',
+        content: '出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
+        imageOrder: 'left',
+    },
+]
 
 export default function Home() {
     return (
@@ -153,7 +175,7 @@ export default function Home() {
             </section>
 
             {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
-            <StackCardsSection />
+            <StackCardsSection cards={stackCards} />
         </main>
     )
 }
