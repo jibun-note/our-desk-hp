@@ -2,14 +2,23 @@
 @tailwind components;
 @tailwind utilities;
 
+/* スクロールスナップ用: html を明示的なスクロールコンテナに */
+html {
+  height: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+  scroll-snap-type: y proximity;
+  scroll-padding-top: 5rem; /* 固定ヘッダー分 */
+}
+
 body {
-    color: #333333;
-    background: #ffffff;
+  color: #333333;
+  background: #ffffff;
 }
 
 /* prefers-reduced-motion対応: 動画を非表示 */
 @media (prefers-reduced-motion: reduce) {
-    video[aria-hidden="true"] {
-        display: none;
-    }
+  video[aria-hidden="true"] {
+    display: none;
+  }
 }
