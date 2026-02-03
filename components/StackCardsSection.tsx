@@ -6,6 +6,7 @@
  * sticky 配置で上に積み重なる見た目を実現する。
  */
 import React, { useRef, useState, useLayoutEffect } from 'react'
+import Image from 'next/image'
 import SlideUpSection from '@/components/ui/SlideUpSection'
 import GradientHeading from '@/components/ui/GradientHeading'
 
@@ -15,6 +16,8 @@ export type StackCardItem = {
     content: string
     imageOrder: 'left' | 'right'
     titleClass?: string
+    /** 画像のパス（例: /images/xxx.jpg）。指定時は画像エリアに表示、未指定時はプレースホルダー */
+    image?: string
 }
 
 /** 改行 \n を <br /> で表示する */
@@ -80,7 +83,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relative bg-gray-100/80 py-16 md:py-24" aria-label={sectionLabel}>
+        <section className="relativ bg-gradient-to-b from-[#fde3e8] via-[#FDE8E0] to-[#FDD9C8] py-16 md:py-24" aria-label={sectionLabel}>
             {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
             <div
                 ref={containerRef}
@@ -94,7 +97,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                     return (
                         <article
                             key={i}
-                            className="sticky min-h-[55vh] flex flex-col justify-center rounded-2xl p-6 md:p-8 lg:p-10 shadow-xl border border-gray-200/80 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out"
+                            className="sticky min-h-[55vh] flex flex-col justify-center rounded-2xl p-6 md:p-8 lg:p-10 shadow-xl border border-gray-200 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out"
                             style={{
                                 top: `${stickyTopRem}rem`,
                                 background: 'rgb(255,255,255)',
@@ -103,8 +106,12 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                             {/* imageOrder に応じてテキストと画像エリアの並びを左右反転 */}
                             <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-12 items-center w-full max-w-full ${card.imageOrder === 'left' ? '' : ''}`}>
                                 {card.imageOrder === 'left' && (
-                                    <div className="min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center order-2 md:order-1" aria-hidden="true">
-                                        <span className="text-sm text-gray-400">写真・画像用</span>
+                                    <div className="relative min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 overflow-hidden order-2 md:order-1" aria-hidden="true">
+                                        {card.image ? (
+                                            <Image src={card.image} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                                        ) : (
+                                            <span className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">写真・画像用</span>
+                                        )}
                                     </div>
                                 )}
                                 <div className={`min-w-0 flex flex-col justify-center ${card.imageOrder === 'left' ? 'order-1 md:order-2' : ''}`}>
@@ -116,8 +123,12 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                     </SlideUpSection>
                                 </div>
                                 {card.imageOrder === 'right' && (
-                                    <div className="min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center" aria-hidden="true">
-                                        <span className="text-sm text-gray-400">写真・画像用</span>
+                                    <div className="relative min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 overflow-hidden" aria-hidden="true">
+                                        {card.image ? (
+                                            <Image src={card.image} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                                        ) : (
+                                            <span className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">写真・画像用</span>
+                                        )}
                                     </div>
                                 )}
                             </div>

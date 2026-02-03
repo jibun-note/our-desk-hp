@@ -5,12 +5,13 @@
  * position="top": 次のセクションの上端が波型（次のセクション色で塗る）。
  * position="bottom": このセクションの下端が波型（グレーセクションのボトム用）。
  */
-type NextBackground = 'white' | 'gray-50'
+type NextBackground = 'gray' | 'pink' | 'orange'
 type Position = 'top' | 'bottom'
 
 const BG_COLORS: Record<NextBackground, string> = {
-    white: '#ffffff',
-    'gray-50': '#f9f9f9',
+    'gray': '#f9f9f9',
+    'pink': '#fde3e8',
+    'orange': '#FDD9C8',
 }
 
 export default function SectionWave({
@@ -31,9 +32,9 @@ export default function SectionWave({
                     preserveAspectRatio="none"
                     xmlns="http://www.w3.org/2000/svg"
                 >
-                    {/* 波が下端：上側を塗り、下端が波型 */}
+                    {/* 波が下端：山1つ（top の逆） */}
                     <path
-                        d="M0 0 L 1440 0 L 1440 50 Q 1200 80 960 50 Q 720 20 480 50 Q 240 80 0 50 Z"
+                        d="M0 0 L 1440 0 L 1440 80 Q 720 30 0 80 Z"
                         fill={fill}
                     />
                 </svg>
@@ -50,7 +51,7 @@ export default function SectionWave({
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
-                    d="M0 80 L0 50 Q 240 80 480 50 Q 720 20 960 50 Q 1200 80 1440 50 L 1440 80 Z"
+                    d="M0 80 L0 50 Q 720 100 1440 50 L 1440 80 Z"
                     fill={fill}
                 />
             </svg>
