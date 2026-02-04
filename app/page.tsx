@@ -6,28 +6,28 @@ import SectionWave from '@/components/SectionWave'
 const stackCards: StackCardItem[] = [
     {
         title: 'OurDeskの人材育成方針',
-        content: '私たちが大切にしているのは、\n働きたい、人の力になりたい、誰かを支える仕事がしたい、そんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも大切に育てています。',
+        content: '私たちが大切にしているのは、\n働きたい \n人の力になりたい\n誰かを支える仕事がしたい\nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも大切に育てています。',
         imageOrder: 'right',
-        image: '/images/AdobeStock_658232575_Preview.jpeg',
+        imageSrc: '/images/イキイキした写真.png',
     },
     {
         title: 'OurDeskを支える基盤',
-        content: 'OurDeskの仕組みの土台には、NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名、定着率は常に90%以上、人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。',
+        content: 'OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名 定着率は常に90%以上、人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。',
         imageOrder: 'left',
-        image: '/images/neugate_logo.jpg',
+        imageSrc: '/images/ノイゲート写真.png',
     },
     {
         title: 'OurDeskのミッション',
-        content: '私たちは、「働きたい」という気持ちが、仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、自分らしい働き方を選びながら、誰かの役に立てる。そんなキャリアの形を、一人ひとりと一緒につくっていく会社です。',
+        content: '私たちは、「働きたい」という気持ちが、仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、\n自分らしい働き方を選びながら、誰かの役に立てる。\nそんなキャリアの形を、一人ひとりと一緒につくっていく会社です。',
         imageOrder: 'right',
-        image: '/images/AdobeStock_596663508_Preview.jpeg',
+        imageSrc: '/images/ライフステージ写真.png',
     },
     {
         title: 'なぜ、女性のキャリア支援なのか',
         titleClass: 'text-xl md:text-3xl',
-        content: '出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
+        content: '出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
         imageOrder: 'left',
-        image: '/images/AdobeStock_1782187012_Preview.jpeg',
+        imageSrc: '/images/親子写真.png',
     },
 ]
 
@@ -146,7 +146,7 @@ export default function Home() {
                     <h2 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
                         OurDeskの強み
                     </h2>
-                    <p className="text-base md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
+                    <p className="text-sm md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
                         OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。
                     </p>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
@@ -160,7 +160,7 @@ export default function Home() {
                             <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
                                 学びの場を提供
                             </h3>
-                            <p className="text-gray-600 text-pretty">
+                            <p className="text-sm md:text-base text-gray-600 text-pretty">
                                 女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。
                             </p>
                         </div>
@@ -174,7 +174,7 @@ export default function Home() {
                             <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
                                 キャリア面談
                             </h3>
-                            <p className="text-gray-600 text-pretty">
+                            <p className="text-sm md:text-base text-gray-600 text-pretty">
                                 国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。
                             </p>
                         </div>
@@ -188,7 +188,7 @@ export default function Home() {
                             <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
                                 仕事につなげる
                             </h3>
-                            <p className="text-gray-600 text-pretty">
+                            <p className="text-sm md:text-base text-gray-600 text-pretty">
                                 その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。
                             </p>
                         </div>
