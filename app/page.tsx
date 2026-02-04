@@ -51,9 +51,9 @@ export default function Home() {
                             <source src="/AdobeStock_487035634_Video_HD_Preview.mp4" type="video/mp4" />
                         </video>
                         {/* コンテンツ - 動画要素内に配置 */}
-                        <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
+                        <div className="absolute inset-0 flex items-center md:items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
                             <div className="max-w-2xl pointer-events-auto">
-                                <h1 className="text-xl md:text-4xl font-bold text-right text-balance text-gray-800">
+                                <h1 className="text-md md:text-3xl font-bold text-right text-balance text-gray-800">
                                     <div className="block">
                                         <SplitText
                                             text="OurDeskが提供するのは、"
@@ -121,8 +121,9 @@ export default function Home() {
                 <div className="flex flex-col items-center justify-center container mx-auto max-w-4xl relative z-10">
                     <SplitText
                         tag="h2"
-                        text="「働きたい」を、ちゃんと育てる。"
-                        className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance"
+                        text="「働きたい」をちゃんと育てる。"
+                        html={'<span class="text-gradient-hero">「働きたい」</span>を<br />ちゃんと育てる。'}
+                        className="text-md md:text-3xl font-bold mb-6 text-gray-800 text-balance"
                         splitType="chars"
                         delay={50}
                         duration={0.8}
@@ -133,7 +134,7 @@ export default function Home() {
                         rootMargin="-50px"
                     />
                     <p className="text-base md:text-lg text-gray-700 leading-relaxed text-pretty text-center">
-                        「働きたい」想いは、自然に生まれるものではありません。<br />OurDeskは、その気持ちを育て、仕事につなげる仕組みをつくっています。
+                        「働きたい」想いは、自然に生まれるものではありません。<br />OurDeskはその気持ちを育て、仕事につなげる仕組みを作っています。
                     </p>
                 </div>
             </section>
@@ -142,7 +143,7 @@ export default function Home() {
             {/* セクション3: OurDeskの強み */}
             <section className="relative py-8 px-4 md:py-16 md:px-6">
                 <div className="container mx-auto max-w-6xl relative z-10">
-                    <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800 text-balance">
+                    <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
                         OurDeskの強み
                     </h2>
                     <p className="text-base md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
@@ -151,7 +152,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
                         <div className="p-6 rounded-lg shadow-md"
                             style={{
-                                backgroundImage: "linear-gradient(rgba(255, 252, 245, 0.75), rgba(255, 252, 245, 0.75)),url(images/AdobeStock_1408184906_Preview.jpeg)",
+                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(images/AdobeStock_1408184906_Preview.jpeg)",
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -165,7 +166,7 @@ export default function Home() {
                         </div>
                         <div className="p-6 rounded-lg shadow-md"
                             style={{
-                                backgroundImage: "linear-gradient(rgba(255, 252, 245, 0.75), rgba(255, 252, 245, 0.75)),url(images/AdobeStock_537141193_Preview.jpeg)",
+                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(images/AdobeStock_537141193_Preview.jpeg)",
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -179,7 +180,7 @@ export default function Home() {
                         </div>
                         <div className="p-6 rounded-lg shadow-md"
                             style={{
-                                backgroundImage: "linear-gradient(rgba(255, 252, 245, 0.75), rgba(255, 252, 245, 0.75)),url(images/AdobeStock_399162949_Preview.jpeg)",
+                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(images/AdobeStock_399162949_Preview.jpeg)",
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -194,11 +195,11 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <SectionWave nextBackground="pink" />
+            <SectionWave nextBackground="top_beige" />
 
             {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
             <StackCardsSection cards={stackCards} />
-            <SectionWave nextBackground="orange" position="bottom" />
+            <SectionWave nextBackground="bottom_beige" position="bottom" />
         </main>
     )
 }

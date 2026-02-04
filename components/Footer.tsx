@@ -6,7 +6,7 @@ import { motion } from 'motion/react'
 
 export default function Footer() {
     return (
-        <footer className="bg-gray-50 text-gray-800 flex flex-col min-h-[200px]">
+        <footer className=" text-gray-800 flex flex-col min-h-[200px]">
             <div className="container mx-auto px-4 py-12 flex-1">
                 <div className="flex flex-col md:flex-row gap-6 md:gap-8">
                     {/* 会社情報 */}
