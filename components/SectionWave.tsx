@@ -9,7 +9,7 @@ type NextBackground = 'top' | 'bottom'
 type Position = 'top' | 'bottom'
 
 const BG_COLORS: Record<NextBackground, string> = {
-    'top': '#FFF8E7',
+    'top': '#fcf7f8',
     'bottom': '#FFE8CC',
 }
 

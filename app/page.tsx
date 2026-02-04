@@ -7,7 +7,7 @@ import StrengthCards from '@/components/StrengthCards'
 const stackCards: StackCardItem[] = [
     {
         title: 'OurDeskの人材育成方針',
-        content: '私たちが大切にしているのは、\n働きたい \n人の力になりたい\n誰かを支える仕事がしたい\nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも大切に育てています。',
+        content: '私たちが大切にしているのは、\n働きたい \n人の力になりたい\n誰かを支える仕事がしたい\nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも\n大切に育てています。',
         imageOrder: 'right',
         imageSrc: '/images/イキイキした写真.png',
     },
@@ -54,9 +54,9 @@ export default function Home() {
                             <source src="/AdobeStock_487035634_Video_HD_Preview.mp4" type="video/mp4" />
                         </video>
                         {/* コンテンツ - 動画要素内に配置 */}
-                        <div className="absolute inset-0 flex items-center md:items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
+                        <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
                             <div className="max-w-2xl pointer-events-auto">
-                                <h1 className="text-md md:text-3xl font-bold text-right text-balance text-gray-800">
+                                <h1 className="text-md md:text-3xl font-bold text-right text-balance text-gray-50/90 drop-shadow-md">
                                     <div className="block">
                                         <SplitText
                                             text="OurDeskが提供するのは、"
@@ -150,11 +150,11 @@ export default function Home() {
                     <StrengthCards />
                 </div>
             </section>
-            <SectionWave nextBackground="top" />
+
 
             {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
             <StackCardsSection cards={stackCards} />
-            <SectionWave nextBackground="bottom" position="bottom" />
+
         </main>
     )
 }
