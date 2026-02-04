@@ -6,6 +6,8 @@
  * sticky 配置で上に積み重なる見た目を実現する。
  */
 import React, { useRef, useState, useLayoutEffect } from 'react'
+import Image from 'next/image'
+import { motion, useReducedMotion } from 'motion/react'
 import SlideUpSection from '@/components/ui/SlideUpSection'
 import GradientHeading from '@/components/ui/GradientHeading'
 
@@ -15,17 +17,119 @@ export type StackCardItem = {
     content: string
     imageOrder: 'left' | 'right'
     titleClass?: string
+    /** 画像を表示する場合のパス（例: /images/xxx.png） */
+    imageSrc?: string
 }
 
-/** 改行 \n を <br /> で表示する */
+/** 行全体に文字色（アクセント）を付ける行の本文（正規化後に一致） */
+const HIGHLIGHT_LINES = [
+    '働きたい',
+    '人の力になりたい',
+    '誰かを支える仕事がしたい',
+    'グループ従業員 約100名 定着率は常に90%以上',
+    '家庭やライフステージに左右されず、',
+    '自分らしい働き方を選びながら、誰かの役に立てる',
+    '働きたい気持ちはあるのに、選択肢が限られてしまう',
+    '女性が自分らしく働き続けられる',
+]
+
+/** 行内の一部フレーズに文字色（アクセント）を付ける（長い順で一致させる） */
+const INLINE_PHRASES = [
+    '働きたい気持ちはあるのに、選択肢が限られてしまう',
+    '女性が自分らしく働き続けられる',
+    '人材育成ノウハウ',
+    '仕組みづくり',
+    '働く姿勢',
+]
+
+/** 行末の ！/! 。や「」を除いて正規化 */
+function normalizeLine(s: string): string {
+    return s
+        .trim()
+        .replace(/[！!\s]+$/, '')
+        .replace(/。$/, '')
+        .replace(/^「/, '')
+        .replace(/」$/, '')
+}
+
+/** 行全体がハイライト対象か判定 */
+function isHighlightLine(trimmed: string): boolean {
+    const normalized = normalizeLine(trimmed)
+    return HIGHLIGHT_LINES.some((m) => m === normalized)
+}
+
+const HIGHLIGHT_CLASS = 'text-primary-700 font-semibold'
+
+/** 行内の INLINE_PHRASES を span でラップして文字色を付与 */
+function highlightInlinePhrases(line: string): React.ReactNode {
+    const phrases = [...INLINE_PHRASES].sort((a, b) => b.length - a.length)
+    const matches: { start: number; end: number; phrase: string }[] = []
+    for (const phrase of phrases) {
+        let pos = 0
+        while (pos < line.length) {
+            const i = line.indexOf(phrase, pos)
+            if (i === -1) break
+            const overlaps = matches.some((m) => i < m.end && i + phrase.length > m.start)
+            if (!overlaps) matches.push({ start: i, end: i + phrase.length, phrase })
+            pos = i + 1
+        }
+    }
+    matches.sort((a, b) => a.start - b.start)
+    const merged: { start: number; end: number; phrase: string }[] = []
+    let lastEnd = 0
+    for (const m of matches) {
+        if (m.start < lastEnd) continue
+        merged.push(m)
+        lastEnd = m.end
+    }
+    const segments: React.ReactNode[] = []
+    let pos = 0
+    for (const m of merged) {
+        if (m.start > pos) segments.push(line.slice(pos, m.start))
+        segments.push(
+            <span key={`${m.start}-${m.phrase}`} className={HIGHLIGHT_CLASS}>
+                {m.phrase}
+            </span>
+        )
+        pos = m.end
+    }
+    if (pos < line.length) segments.push(line.slice(pos))
+    return <>{segments}</>
+}
+
+/** 改行 \n をブロック表示し、行間に余白を付ける。該当行／該当フレーズは文字色を付与 */
 function contentWithLineBreaks(content: string): React.ReactNode {
     const lines = content.split('\n')
-    return lines.map((line, i) => (
-        <React.Fragment key={i}>
-            {i > 0 && <br />}
-            {line}
-        </React.Fragment>
-    ))
+    return lines.map((line, i) => {
+        const trimmed = line.trim()
+        const fullLineHighlight = isHighlightLine(trimmed)
+        const hasInline = INLINE_PHRASES.some((p) => line.includes(p))
+        let body: React.ReactNode
+        if (fullLineHighlight) {
+            const startQuote = line.indexOf('「')
+            const endQuote = line.lastIndexOf('」')
+            if (startQuote !== -1 && endQuote > startQuote) {
+                body = (
+                    <>
+                        {line.slice(0, startQuote + 1)}
+                        <span className={HIGHLIGHT_CLASS}>{line.slice(startQuote + 1, endQuote)}</span>
+                        {line.slice(endQuote)}
+                    </>
+                )
+            } else {
+                body = <span className={HIGHLIGHT_CLASS}>{line}</span>
+            }
+        } else if (hasInline) {
+            body = highlightInlinePhrases(line)
+        } else {
+            body = line
+        }
+        return (
+            <span key={i} className={i > 0 ? 'block mt-3' : undefined}>
+                {body}
+            </span>
+        )
+    })
 }
 
 const STICKY_BREAKPOINT = 768 // この幅未満で sticky top を小さく（セクション5飛び出し防止）
@@ -41,6 +145,7 @@ type Props = {
 
 export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み' }: Props) {
     const containerRef = useRef<HTMLDivElement>(null)
+    const shouldReduceMotion = useReducedMotion()
     /** セクション内のスクロール進捗 0〜1（0=上端が画面下端、1=下端が画面上端） */
     const [progress, setProgress] = useState(0)
     /** 狭い画面か（sticky の top を小さくしてセクションからはみ出しを防ぐ） */
@@ -91,34 +196,68 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                 {cards.map((card, i) => {
                     // カードごとに top をずらして sticky 時に重なって見せる（ずらしを保ち最後まで複数枚のスタックに見える）
                     const stickyTopRem = getStickyTopRem(i, isNarrow)
+                    const cardNumber = String(i + 1).padStart(2, '0')
                     return (
                         <article
                             key={i}
-                            className="sticky min-h-[55vh] flex flex-col justify-center rounded-2xl p-6 md:p-8 lg:p-10 shadow-xl border border-gray-200/80 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out"
+                            className={`sticky min-h-[55vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out px-5 py-4 md:py-5 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
                             style={{
                                 top: `${stickyTopRem}rem`,
                                 background: 'rgb(255,255,255)',
                             }}
                         >
-                            {/* imageOrder に応じてテキストと画像エリアの並びを左右反転 */}
-                            <div className={`grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-10 lg:gap-12 items-center w-full max-w-full ${card.imageOrder === 'left' ? '' : ''}`}>
+                            {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
+                            <div className={`grid grid-cols-1 gap-1 md:gap-6 lg:gap-8 w-full max-w-full items-center ${card.imageSrc ? 'min-h-[360px] md:min-h-[55vh]' : ''} ${card.imageOrder === 'left' ? 'md:grid-cols-[1.1fr_1.3fr]' : 'md:grid-cols-[1.3fr_1.1fr]'}`}>
                                 {card.imageOrder === 'left' && (
-                                    <div className="min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center order-2 md:order-1" aria-hidden="true">
-                                        <span className="text-sm text-gray-400">写真・画像用</span>
-                                    </div>
+                                    <motion.div
+                                        initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -2.5 }}
+                                        whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-2.5, 1.2, -0.4, 0.8, -0.2, 0] }}
+                                        viewport={{ once: false, margin: '-60px', amount: 0.25 }}
+                                        transition={{ duration: 1.1, delay: 0.15, ease: 'easeOut' }}
+                                        className={`relative order-2 md:order-1 overflow-hidden ${card.imageSrc ? 'h-[360px] md:h-[55vh] w-full min-w-0 aspect-[4/3] md:aspect-auto' : 'min-h-[180px] md:min-h-[220px] flex items-center justify-center'}`}
+                                        aria-hidden="true"
+                                    >
+                                        {card.imageSrc ? (
+                                            <Image src={card.imageSrc} alt="" fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
+                                        ) : (
+                                            <span className="text-sm text-gray-400">写真・画像用</span>
+                                        )}
+                                    </motion.div>
                                 )}
-                                <div className={`min-w-0 flex flex-col justify-center ${card.imageOrder === 'left' ? 'order-1 md:order-2' : ''}`}>
-                                    <SlideUpSection>
-                                        <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-2xl md:text-3xl'} font-bold mb-4 whitespace-nowrap block drop-shadow-sm`} />
-                                        <p className="text-base md:text-lg mb-6 leading-relaxed text-pretty text-gray-800">
-                                            {contentWithLineBreaks(card.content)}
-                                        </p>
+                                <div className={`min-w-0 flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 md:pl-0 order-1 md:order-2' : ''}`}>
+                                    <SlideUpSection className="w-full">
+                                        <span className="font-display inline-block text-2xl md:text-4xl font-extrabold text-primary-500/60 tabular-nums mb-2 md:mb-4" aria-hidden="true">
+                                            {cardNumber}
+                                        </span>
+                                        <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-2xl md:text-4xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-nowrap`} />
+                                        <motion.div
+                                            initial={{ opacity: 0, y: 24 }}
+                                            whileInView={{ opacity: 1, y: 0 }}
+                                            viewport={{ once: true, margin: '-220px', amount: 0.5 }}
+                                            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.12 }}
+                                            className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1"
+                                        >
+                                            <p className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700">
+                                                {contentWithLineBreaks(card.content)}
+                                            </p>
+                                        </motion.div>
                                     </SlideUpSection>
                                 </div>
                                 {card.imageOrder === 'right' && (
-                                    <div className="min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 flex items-center justify-center" aria-hidden="true">
-                                        <span className="text-sm text-gray-400">写真・画像用</span>
-                                    </div>
+                                    <motion.div
+                                        initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -2.5 }}
+                                        whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-2.5, 1.2, -0.4, 0.8, -0.2, 0] }}
+                                        viewport={{ once: false, margin: '-60px', amount: 0.25 }}
+                                        transition={{ duration: 1.1, delay: 0.60, ease: 'easeOut' }}
+                                        className={`relative overflow-hidden ${card.imageSrc ? 'h-[360px] md:h-[55vh] w-full min-w-0 aspect-[4/3] md:aspect-auto' : 'min-h-[180px] md:min-h-[220px] flex items-center justify-center'}`}
+                                        aria-hidden="true"
+                                    >
+                                        {card.imageSrc ? (
+                                            <Image src={card.imageSrc} alt="" fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
+                                        ) : (
+                                            <span className="text-sm text-gray-400">写真・画像用</span>
+                                        )}
+                                    </motion.div>
                                 )}
                             </div>
                         </article>

@@ -124,7 +124,13 @@ const Particles: React.FC<ParticlesProps> = ({
         const container = containerRef.current;
         if (!container) return;
 
-        const renderer = new Renderer({ dpr: pixelRatio, depth: false, alpha: true });
+        let renderer: Renderer;
+        try {
+            renderer = new Renderer({ dpr: pixelRatio, depth: false, alpha: true });
+        } catch {
+            // WebGL が利用できない環境（GPU 制限・コンテキスト数超過・ヘッドレス等）ではパーティクルを描画しない
+            return;
+        }
         const gl = renderer.gl;
         container.appendChild(gl.canvas);
         gl.clearColor(0, 0, 0, 0);

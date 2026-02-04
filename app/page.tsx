@@ -5,24 +5,28 @@ import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSe
 const stackCards: StackCardItem[] = [
     {
         title: 'OurDeskの人材育成方針',
-        content: '私たちが大切にしているのは、\n働きたい、人の力になりたい、誰かを支える仕事がしたい、そんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも大切に育てています。',
+        content: '私たちが大切にしているのは、\n働きたい \n人の力になりたい\n誰かを支える仕事がしたい\nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも大切に育てています。',
         imageOrder: 'right',
+        imageSrc: '/images/イキイキした写真.png',
     },
     {
         title: 'OurDeskを支える基盤',
-        content: 'OurDeskの仕組みの土台には、NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名、定着率は常に90%以上、人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。',
+        content: 'OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名 定着率は常に90%以上 \n 人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、\n OurDeskでもスタッフの育成とキャリア支援を行っています。',
         imageOrder: 'left',
+        imageSrc: '/images/ノイゲート写真.png',
     },
     {
         title: 'OurDeskのミッション',
-        content: '私たちは、「働きたい」という気持ちが、仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、自分らしい働き方を選びながら、誰かの役に立てる。そんなキャリアの形を、一人ひとりと一緒につくっていく会社です。',
+        content: '私たちは、「働きたい」という気持ちが、\n 仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、\n自分らしい働き方を選びながら、誰かの役に立てる。\nそんなキャリアの形を、\n 一人ひとりと一緒につくっていく会社です。',
         imageOrder: 'right',
+        imageSrc: '/images/ライフステージ写真.png',
     },
     {
         title: 'なぜ、女性のキャリア支援なのか',
         titleClass: 'text-xl md:text-3xl',
-        content: '出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
+        content: '出産や育児、家庭との両立など、\n 女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、\n 女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
         imageOrder: 'left',
+        imageSrc: '/images/親子写真.png',
     },
 ]
 
@@ -117,7 +121,7 @@ export default function Home() {
                     <SplitText
                         tag="h2"
                         text="「働きたい」を、ちゃんと育てる。"
-                        className="text-2xl md:text-3xl font-bold mb-6 text-gray-800 text-balance"
+                        className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-balance"
                         splitType="chars"
                         delay={50}
                         duration={0.8}
@@ -127,7 +131,7 @@ export default function Home() {
                         threshold={0.1}
                         rootMargin="-50px"
                     />
-                    <p className="text-base md:text-lg text-gray-700 leading-relaxed text-pretty">
+                    <p className="text-sm md:text-lg text-gray-700 leading-relaxed text-pretty">
                         「働きたい」想いは、自然に生まれるものではありません。<br />OurDeskは、その気持ちを育て、仕事につなげる仕組みをつくっています。
                     </p>
                 </div>
@@ -136,37 +140,37 @@ export default function Home() {
             {/* セクション3: OurDeskの強み */}
             <section className="relative py-8 px-4 md:py-16 md:px-6 bg-gray-50">
                 <div className="container mx-auto max-w-6xl relative z-10">
-                    <h2 className="text-2xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800 text-balance">
+                    <h2 className="text-xl md:text-3xl font-bold text-center mb-8 md:mb-12 text-gray-800 text-balance">
                         OurDeskの強み
                     </h2>
-                    <p className="text-base md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
+                    <p className="text-sm md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
                         OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。
                     </p>
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
-                        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="text-2xl font-bold text-primary-700 mb-3">①</div>
-                            <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
+                        <div className="bg-white p-5 md:p-6 rounded-lg shadow-md">
+                            <div className="text-xl md:text-2xl font-bold text-primary-700 mb-2 md:mb-3">①</div>
+                            <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-800 text-balance">
                                 学びの場を提供
                             </h3>
-                            <p className="text-gray-600 text-pretty">
+                            <p className="text-sm md:text-base text-gray-600 text-pretty">
                                 女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。
                             </p>
                         </div>
-                        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="text-2xl font-bold text-primary-700 mb-3">②</div>
-                            <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
+                        <div className="bg-white p-5 md:p-6 rounded-lg shadow-md">
+                            <div className="text-xl md:text-2xl font-bold text-primary-700 mb-2 md:mb-3">②</div>
+                            <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-800 text-balance">
                                 キャリア面談
                             </h3>
-                            <p className="text-gray-600 text-pretty">
+                            <p className="text-sm md:text-base text-gray-600 text-pretty">
                                 国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。
                             </p>
                         </div>
-                        <div className="bg-white p-6 rounded-lg shadow-md">
-                            <div className="text-2xl font-bold text-primary-700 mb-3">③</div>
-                            <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
+                        <div className="bg-white p-5 md:p-6 rounded-lg shadow-md">
+                            <div className="text-xl md:text-2xl font-bold text-primary-700 mb-2 md:mb-3">③</div>
+                            <h3 className="text-lg md:text-xl font-semibold mb-2 md:mb-3 text-gray-800 text-balance">
                                 仕事につなげる
                             </h3>
-                            <p className="text-gray-600 text-pretty">
+                            <p className="text-sm md:text-base text-gray-600 text-pretty">
                                 その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。
                             </p>
                         </div>
