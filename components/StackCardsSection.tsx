@@ -138,6 +138,11 @@ function getStickyTopRem(index: number, isNarrow: boolean): number {
     return isNarrow ? 2 + index * 0.9 : 5 + index * 1.25
 }
 
+// 2枚目以降：重なる前に空振りさせるスクロール量（約2スクロール分＝2×40vh）
+const STACK_DELAY_MARGIN_VH = 40
+// 最後のカードが前のカードに重なって止まるようにするための下スペーサー（4枚目も sticky で重なる余白）
+const STACK_END_SPACER_VH = 80
+
 type Props = {
     cards: StackCardItem[]
     sectionLabel?: string
@@ -189,7 +194,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
             {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
             <div
                 ref={containerRef}
-                className="relative container mx-auto max-w-6xl px-4 md:px-8 flex flex-col gap-6 md:gap-8"
+                className="relative container mx-auto max-w-6xl px-8 md:px-16 flex flex-col gap-8 md:gap-12"
                 style={{ minHeight: '220vh' }}
                 data-stack-scroll-progress={Math.round(progress * 100) / 100}
             >
@@ -200,10 +205,11 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                     return (
                         <article
                             key={i}
-                            className={`sticky min-h-[55vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out px-5 py-4 md:py-5 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
+                            className={`sticky min-h-[55vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out px-7 py-6 md:py-7 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
                             style={{
                                 top: `${stickyTopRem}rem`,
                                 background: 'rgb(255,255,255)',
+                                ...(i >= 1 && { marginTop: `${STACK_DELAY_MARGIN_VH}vh` }),
                             }}
                         >
                             {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
@@ -233,8 +239,8 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                         <motion.div
                                             initial={{ opacity: 0, y: 24 }}
                                             whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true, margin: '-220px', amount: 0.5 }}
-                                            transition={{ duration: 0.5, ease: 'easeOut', delay: 0.12 }}
+                                            viewport={{ once: true, margin: '-280px', amount: 0.15 }}
+                                            transition={{ duration: 0.45, ease: 'easeOut', delay: 0 }}
                                             className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1"
                                         >
                                             <p className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700">
@@ -263,6 +269,8 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                         </article>
                     )
                 })}
+                {/* 最後のカード（4枚目）も前のカードに top をずらして重なって止まるためのスペーサー */}
+                <div aria-hidden="true" style={{ minHeight: `${STACK_END_SPACER_VH}vh` }} />
             </div>
         </section>
     )

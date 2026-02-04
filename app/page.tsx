@@ -12,7 +12,7 @@ const stackCards: StackCardItem[] = [
     },
     {
         title: 'OurDeskを支える基盤',
-        content: 'OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名 定着率は常に90%以上 \n 人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、\n OurDeskでもスタッフの育成とキャリア支援を行っています。',
+        content: 'OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名 定着率は常に90%以上 \n 人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。',
         imageOrder: 'left',
         imageSrc: '/images/ノイゲート写真.png',
     },
