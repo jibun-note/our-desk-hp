@@ -2,6 +2,7 @@ import SplitText from '@/components/ui/SplitText'
 import Particles from '@/components/ui/Particles'
 import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSection'
 import SectionWave from '@/components/SectionWave'
+import StrengthCards from '@/components/StrengthCards'
 
 const stackCards: StackCardItem[] = [
     {
@@ -32,6 +33,8 @@ const stackCards: StackCardItem[] = [
 ]
 
 export default function Home() {
+
+
     return (
         <main className="min-h-screen">
             {/* セクション1: アイキャッチ */}
@@ -103,22 +106,22 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* セクション2: 「働きたい」を、ちゃんと育てる */}
+            {/* セクション2: 「働きたい」を、ちゃんと育てる + OurDeskの強み */}
             <section className="relative py-8 px-4 md:py-16 md:px-6">
                 <div className="absolute inset-0 z-0">
                     <Particles
                         particleColors={["#f69104"]}
-                        particleCount={200}
-                        particleSpread={10}
-                        speed={0.1}
-                        particleBaseSize={100}
+                        particleCount={150}
+                        particleSpread={6}
+                        speed={0.06}
+                        particleBaseSize={130}
                         moveParticlesOnHover={false}
                         alphaParticles
                         disableRotation={false}
                         pixelRatio={1}
                     />
                 </div>
-                <div className="flex flex-col items-center justify-center container mx-auto max-w-4xl relative z-10">
+                <div className="flex flex-col items-center justify-center container mx-auto max-w-4xl relative z-10 mb-12 md:mb-16">
                     <SplitText
                         tag="h2"
                         text="「働きたい」をちゃんと育てる。"
@@ -137,11 +140,6 @@ export default function Home() {
                         「働きたい」想いは、自然に生まれるものではありません。<br />OurDeskはその気持ちを育て、仕事につなげる仕組みを作っています。
                     </p>
                 </div>
-            </section>
-
-
-            {/* セクション3: OurDeskの強み */}
-            <section className="relative py-8 px-4 md:py-16 md:px-6">
                 <div className="container mx-auto max-w-6xl relative z-10">
                     <h2 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
                         OurDeskの強み
@@ -149,50 +147,7 @@ export default function Home() {
                     <p className="text-sm md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
                         OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。
                     </p>
-                    <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
-                        <div className="p-6 rounded-lg shadow-md"
-                            style={{
-                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(/images/AdobeStock_1408184906_Preview.jpeg)",
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                            }}>
-                            <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
-                                学びの場を提供
-                            </h3>
-                            <p className="text-sm md:text-base text-gray-600 text-pretty">
-                                女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。
-                            </p>
-                        </div>
-                        <div className="p-6 rounded-lg shadow-md"
-                            style={{
-                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(/images/AdobeStock_537141193_Preview.jpeg)",
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                            }}>
-                            <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
-                                キャリア面談
-                            </h3>
-                            <p className="text-sm md:text-base text-gray-600 text-pretty">
-                                国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。
-                            </p>
-                        </div>
-                        <div className="p-6 rounded-lg shadow-md"
-                            style={{
-                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(/images/AdobeStock_399162949_Preview.jpeg)",
-                                backgroundSize: 'cover',
-                                backgroundPosition: 'center',
-                                backgroundRepeat: 'no-repeat',
-                            }}>
-                            <h3 className="text-xl font-semibold mb-3 text-gray-800 text-balance">
-                                仕事につなげる
-                            </h3>
-                            <p className="text-sm md:text-base text-gray-600 text-pretty">
-                                その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。
-                            </p>
-                        </div>
-                    </div>
+                    <StrengthCards />
                 </div>
             </section>
             <SectionWave nextBackground="top" />
