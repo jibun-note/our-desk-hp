@@ -83,7 +83,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relativ bg-gradient-to-b from-[#fde3e8] via-[#FDE8E0] to-[#FDD9C8] py-16 md:py-24" aria-label={sectionLabel}>
+        <section className="relativ bg-gradient-to-b from-[#f9f2e8] via-[#f5ebe0] to-[#f3e9da] py-16 md:py-24" aria-label={sectionLabel}>
             {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
             <div
                 ref={containerRef}
