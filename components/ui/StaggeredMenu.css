@@ -34,10 +34,27 @@
 	pointer-events: auto;
 }
 
+.sm-logo-area {
+	display: flex;
+	align-items: center;
+	gap: 0.75rem;
+}
 .sm-logo {
 	display: flex;
 	align-items: center;
 	user-select: none;
+}
+.sm-company-name {
+	font-size: 1rem;
+	font-weight: 600;
+	color: inherit;
+	line-height: 1.2;
+}
+.sm-company-name-link {
+	text-decoration: none;
+}
+.sm-company-name-link:hover {
+	text-decoration: none;
 }
 
 .sm-logo-img {
@@ -279,10 +296,10 @@
 .sm-panel-item {
 	position: relative;
 	color: #000;
-	font-weight: 600;
-	font-size: 4rem;
+	font-weight: 400;
+	font-size: 3.5rem;
 	cursor: pointer;
-	line-height: 1;
+	line-height: 1.2;
 	letter-spacing: -2px;
 	text-transform: uppercase;
 	transition: background 0.25s, color 0.25s;
@@ -328,7 +345,7 @@
 	content: counter(smItem, decimal-leading-zero);
 	position: absolute;
 	top: 0.1em;
-	right: 3.2em;
+	right: 2.5em;
 	font-size: 18px;
 	font-weight: 400;
 	color: var(--sm-accent, #5227ff);
@@ -360,4 +377,77 @@
 	.staggered-menu-wrapper[data-open] .sm-logo-img {
 		filter: invert(100%);
 	}
+}
+
+/* ========================================
+   .header-desktop-menu コンテキスト用オーバーライド
+   （DeskTopHeader 等で白背景ヘッダー・GSAP 競合回避・prelayers アニメーション）
+   ======================================== */
+.header-desktop-menu .staggered-menu-header {
+	background: #ffffff;
+	box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+	padding: 0 1rem;
+	min-height: 4rem;
+	align-items: center;
+}
+.header-desktop-menu .sm-company-name {
+	color: #1f2937;
+	font-size: 1rem;
+	font-weight: 600;
+}
+.header-desktop-menu .sm-logo-link {
+	display: flex;
+	align-items: center;
+	text-decoration: none;
+	color: inherit;
+}
+.header-desktop-menu .sm-logo-img {
+	height: 32px;
+	width: auto;
+	object-fit: contain;
+}
+
+/* パネル表示の確実化: GSAP と CSS transform の競合を回避し、data-open で CSS 制御 */
+.header-desktop-menu .staggered-menu-panel {
+	transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0.35s !important; /* 1→2の後に素早くスライド */
+	z-index: 15 !important; /* prelayers(z-5)より上、ヘッダー(z-30)より下 */
+}
+.header-desktop-menu .staggered-menu-wrapper:not([data-open]) .staggered-menu-panel {
+	transform: translateX(100%) !important;
+	transition-delay: 0s !important;
+}
+.header-desktop-menu .staggered-menu-wrapper[data-open] .staggered-menu-panel {
+	transform: translateX(0) !important;
+}
+
+/* メニュー開時: ヘッダー（Close ボタン）をパネルより前面に */
+.header-desktop-menu .staggered-menu-wrapper[data-open] .staggered-menu-header {
+	z-index: 30 !important;
+}
+
+/* カラーレイヤー（prelayers）のアニメーション: 公式同様に段階的にスライドイン */
+.header-desktop-menu .sm-prelayers {
+	z-index: 5;
+}
+.header-desktop-menu .sm-prelayer {
+	position: absolute;
+	top: 0;
+	right: 0;
+	height: 100%;
+	width: 100%;
+	transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+.header-desktop-menu .staggered-menu-wrapper:not([data-open]) .sm-prelayer {
+	transform: translateX(100%) !important;
+	transition-delay: 0s !important;
+}
+.header-desktop-menu .staggered-menu-wrapper[data-open] .sm-prelayer {
+	transform: translateX(0) !important; /* メニューパネルとぴったり重なる */
+}
+/* 1→2→パネルの順で素早く順々にスライドイン */
+.header-desktop-menu .staggered-menu-wrapper[data-open] .sm-prelayer:nth-child(1) {
+	transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0s !important;
+}
+.header-desktop-menu .staggered-menu-wrapper[data-open] .sm-prelayer:nth-child(2) {
+	transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1) 0.15s !important;
 }

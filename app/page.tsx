@@ -123,7 +123,7 @@ export default function Home() {
                         tag="h2"
                         text="「働きたい」をちゃんと育てる。"
                         html={'<span class="text-gradient-hero">「働きたい」</span>を<br />ちゃんと育てる。'}
-                        className="text-md md:text-3xl font-bold mb-6 text-gray-800 text-balance"
+                        className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-balance"
                         splitType="chars"
                         delay={50}
                         duration={0.8}
@@ -143,7 +143,7 @@ export default function Home() {
             {/* セクション3: OurDeskの強み */}
             <section className="relative py-8 px-4 md:py-16 md:px-6">
                 <div className="container mx-auto max-w-6xl relative z-10">
-                    <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
+                    <h2 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
                         OurDeskの強み
                     </h2>
                     <p className="text-base md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">

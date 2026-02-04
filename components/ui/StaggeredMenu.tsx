@@ -1,4 +1,6 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
+import { motion } from 'motion/react';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
 
@@ -30,6 +32,8 @@ export interface StaggeredMenuProps {
     onMenuOpen?: () => void;
     onMenuClose?: () => void;
     isFixed?: boolean;
+    companyName?: string;
+    logoHref?: string;
 }
 
 export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
@@ -48,7 +52,9 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     isFixed = false,
     closeOnClickAway = true,
     onMenuOpen,
-    onMenuClose
+    onMenuClose,
+    companyName,
+    logoHref
 }: StaggeredMenuProps) => {
     const [open, setOpen] = useState(false);
     const openRef = useRef(false);
@@ -407,15 +413,47 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                 })()}
             </div>
             <header className="staggered-menu-header" aria-label="Main navigation header">
-                <div className="sm-logo" aria-label="Logo">
-                    <img
-                        src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
-                        alt="Logo"
-                        className="sm-logo-img"
-                        draggable={false}
-                        width={110}
-                        height={24}
-                    />
+                <div className="sm-logo-area">
+                    {logoHref ? (
+                        <Link href={logoHref} className="sm-logo-link">
+                            <motion.div
+                                className="sm-logo"
+                                aria-label="Logo"
+                                whileHover={{ scale: 1.08, opacity: 0.9 }}
+                                whileTap={{ scale: 0.96 }}
+                                transition={{ duration: 0.15, ease: 'easeOut' }}
+                            >
+                                <img
+                                    src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+                                    alt="Logo"
+                                    className="sm-logo-img"
+                                    draggable={false}
+                                    width={110}
+                                    height={24}
+                                />
+                            </motion.div>
+                        </Link>
+                    ) : (
+                        <div className="sm-logo" aria-label="Logo">
+                            <img
+                                src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+                                alt="Logo"
+                                className="sm-logo-img"
+                                draggable={false}
+                                width={110}
+                                height={24}
+                            />
+                        </div>
+                    )}
+                    {companyName && (
+                        logoHref ? (
+                            <Link href={logoHref} className="sm-company-name sm-company-name-link">
+                                {companyName}
+                            </Link>
+                        ) : (
+                            <span className="sm-company-name">{companyName}</span>
+                        )
+                    )}
                 </div>
                 <button
                     ref={toggleBtnRef}
