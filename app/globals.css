@@ -4,21 +4,37 @@
 
 /* スクロールスナップ用: html を明示的なスクロールコンテナに */
 html {
-  height: 100%;
-  overflow-y: scroll;
-  overflow-x: hidden;
-  scroll-snap-type: y proximity;
-  scroll-padding-top: 5rem; /* 固定ヘッダー分 */
+	height: 100%;
+	overflow-y: scroll;
+	overflow-x: hidden;
+	scroll-snap-type: y proximity;
+	scroll-padding-top: 5rem; /* 固定ヘッダー分 */
 }
 
 body {
-  color: #333333;
-  background: #ffffff;
+	color: #333333;
+	background: #ffffff;
+}
+
+/* ヒーロー用テキストグラデーション (#FDD000 → #F08300) */
+/* GSAP SplitText で文字が .split-char に分割されるため、子要素にグラデーションを適用 */
+.text-gradient-hero,
+.text-gradient-hero .split-char {
+	background: linear-gradient(to right, #fdd000, #f08300);
+	-webkit-background-clip: text;
+	background-clip: text;
+	color: transparent;
+	-webkit-text-fill-color: transparent;
+}
+
+/* ヘッダー内デスクトップメニュー: 自前ロゴがあるため StaggeredMenu のロゴを非表示 */
+.header-desktop-menu .sm-logo {
+	display: none;
 }
 
 /* prefers-reduced-motion対応: 動画を非表示 */
 @media (prefers-reduced-motion: reduce) {
-  video[aria-hidden="true"] {
-    display: none;
-  }
+	video[aria-hidden="true"] {
+		display: none;
+	}
 }
