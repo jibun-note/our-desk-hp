@@ -27,11 +27,6 @@ body {
 	-webkit-text-fill-color: transparent;
 }
 
-/* ヘッダー内デスクトップメニュー: 自前ロゴがあるため StaggeredMenu のロゴを非表示 */
-.header-desktop-menu .sm-logo {
-	display: none;
-}
-
 /* prefers-reduced-motion対応: 動画を非表示 */
 @media (prefers-reduced-motion: reduce) {
 	video[aria-hidden="true"] {

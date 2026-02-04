@@ -23,7 +23,7 @@ const stackCards: StackCardItem[] = [
         imageSrc: '/images/ライフステージ写真.png',
     },
     {
-        title: 'なぜ、女性のキャリア支援なのか',
+        title: '女性のキャリア支援',
         titleClass: 'text-xl md:text-3xl',
         content: '出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
         imageOrder: 'left',
@@ -123,7 +123,7 @@ export default function Home() {
                         tag="h2"
                         text="「働きたい」をちゃんと育てる。"
                         html={'<span class="text-gradient-hero">「働きたい」</span>を<br />ちゃんと育てる。'}
-                        className="text-md md:text-3xl font-bold mb-6 text-gray-800 text-balance"
+                        className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-balance"
                         splitType="chars"
                         delay={50}
                         duration={0.8}
@@ -143,7 +143,7 @@ export default function Home() {
             {/* セクション3: OurDeskの強み */}
             <section className="relative py-8 px-4 md:py-16 md:px-6">
                 <div className="container mx-auto max-w-6xl relative z-10">
-                    <h2 className="text-2xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
+                    <h2 className="text-xl md:text-3xl font-bold text-center mb-4 md:mb-6 text-gray-800 text-balance">
                         OurDeskの強み
                     </h2>
                     <p className="text-sm md:text-lg text-center mb-8 md:mb-12 text-gray-700 text-pretty max-w-4xl mx-auto">
@@ -152,7 +152,7 @@ export default function Home() {
                     <div className="grid grid-cols-1 gap-4 md:grid-cols-3 md:gap-8">
                         <div className="p-6 rounded-lg shadow-md"
                             style={{
-                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(images/AdobeStock_1408184906_Preview.jpeg)",
+                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(/images/AdobeStock_1408184906_Preview.jpeg)",
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -166,7 +166,7 @@ export default function Home() {
                         </div>
                         <div className="p-6 rounded-lg shadow-md"
                             style={{
-                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(images/AdobeStock_537141193_Preview.jpeg)",
+                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(/images/AdobeStock_537141193_Preview.jpeg)",
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -180,7 +180,7 @@ export default function Home() {
                         </div>
                         <div className="p-6 rounded-lg shadow-md"
                             style={{
-                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(images/AdobeStock_399162949_Preview.jpeg)",
+                                backgroundImage: "linear-gradient(rgb(224, 214, 210, 0.45), rgb(224, 214, 210, 0.65)),url(/images/AdobeStock_399162949_Preview.jpeg)",
                                 backgroundSize: 'cover',
                                 backgroundPosition: 'center',
                                 backgroundRepeat: 'no-repeat',
@@ -195,11 +195,11 @@ export default function Home() {
                     </div>
                 </div>
             </section>
-            <SectionWave nextBackground="top_beige" />
+            <SectionWave nextBackground="top" />
 
             {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
             <StackCardsSection cards={stackCards} />
-            <SectionWave nextBackground="bottom_beige" position="bottom" />
+            <SectionWave nextBackground="bottom" position="bottom" />
         </main>
     )
 }
