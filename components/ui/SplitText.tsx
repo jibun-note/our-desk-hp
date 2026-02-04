@@ -10,6 +10,8 @@ gsap.registerPlugin(ScrollTrigger, GSAPSplitText, useGSAP);
 
 export interface SplitTextProps {
     text: string;
+    /** HTML 文字列を指定すると dangerouslySetInnerHTML で描画（グラデーション用 span など） */
+    html?: string;
     className?: string;
     delay?: number;
     duration?: number;
@@ -26,6 +28,7 @@ export interface SplitTextProps {
 
 const SplitText: React.FC<SplitTextProps> = ({
     text,
+    html,
     className = '',
     delay = 50,
     duration = 1.25,
@@ -61,7 +64,8 @@ const SplitText: React.FC<SplitTextProps> = ({
 
     useGSAP(
         () => {
-            if (!ref.current || !text || !fontsLoaded) return;
+            const content = html ?? text;
+            if (!ref.current || !content || !fontsLoaded) return;
             // Prevent re-animation if already completed
             if (animationCompletedRef.current) return;
             const el = ref.current as HTMLElement & {
@@ -142,7 +146,7 @@ const SplitText: React.FC<SplitTextProps> = ({
         },
         {
             dependencies: [
-                text,
+                html ?? text,
                 delay,
                 duration,
                 ease,
@@ -164,49 +168,24 @@ const SplitText: React.FC<SplitTextProps> = ({
             willChange: 'transform, opacity'
         };
         const classes = `split-parent overflow-hidden inline-block whitespace-normal ${className}`;
+        const content = html != null
+            ? { dangerouslySetInnerHTML: { __html: html } }
+            : { children: text };
         switch (tag) {
             case 'h1':
-                return (
-                    <h1 ref={ref} style={style} className={classes}>
-                        {text}
-                    </h1>
-                );
+                return <h1 ref={ref} style={style} className={classes} {...content} />;
             case 'h2':
-                return (
-                    <h2 ref={ref} style={style} className={classes}>
-                        {text}
-                    </h2>
-                );
+                return <h2 ref={ref} style={style} className={classes} {...content} />;
             case 'h3':
-                return (
-                    <h3 ref={ref} style={style} className={classes}>
-                        {text}
-                    </h3>
-                );
+                return <h3 ref={ref} style={style} className={classes} {...content} />;
             case 'h4':
-                return (
-                    <h4 ref={ref} style={style} className={classes}>
-                        {text}
-                    </h4>
-                );
+                return <h4 ref={ref} style={style} className={classes} {...content} />;
             case 'h5':
-                return (
-                    <h5 ref={ref} style={style} className={classes}>
-                        {text}
-                    </h5>
-                );
+                return <h5 ref={ref} style={style} className={classes} {...content} />;
             case 'h6':
-                return (
-                    <h6 ref={ref} style={style} className={classes}>
-                        {text}
-                    </h6>
-                );
+                return <h6 ref={ref} style={style} className={classes} {...content} />;
             default:
-                return (
-                    <p ref={ref} style={style} className={classes}>
-                        {text}
-                    </p>
-                );
+                return <p ref={ref} style={style} className={classes} {...content} />;
         }
     };
 

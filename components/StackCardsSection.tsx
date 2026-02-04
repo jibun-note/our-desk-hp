@@ -7,7 +7,10 @@
  */
 import React, { useRef, useState, useLayoutEffect } from 'react'
 import Image from 'next/image'
+<<<<<<< HEAD
 import { motion, useReducedMotion } from 'motion/react'
+=======
+>>>>>>> main
 import SlideUpSection from '@/components/ui/SlideUpSection'
 import GradientHeading from '@/components/ui/GradientHeading'
 
@@ -17,8 +20,13 @@ export type StackCardItem = {
     content: string
     imageOrder: 'left' | 'right'
     titleClass?: string
+<<<<<<< HEAD
     /** 画像を表示する場合のパス（例: /images/xxx.png） */
     imageSrc?: string
+=======
+    /** 画像のパス（例: /images/xxx.jpg）。指定時は画像エリアに表示、未指定時はプレースホルダー */
+    image?: string
+>>>>>>> main
 }
 
 /** 行全体に文字色（アクセント）を付ける行の本文（正規化後に一致） */
@@ -185,7 +193,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relative bg-gray-100/80 py-16 md:py-24" aria-label={sectionLabel}>
+        <section className="relativ bg-gradient-to-b from-[#f9f2e8] via-[#f5ebe0] to-[#f3e9da] py-16 md:py-24" aria-label={sectionLabel}>
             {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
             <div
                 ref={containerRef}
@@ -200,7 +208,11 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                     return (
                         <article
                             key={i}
+<<<<<<< HEAD
                             className={`sticky min-h-[55vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out px-5 py-4 md:py-5 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
+=======
+                            className="sticky min-h-[55vh] flex flex-col justify-center rounded-2xl p-6 md:p-8 lg:p-10 shadow-xl border border-gray-200 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out"
+>>>>>>> main
                             style={{
                                 top: `${stickyTopRem}rem`,
                                 background: 'rgb(255,255,255)',
@@ -209,6 +221,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                             {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
                             <div className={`grid grid-cols-1 gap-1 md:gap-6 lg:gap-8 w-full max-w-full items-center ${card.imageSrc ? 'min-h-[360px] md:min-h-[55vh]' : ''} ${card.imageOrder === 'left' ? 'md:grid-cols-[1.1fr_1.3fr]' : 'md:grid-cols-[1.3fr_1.1fr]'}`}>
                                 {card.imageOrder === 'left' && (
+<<<<<<< HEAD
                                     <motion.div
                                         initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -2.5 }}
                                         whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-2.5, 1.2, -0.4, 0.8, -0.2, 0] }}
@@ -223,6 +236,15 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                             <span className="text-sm text-gray-400">写真・画像用</span>
                                         )}
                                     </motion.div>
+=======
+                                    <div className="relative min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 overflow-hidden order-2 md:order-1" aria-hidden="true">
+                                        {card.image ? (
+                                            <Image src={card.image} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                                        ) : (
+                                            <span className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">写真・画像用</span>
+                                        )}
+                                    </div>
+>>>>>>> main
                                 )}
                                 <div className={`min-w-0 flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 md:pl-0 order-1 md:order-2' : ''}`}>
                                     <SlideUpSection className="w-full">
@@ -244,6 +266,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                     </SlideUpSection>
                                 </div>
                                 {card.imageOrder === 'right' && (
+<<<<<<< HEAD
                                     <motion.div
                                         initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -2.5 }}
                                         whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-2.5, 1.2, -0.4, 0.8, -0.2, 0] }}
@@ -258,6 +281,15 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                             <span className="text-sm text-gray-400">写真・画像用</span>
                                         )}
                                     </motion.div>
+=======
+                                    <div className="relative min-h-[180px] md:min-h-[220px] rounded-xl bg-gray-100 border border-gray-200 overflow-hidden" aria-hidden="true">
+                                        {card.image ? (
+                                            <Image src={card.image} alt="" fill className="object-cover" sizes="(max-width: 768px) 100vw, 50vw" />
+                                        ) : (
+                                            <span className="absolute inset-0 flex items-center justify-center text-sm text-gray-400">写真・画像用</span>
+                                        )}
+                                    </div>
+>>>>>>> main
                                 )}
                             </div>
                         </article>
