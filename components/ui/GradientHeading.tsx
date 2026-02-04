@@ -2,8 +2,9 @@
 
 import { motion } from 'motion/react'
 
-const FROM_COLOR = '#FDD000'
-const TO_COLOR = '#F08300'
+/* 元のブランド色を薄めに（#FDD000 → #F08300 のライト版） */
+const FROM_COLOR = '#FDDE50'
+const TO_COLOR = '#F5A040'
 
 type GradientHeadingProps = {
     text: string
@@ -32,7 +33,7 @@ export default function GradientHeading({ text, className = '', as = 'h2' }: Gra
                     }}
                     initial={{ opacity: 0, y: 24 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true, margin: '-50px' }}
+                    viewport={{ once: false, margin: '-50px' }}
                     transition={{
                         duration: 0.8,
                         ease: [0.22, 1, 0.36, 1],
