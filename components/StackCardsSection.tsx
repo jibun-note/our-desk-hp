@@ -148,9 +148,10 @@ const STACK_END_SPACER_VH = 80
 type Props = {
     cards: StackCardItem[]
     sectionLabel?: string
+    id?: string
 }
 
-export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み' }: Props) {
+export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', id }: Props) {
     const containerRef = useRef<HTMLDivElement>(null)
     const shouldReduceMotion = useReducedMotion()
     /** セクション内のスクロール進捗 0〜1（0=上端が画面下端、1=下端が画面上端） */
@@ -192,7 +193,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relative bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
+        <section id={id} className="relative bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
             style={{
                 backgroundImage: "linear-gradient(rgb(255, 255, 255, 0.45), rgb(255, 255, 255, 0.65)),url(/images/AdobeStock_321344810_Preview.jpeg)",
                 backgroundSize: 'cover',
@@ -247,9 +248,10 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                         <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-lg md:text-3xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-normal md:whitespace-nowrap`} />
                                         <motion.div
                                             initial={{ opacity: 0, y: 24 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true, margin: '-280px', amount: 0.15 }}
-                                            transition={{ duration: 0.45, ease: 'easeOut', delay: 0 }}
+                                            {...(isNarrow
+                                                ? { animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0.1 } }
+                                                : { whileInView: { opacity: 1, y: 0 }, viewport: { once: false, margin: '-100px', amount: 0.25 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0 } }
+                                            )}
                                             className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1"
                                         >
                                             <div className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700 space-y-2">
