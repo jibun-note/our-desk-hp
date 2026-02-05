@@ -200,10 +200,10 @@ export default function Home() {
             </SwipeToNextSection>
 
 
-            <SectionWave nextBackground='top' position='top' />
+            <SectionWave position='top' />
             {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
             <StackCardsWithFixedMarquee cards={stackCards} />
-            <SectionWave nextBackground='bottom' position='bottom' />
+            <SectionWave position='bottom' />
 
         </main>
     )
