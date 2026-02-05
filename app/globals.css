@@ -33,3 +33,25 @@ body {
 		display: none;
 	}
 }
+
+/* OurDesk マーキー: 一定速度で流れる（スクロール非依存） */
+@keyframes ourdesk-marquee-ltr {
+	0% { transform: translateX(0); }
+	100% { transform: translateX(-50%); }
+}
+@keyframes ourdesk-marquee-rtl {
+	0% { transform: translateX(-50%); }
+	100% { transform: translateX(0); }
+}
+.ourdesk-marquee-row-ltr {
+	animation: ourdesk-marquee-ltr 35s linear infinite;
+}
+.ourdesk-marquee-row-rtl {
+	animation: ourdesk-marquee-rtl 40s linear infinite;
+}
+@media (prefers-reduced-motion: reduce) {
+	.ourdesk-marquee-row-ltr,
+	.ourdesk-marquee-row-rtl {
+		animation: none;
+	}
+}

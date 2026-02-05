@@ -1,6 +1,7 @@
 import SplitText from '@/components/ui/SplitText'
 import Particles from '@/components/ui/Particles'
-import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSection'
+import { type StackCardItem } from '@/components/StackCardsSection'
+import StackCardsWithFixedMarquee from '@/components/StackCardsWithFixedMarquee'
 import SectionWave from '@/components/SectionWave'
 import StrengthCards from '@/components/StrengthCards'
 import SwipeToNextSection from '@/components/SwipeToNextSection'
@@ -199,8 +200,10 @@ export default function Home() {
             </SwipeToNextSection>
 
 
-            {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
-            <StackCardsSection id="stack-cards-section" cards={stackCards} />
+            <SectionWave nextBackground='top' position='top' />
+            {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
+            <StackCardsWithFixedMarquee cards={stackCards} />
+            <SectionWave nextBackground='bottom' position='bottom' />
 
         </main>
     )
