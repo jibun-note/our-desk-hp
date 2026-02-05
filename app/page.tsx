@@ -1,6 +1,7 @@
 import SplitText from '@/components/ui/SplitText'
 import Particles from '@/components/ui/Particles'
-import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSection'
+import { type StackCardItem } from '@/components/StackCardsSection'
+import StackCardsWithFixedMarquee from '@/components/StackCardsWithFixedMarquee'
 import SectionWave from '@/components/SectionWave'
 import StrengthCards from '@/components/StrengthCards'
 import SwipeToNextSection from '@/components/SwipeToNextSection'
@@ -53,7 +54,7 @@ export default function Home() {
                             preload="metadata"
                             aria-hidden="true"
                         >
-                            <source src="/AdobeStock_487035634_Video_HD_Preview.mp4" type="video/mp4" />
+                            <source src="/Adobe Express - AdobeStock_487035634.mp4" type="video/mp4" />
                         </video>
                         {/* コンテンツ - 動画要素内に配置 */}
                         <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
@@ -199,8 +200,10 @@ export default function Home() {
             </SwipeToNextSection>
 
 
-            {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
-            <StackCardsSection id="stack-cards-section" cards={stackCards} />
+            <SectionWave nextBackground='top' position='top' />
+            {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
+            <StackCardsWithFixedMarquee cards={stackCards} />
+            <SectionWave nextBackground='bottom' position='bottom' />
 
         </main>
     )

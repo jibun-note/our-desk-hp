@@ -148,10 +148,13 @@ const STACK_END_SPACER_VH = 80
 type Props = {
     cards: StackCardItem[]
     sectionLabel?: string
-    id?: string
+    /** カードの背面に表示する背景ノード（マーキー等） */
+    background?: React.ReactNode
+    /** 最後のカード（4枚目）の要素に付与する ref（マーキー固定解除の判定用） */
+    lastCardRef?: React.RefObject<HTMLElement | null>
 }
 
-export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', id }: Props) {
+export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', background, lastCardRef }: Props) {
     const containerRef = useRef<HTMLDivElement>(null)
     const shouldReduceMotion = useReducedMotion()
     /** セクション内のスクロール進捗 0〜1（0=上端が画面下端、1=下端が画面上端） */
@@ -193,7 +196,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section id={id} className="relative bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
+        <section className="relative z-20 bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
             style={{
                 backgroundImage: "linear-gradient(rgb(255, 255, 255, 0.45), rgb(255, 255, 255, 0.65)),url(/images/AdobeStock_321344810_Preview.jpeg)",
                 backgroundSize: 'cover',
@@ -201,10 +204,15 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                 backgroundRepeat: 'no-repeat',
             }}
         >
+            {background != null && (
+                <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none rounded-3xl" aria-hidden="true">
+                    {background}
+                </div>
+            )}
             {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
             <div
                 ref={containerRef}
-                className="relative container mx-auto max-w-6xl px-8 md:px-16 flex flex-col gap-8 md:gap-12"
+                className="relative z-20 container mx-auto max-w-6xl px-8 md:px-16 flex flex-col gap-8 md:gap-12"
                 style={{ minHeight: '220vh' }}
                 data-stack-scroll-progress={Math.round(progress * 100) / 100}
             >
@@ -215,6 +223,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                     return (
                         <article
                             key={i}
+                            ref={lastCardRef != null && i === cards.length - 1 ? lastCardRef : undefined}
                             className={`sticky min-h-0 md:min-h-[55vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out px-7 py-4 md:py-7 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
                             style={{
                                 top: `${stickyTopRem}rem`,
