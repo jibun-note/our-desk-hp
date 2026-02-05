@@ -5,8 +5,6 @@ import StackCardsWithFixedMarquee from '@/components/StackCardsWithFixedMarquee'
 import SectionWave from '@/components/SectionWave'
 import StrengthCards from '@/components/StrengthCards'
 import SwipeToNextSection from '@/components/SwipeToNextSection'
-import GradientHeading from '@/components/ui/GradientHeading'
-
 const stackCards: StackCardItem[] = [
     {
         title: 'OurDeskの人材育成方針',
@@ -166,11 +164,7 @@ export default function Home() {
                 <section className="relative pt-20 pb-12 md:py-20">
                     {/* 見出しと説明文 - PCのみ表示 */}
                     <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                        <GradientHeading
-                            text="OurDeskの強み"
-                            className="text-2xl md:text-4xl font-bold mb-4 text-gray-800"
-                            as="h2"
-                        />
+                        <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
                         <div
                             className="w-20 h-1 mx-auto mb-4"
                             style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}

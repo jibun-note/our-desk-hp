@@ -13,6 +13,7 @@ import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSe
 const STICKY_BREAKPOINT = 768
 const FIRST_CARD_TOP_REM_NARROW = 6
 const FIRST_CARD_TOP_REM_WIDE = 9
+const CENTER_ENTER_TOP = 0.3 // 1枚目中央が画面 [30%,70%] に入ったら fixed
 const CENTER_ENTER_BOTTOM = 0.7 // 1枚目中央がこの比率より下なら「1枚目追従」（戻し時）
 
 type Props = { cards: StackCardItem[] }
@@ -22,6 +23,7 @@ export default function StackCardsWithFixedMarquee({ cards }: Props) {
   const blockRef = useRef<HTMLDivElement>(null)
   const centerRef = useRef<HTMLDivElement>(null)
   const lastCardRef = useRef<HTMLElement | null>(null)
+  const blockInViewRef = useRef(false)
   const [blockInView, setBlockInView] = useState(false)
   const [isFixed, setIsFixed] = useState(false)
   const [lastCardPastTop, setLastCardPastTop] = useState(false)
@@ -33,13 +35,20 @@ export default function StackCardsWithFixedMarquee({ cards }: Props) {
   useLayoutEffect(() => {
     const el = blockRef.current
     if (!el) return
-    const io = new IntersectionObserver(([e]) => setBlockInView(e.isIntersecting), { threshold: 0 })
+    const io = new IntersectionObserver(([e]) => {
+      blockInViewRef.current = e.isIntersecting
+      setBlockInView(e.isIntersecting)
+    }, { threshold: 0 })
     io.observe(el)
     return () => io.disconnect()
   }, [])
 
   useLayoutEffect(() => {
-    const onResize = () => setIsNarrow(typeof window !== 'undefined' && window.innerWidth < STICKY_BREAKPOINT)
+    const onResize = () => {
+      if (typeof window === 'undefined') return
+      setIsNarrow(window.innerWidth < STICKY_BREAKPOINT)
+      setViewportCenterY(Math.round(window.innerHeight / 2))
+    }
     onResize()
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
@@ -53,10 +62,8 @@ export default function StackCardsWithFixedMarquee({ cards }: Props) {
   useLayoutEffect(() => {
     // 入り: 1枚目カード中央が画面中央付近 [30%,70%] に入ったら fixed（ただし戻し時は入らない）
     // 出: 4枚目（最後のカード）が画面上端を過ぎたら fixed 解除
-    const CENTER_ENTER_TOP = 0.3
-    const CENTER_ENTER_BOTTOM = 0.7
-
     const check = () => {
+      if (!blockInViewRef.current) return
       const centerEl = centerRef.current
       const lastCardEl = lastCardRef.current
       if (!centerEl) return
@@ -67,21 +74,19 @@ export default function StackCardsWithFixedMarquee({ cards }: Props) {
       const t = y / vh  // 0=画面上端、1=画面下端
 
       const inEnterBand = t >= CENTER_ENTER_TOP && t <= CENTER_ENTER_BOTTOM
-      // 4枚目が画面上端を過ぎたら固定解除（4枚そろってスタックごと上に流れた）
-      const pastTop = lastCardEl ? lastCardEl.getBoundingClientRect().top < 0 : false
+      // 4枚目が画面上端を過ぎたら固定解除（4枚そろってスタックごと上に流れた）。1回だけ getBoundingClientRect を取得して使い回す
+      const lastCardRect = lastCardEl ? lastCardEl.getBoundingClientRect() : null
+      const pastTop = lastCardRect ? lastCardRect.top < 0 : false
       if (pastTop !== lastCardPastTopRef.current) {
         lastCardPastTopRef.current = pastTop
         setLastCardPastTop(pastTop)
       }
-      // 1枚目中央の比率・ビューポート中央（戻し時の固定→1枚目追従の切り替えに使用）
+      // 1枚目中央の比率（戻し時の固定→1枚目追従の切り替えに使用）。viewportCenterY は resize 時のみ更新
       const tRounded = Math.round((y / vh) * 100) / 100
       setCenterRatio((prev) => (prev !== tRounded ? tRounded : prev))
-      const vcy = Math.round(vh / 2)
-      setViewportCenterY((prev) => (prev !== vcy ? vcy : prev))
       // スクロール戻し時: 4枚目中央のビューポートY（整数で比較して再描画を抑える）
-      if (lastCardEl && !pastTop) {
-        const rect = lastCardEl.getBoundingClientRect()
-        const centerY = Math.round(rect.top + rect.height / 2)
+      if (lastCardRect && !pastTop) {
+        const centerY = Math.round(lastCardRect.top + lastCardRect.height / 2)
         setLastCardViewportY((prev) => (prev !== centerY ? centerY : prev))
       } else {
         setLastCardViewportY((prev) => (prev !== null ? null : prev))

@@ -5,11 +5,9 @@
  * スクロールに連動してカードが重なって見える「スタック」効果を持つセクション。
  * sticky 配置で上に積み重なる見た目を実現する。
  */
-import React, { useRef, useState, useLayoutEffect } from 'react'
+import React, { useState, useLayoutEffect, useMemo } from 'react'
 import Image from 'next/image'
 import { motion, useReducedMotion } from 'motion/react'
-import SlideUpSection from '@/components/ui/SlideUpSection'
-import GradientHeading from '@/components/ui/GradientHeading'
 
 /** 1枚のスタックカードの表示内容・レイアウト指定 */
 export type StackCardItem = {
@@ -21,7 +19,10 @@ export type StackCardItem = {
     imageSrc?: string
 }
 
-/** 行全体に文字色（アクセント）を付ける行の本文（正規化後に一致） */
+/**
+ * 行全体に文字色（アクセント）を付ける行の本文。
+ * normalizeLine で正規化した文字列と完全一致した行は、行全体に HIGHLIGHT_CLASS を付与する。
+ */
 const HIGHLIGHT_LINES = [
     '働きたい',
     '人の力になりたい',
@@ -33,7 +34,10 @@ const HIGHLIGHT_LINES = [
     '女性が自分らしく働き続けられる',
 ]
 
-/** 行内の一部フレーズに文字色（アクセント）を付ける（長い順で一致させる） */
+/**
+ * 行内の一部フレーズに文字色を付ける用。
+ * 長いフレーズから先に一致させるため、ソート済みの配列をモジュールで1回だけ用意する。
+ */
 const INLINE_PHRASES = [
     '働きたい気持ちはあるのに、選択肢が限られてしまう',
     '女性が自分らしく働き続けられる',
@@ -41,8 +45,12 @@ const INLINE_PHRASES = [
     '仕組みづくり',
     '働く姿勢',
 ]
+const INLINE_PHRASES_SORTED = [...INLINE_PHRASES].sort((a, b) => b.length - a.length)
 
-/** 行末の ！/! 。や「」を除いて正規化 */
+/**
+ * 行末の ！/! 。や「」を除いて正規化する。
+ * HIGHLIGHT_LINES との完全一致判定で、表記ゆれ（句読点の有無など）を吸収するため。
+ */
 function normalizeLine(s: string): string {
     return s
         .trim()
@@ -52,17 +60,22 @@ function normalizeLine(s: string): string {
         .replace(/」$/, '')
 }
 
-/** 行全体がハイライト対象か判定 */
+/** 行全体が HIGHLIGHT_LINES のいずれかと一致するか（正規化後に）判定する。 */
 function isHighlightLine(trimmed: string): boolean {
     const normalized = normalizeLine(trimmed)
     return HIGHLIGHT_LINES.some((m) => m === normalized)
 }
 
+/** ハイライト用の共通クラス（アクセント色・太字） */
 const HIGHLIGHT_CLASS = 'text-primary-700 font-semibold'
 
-/** 行内の INLINE_PHRASES を span でラップして文字色を付与 */
+/**
+ * 行内の INLINE_PHRASES に一致する部分を span でラップして文字色を付与する。
+ * 処理: (1) 長い順ソート済みフレーズで行内の出現位置を検出
+ *       (2) 重複する範囲をマージ (3) 区間ごとに通常テキスト / span を組み立てて返す
+ */
 function highlightInlinePhrases(line: string): React.ReactNode {
-    const phrases = [...INLINE_PHRASES].sort((a, b) => b.length - a.length)
+    const phrases = INLINE_PHRASES_SORTED
     const matches: { start: number; end: number; phrase: string }[] = []
     for (const phrase of phrases) {
         let pos = 0
@@ -97,7 +110,11 @@ function highlightInlinePhrases(line: string): React.ReactNode {
     return <>{segments}</>
 }
 
-/** 改行 \n をブロック表示し、行間に余白を付ける。該当行／該当フレーズは文字色を付与 */
+/**
+ * 本文を改行で分割し、1行ずつブロック表示（行間余白）にする。
+ * 各行について: HIGHLIGHT_LINES に一致すれば行全体をハイライト、
+ * INLINE_PHRASES を含むなら highlightInlinePhrases で部分ハイライト、それ以外はそのまま表示。
+ */
 function contentWithLineBreaks(content: string): React.ReactNode {
     const lines = content.split('\n')
     return lines.map((line, i) => {
@@ -106,6 +123,7 @@ function contentWithLineBreaks(content: string): React.ReactNode {
         const hasInline = INLINE_PHRASES.some((p) => line.includes(p))
         let body: React.ReactNode
         if (fullLineHighlight) {
+            // 「」で囲まれた部分だけハイライト、なければ行全体
             const startQuote = line.indexOf('「')
             const endQuote = line.lastIndexOf('」')
             if (startQuote !== -1 && endQuote > startQuote) {
@@ -126,23 +144,29 @@ function contentWithLineBreaks(content: string): React.ReactNode {
         }
         return (
             <span key={i} className="block">
+                {/* 1行を block にして行間を確保 */}
                 {body}
             </span>
         )
     })
 }
 
-const STICKY_BREAKPOINT = 768 // この幅未満で sticky top を小さく（セクション5飛び出し防止）
-// スマホ時のヘッダー高さ（ロゴ size-20 等で約5rem）。これより下に sticky を置いてヘッダーに埋まらないようにする
+/** この幅（px）未満を「狭い画面」とし、sticky の top を小さくしてセクションからはみ出しを防ぐ */
+const STICKY_BREAKPOINT = 768
+/** スマホ時のヘッダー高さ（約5rem）。sticky の top をこれより下にしてヘッダーに埋まらないようにする */
 const MOBILE_HEADER_TOP_REM = 5
-// カード数に応じた sticky top（小画面: ヘッダー下 + i*0.9 rem、大画面: 5 + i*1.25 rem）
+
+/**
+ * カードの sticky top（rem）を算出する。
+ * 小画面: ヘッダー下 + index×0.9rem / 大画面: 5 + index×1.25rem で、カードごとにずらして重なって見せる。
+ */
 function getStickyTopRem(index: number, isNarrow: boolean): number {
     return isNarrow ? MOBILE_HEADER_TOP_REM + index * 0.9 : 5 + index * 1.25
 }
 
-// 2枚目以降：重なる前に空振りさせるスクロール量（約2スクロール分＝2×40vh）
+/** 2枚目以降のカード: 重なる前に「空振り」させるスクロール量（vh）。この分だけ margin-top を入れてスタックの間を稼ぐ */
 const STACK_DELAY_MARGIN_VH = 40
-// 最後のカードが前のカードに重なって止まるようにするための下スペーサー（4枚目も sticky で重なる余白）
+/** 最後のカードが前のカードに重なって止まるまで必要な下方向の余白（vh）。この分の minHeight をスペーサーで確保 */
 const STACK_END_SPACER_VH = 80
 
 type Props = {
@@ -155,14 +179,12 @@ type Props = {
 }
 
 export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', background, lastCardRef }: Props) {
-    const containerRef = useRef<HTMLDivElement>(null)
+    /** prefers-reduced-motion が有効な場合は画像の rotate 等を無効にする */
     const shouldReduceMotion = useReducedMotion()
-    /** セクション内のスクロール進捗 0〜1（0=上端が画面下端、1=下端が画面上端） */
-    const [progress, setProgress] = useState(0)
-    /** 狭い画面か（sticky の top を小さくしてセクションからはみ出しを防ぐ） */
+    /** 狭い画面かどうか。true のとき sticky の top を小さくしてセクションからはみ出しを防ぐ */
     const [isNarrow, setIsNarrow] = useState(false)
 
-    // ビューポート幅で sticky top を切り替え（リサイズ時も再計算）
+    /** ビューポート幅で isNarrow を更新。リサイズ時も再計算し、sticky の top を切り替える */
     useLayoutEffect(() => {
         const checkNarrow = () => setIsNarrow(typeof window !== 'undefined' && window.innerWidth < STICKY_BREAKPOINT)
         checkNarrow()
@@ -170,30 +192,14 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
         return () => window.removeEventListener('resize', checkNarrow)
     }, [])
 
-    // スクロール位置から「セクション内の進捗」を算出して progress を更新
-    useLayoutEffect(() => {
-        const el = containerRef.current
-        if (!el) return
-
-        const onScroll = () => {
-            const rect = el.getBoundingClientRect()
-            const viewportHeight = window.innerHeight
-            // セクションが画面を通過するのに必要なスクロール量
-            const total = rect.height - viewportHeight
-            if (total <= 0) {
-                setProgress(rect.top <= 0 ? 1 : 0)
-                return
-            }
-            // セクション上端が画面上端より上にどれだけ行ったか（通過した量）
-            const scrolled = -rect.top
-            const p = scrolled / total
-            setProgress(Math.max(0, Math.min(1, p)))
-        }
-
-        onScroll()
-        window.addEventListener('scroll', onScroll, { passive: true })
-        return () => window.removeEventListener('scroll', onScroll)
-    }, [])
+    /**
+     * 各カードの content を contentWithLineBreaks で処理した結果を保持する。
+     * cards が変わらない限り再計算しないため、再レンダー時の文字列処理・ノード生成を避けられる。
+     */
+    const contentNodes = useMemo(
+        () => cards.map((card) => contentWithLineBreaks(card.content)),
+        [cards]
+    )
 
     return (
         <section className="relative z-20 bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
@@ -204,26 +210,25 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                 backgroundRepeat: 'no-repeat',
             }}
         >
+            {/* マーキー等の背景は背面レイヤーで表示（クリックは透過） */}
             {background != null && (
                 <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none rounded-3xl" aria-hidden="true">
                     {background}
                 </div>
             )}
-            {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
+            {/* minHeight 220vh でスクロール量を稼ぎ、カードが sticky で重なって見える区間を確保 */}
             <div
-                ref={containerRef}
                 className="relative z-20 container mx-auto max-w-6xl px-8 md:px-16 flex flex-col gap-8 md:gap-12"
                 style={{ minHeight: '220vh' }}
-                data-stack-scroll-progress={Math.round(progress * 100) / 100}
             >
                 {cards.map((card, i) => {
-                    // カードごとに top をずらして sticky 時に重なって見せる（ずらしを保ち最後まで複数枚のスタックに見える）
                     const stickyTopRem = getStickyTopRem(i, isNarrow)
                     const cardNumber = String(i + 1).padStart(2, '0')
                     return (
                         <article
                             key={i}
                             ref={lastCardRef != null && i === cards.length - 1 ? lastCardRef : undefined}
+                            /* sticky + top ずらしでスクロール時にカードが重なって見える */
                             className={`sticky min-h-0 md:min-h-[55vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 backdrop-blur-sm transition-[background-color] duration-700 ease-in-out px-7 py-4 md:py-7 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
                             style={{
                                 top: `${stickyTopRem}rem`,
@@ -235,10 +240,11 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                             <div className={`grid grid-cols-1 gap-1 md:gap-6 lg:gap-8 w-full max-w-full items-center ${card.imageSrc ? 'min-h-0 md:min-h-[55vh]' : ''} ${card.imageOrder === 'left' ? 'md:grid-cols-[1.1fr_1.3fr]' : 'md:grid-cols-[1.3fr_1.1fr]'}`}>
                                 {card.imageOrder === 'left' && (
                                     <motion.div
-                                        initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -2.5 }}
-                                        whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-2.5, 1.2, -0.4, 0.8, -0.2, 0] }}
-                                        viewport={{ once: false, margin: '-60px', amount: 0.25 }}
-                                        transition={{ duration: 1.1, delay: 0.15, ease: 'easeOut' }}
+                                        /* 画像: 傾き -3.5° → ややオーバーシュート(0.6°) → 0°、一度だけ再生 */
+                                        initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -3.5 }}
+                                        whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-3.5, 0.6, 0] }}
+                                        viewport={{ once: true, margin: '-60px', amount: 0.25 }}
+                                        transition={{ duration: 0.75, delay: 0.15, ease: 'easeOut' }}
                                         className={`relative order-2 md:order-1 overflow-hidden ${card.imageSrc ? 'h-[240px] md:h-[55vh] w-full min-w-0 aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
                                         aria-hidden="true"
                                     >
@@ -250,31 +256,34 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                     </motion.div>
                                 )}
                                 <div className={`min-w-0 flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 md:pl-0 order-1 md:order-2' : ''}`}>
-                                    <SlideUpSection className="w-full">
+                                    {/* テキストブロック: 狭い画面ではマウント時に一度だけ、それ以外はビューに入ったとき一度だけ */}
+                                    <motion.div
+                                        className="w-full"
+                                        initial={{ opacity: 0, y: 24 }}
+                                        {...(isNarrow
+                                            ? { animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0.1 } }
+                                            : { whileInView: { opacity: 1, y: 0 }, viewport: { once: true, margin: '-100px', amount: 0.25 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0 } }
+                                        )}
+                                    >
                                         <span className="font-display inline-block text-2xl md:text-4xl font-extrabold text-primary-500/60 tabular-nums mb-2 md:mb-4" aria-hidden="true">
                                             {cardNumber}
                                         </span>
-                                        <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-lg md:text-3xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-normal md:whitespace-nowrap`} />
-                                        <motion.div
-                                            initial={{ opacity: 0, y: 24 }}
-                                            {...(isNarrow
-                                                ? { animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0.1 } }
-                                                : { whileInView: { opacity: 1, y: 0 }, viewport: { once: false, margin: '-100px', amount: 0.25 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0 } }
-                                            )}
-                                            className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1"
-                                        >
+                                        <h2 className={`${card.titleClass ?? 'text-lg md:text-3xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-normal md:whitespace-nowrap text-[#555555]`}>{card.title}</h2>
+                                        <div className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1">
                                             <div className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700 space-y-2">
-                                                {contentWithLineBreaks(card.content)}
+                                                {/* useMemo で事前計算したハイライト済み本文 */}
+                                                {contentNodes[i]}
                                             </div>
-                                        </motion.div>
-                                    </SlideUpSection>
+                                        </div>
+                                    </motion.div>
                                 </div>
                                 {card.imageOrder === 'right' && (
                                     <motion.div
-                                        initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -2.5 }}
-                                        whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-2.5, 1.2, -0.4, 0.8, -0.2, 0] }}
-                                        viewport={{ once: false, margin: '-60px', amount: 0.25 }}
-                                        transition={{ duration: 1.1, delay: 0.60, ease: 'easeOut' }}
+                                        /* 右側画像: 左より delay を長めにしてずらして表示 */
+                                        initial={{ opacity: 0.85, rotate: shouldReduceMotion ? 0 : -3.5 }}
+                                        whileInView={{ opacity: 1, rotate: shouldReduceMotion ? 0 : [-3.5, 0.6, 0] }}
+                                        viewport={{ once: true, margin: '-60px', amount: 0.25 }}
+                                        transition={{ duration: 0.75, delay: 0.25, ease: 'easeOut' }}
                                         className={`relative overflow-hidden ${card.imageSrc ? 'h-[240px] md:h-[55vh] w-full min-w-0 aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
                                         aria-hidden="true"
                                     >
@@ -289,7 +298,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                         </article>
                     )
                 })}
-                {/* 最後のカード（4枚目）も前のカードに top をずらして重なって止まるためのスペーサー */}
+                {/* 最後のカードが sticky で重なって止まるまで必要な下方向の余白（STACK_END_SPACER_VH） */}
                 <div aria-hidden="true" style={{ minHeight: `${STACK_END_SPACER_VH}vh` }} />
             </div>
         </section>
