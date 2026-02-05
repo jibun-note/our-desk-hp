@@ -247,9 +247,10 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                         <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-lg md:text-3xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-normal md:whitespace-nowrap`} />
                                         <motion.div
                                             initial={{ opacity: 0, y: 24 }}
-                                            whileInView={{ opacity: 1, y: 0 }}
-                                            viewport={{ once: true, margin: '-280px', amount: 0.15 }}
-                                            transition={{ duration: 0.45, ease: 'easeOut', delay: 0 }}
+                                            {...(isNarrow
+                                                ? { animate: { opacity: 1, y: 0 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0.1 } }
+                                                : { whileInView: { opacity: 1, y: 0 }, viewport: { once: false, margin: '-100px', amount: 0.25 }, transition: { duration: 0.45, ease: 'easeOut', delay: 0 } }
+                                            )}
                                             className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1"
                                         >
                                             <div className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700 space-y-2">
