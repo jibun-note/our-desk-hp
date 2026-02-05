@@ -1,4 +1,5 @@
 .staggered-menu-wrapper {
+	--sm-panel-width: clamp(260px, 38vw, 420px);
 	position: relative;
 	width: 100%;
 	height: 100%;
@@ -8,10 +9,7 @@
 
 .staggered-menu-wrapper.fixed-wrapper {
 	position: fixed;
-	top: 0;
-	left: 0;
-	width: 100vw;
-	height: 100vh;
+	inset: 0;
 	z-index: 40;
 	overflow: hidden;
 }
@@ -144,7 +142,7 @@
 	position: absolute;
 	top: 0;
 	right: 0;
-	width: clamp(260px, 38vw, 420px);
+	width: var(--sm-panel-width, clamp(260px, 38vw, 420px));
 	height: 100%;
 	background: white;
 	backdrop-filter: blur(12px);
@@ -176,9 +174,10 @@
 	top: 0;
 	right: 0;
 	bottom: 0;
-	width: clamp(260px, 38vw, 420px);
+	width: var(--sm-panel-width, clamp(260px, 38vw, 420px));
 	pointer-events: none;
 	z-index: 5;
+	overflow: hidden;
 }
 
 [data-position="left"] .sm-prelayers {
@@ -345,14 +344,16 @@
 }
 
 @media (max-width: 1024px) {
+	.staggered-menu-wrapper {
+		--sm-panel-width: max(260px, 50%);
+	}
+
 	.staggered-menu-panel {
-		width: 50%;
-		min-width: 260px;
+		width: var(--sm-panel-width);
 	}
 
 	.sm-prelayers {
-		width: 50%;
-		min-width: 260px;
+		width: var(--sm-panel-width);
 	}
 
 	.sm-panel-item {
@@ -370,14 +371,16 @@
 		padding-right: 0.5rem;
 	}
 
+	.staggered-menu-wrapper {
+		--sm-panel-width: max(260px, 50%);
+	}
+
 	.staggered-menu-panel {
-		width: 50%;
-		min-width: 260px;
+		width: var(--sm-panel-width);
 	}
 
 	.sm-prelayers {
-		width: 50%;
-		min-width: 260px;
+		width: var(--sm-panel-width);
 	}
 
 	.sm-panel-item {
