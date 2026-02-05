@@ -148,9 +148,10 @@ const STACK_END_SPACER_VH = 80
 type Props = {
     cards: StackCardItem[]
     sectionLabel?: string
+    id?: string
 }
 
-export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み' }: Props) {
+export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', id }: Props) {
     const containerRef = useRef<HTMLDivElement>(null)
     const shouldReduceMotion = useReducedMotion()
     /** セクション内のスクロール進捗 0〜1（0=上端が画面下端、1=下端が画面上端） */
@@ -192,7 +193,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relative bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
+        <section id={id} className="relative bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
             style={{
                 backgroundImage: "linear-gradient(rgb(255, 255, 255, 0.45), rgb(255, 255, 255, 0.65)),url(/images/AdobeStock_321344810_Preview.jpeg)",
                 backgroundSize: 'cover',
