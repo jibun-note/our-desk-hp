@@ -5,12 +5,12 @@
  * position="top": 次のセクションの上端が波型（次のセクション色で塗る）。
  * position="bottom": このセクションの下端が波型（グレーセクションのボトム用）。
  */
-type NextBackground = 'top_beige' | 'bottom_beige'
+type NextBackground = 'top' | 'bottom'
 type Position = 'top' | 'bottom'
 
 const BG_COLORS: Record<NextBackground, string> = {
-    'top_beige': '#f9f2e8',
-    'bottom_beige': '#f3e9da',
+    'top': '#fcf7f8',
+    'bottom': '#FFE8CC',
 }
 
 export default function SectionWave({

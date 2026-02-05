@@ -6,6 +6,7 @@ import { createPortal } from 'react-dom'
 import Image from 'next/image'
 import { motion, useScroll, useMotionValueEvent, AnimatePresence } from 'motion/react'
 import { cn } from '@/lib/utils'
+import DeskTopHeader from './DeskTopHeader'
 
 const menuItems = [
     { href: '/service', label: 'Service' },
@@ -55,52 +56,32 @@ export default function Header() {
         >
             <nav className="container mx-auto px-4">
                 <div className="flex items-center justify-between h-16">
-                    {/* ロゴ */}
-                    <motion.div
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        whileHover={{ scale: 1.08, opacity: 0.9 }}
-                        whileTap={{ scale: 0.96 }}
-                        transition={{ duration: 0.15, ease: 'easeOut' }}
-                    >
-                        <Link href="/" className="flex items-center gap-3">
-                            <div className="relative size-20 md:size-32 shrink-0">
+                    {/* ロゴ（モバイルのみ。PCは DeskTopHeader の StaggeredMenu 内で表示） */}
+                    <div className="flex items-center gap-3">
+                        <Link href="/" className="block shrink-0">
+                            <motion.div
+                                className="relative size-20 shrink-0"
+                                initial={{ opacity: 1 }}
+                                animate={{ opacity: 1 }}
+                                whileHover={{ scale: 1.08, opacity: 0.9 }}
+                                whileTap={{ scale: 0.96 }}
+                                transition={{ duration: 0.15, ease: 'easeOut' }}
+                            >
                                 <Image
                                     src="/OurDesk_logo.png"
                                     alt="OurDesk株式会社"
                                     fill
                                     className="object-contain"
                                 />
-                            </div>
-                            <h3 className="hidden md:block text-gray-800 text-base md:text-lg font-semibold text-balance">
-                                OurDesk株式会社
-                            </h3>
-                        </Link>
-                    </motion.div>
-
-                    {/* デスクトップメニュー */}
-                    <div className="hidden md:flex items-center space-x-6">
-                        {menuItems.map((item) => (
-                            <motion.div
-                                key={item.href}
-                                whileHover={{ scale: 1.05, y: -2 }}
-                                transition={{ duration: 0.15, ease: 'easeOut' }}
-                            >
-                                <Link
-                                    href={item.href}
-                                    className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block"
-                                >
-                                    {item.label}
-                                    <motion.span
-                                        className="absolute bottom-0 left-0 w-full h-0.5 bg-primary-500 origin-left"
-                                        initial={{ scaleX: 0 }}
-                                        whileHover={{ scaleX: 1 }}
-                                        transition={{ duration: 0.15, ease: 'easeOut' }}
-                                    />
-                                </Link>
                             </motion.div>
-                        ))}
+                        </Link>
+                        <h3 className="block text-gray-800 text-base md:text-lg font-semibold text-balance">
+                            OurDesk株式会社
+                        </h3>
                     </div>
+
+                    {/* デスクトップ用スペーサー（DeskTopHeader は Portal で body に描画） */}
+                    <div className="hidden md:block md:flex-1 md:min-h-16" aria-hidden="true" />
 
                     {/* モバイルメニューボタン */}
                     <motion.button
@@ -172,6 +153,15 @@ export default function Header() {
                                 </motion.div>
                             )}
                         </AnimatePresence>,
+                        document.body
+                    )}
+
+                {/* デスクトップメニュー（Portal で body 直下に描画。backdrop-blur の containing block 影響を回避） */}
+                {mounted &&
+                    createPortal(
+                        <div className="hidden md:block fixed inset-0 z-[60] pointer-events-none">
+                            <DeskTopHeader />
+                        </div>,
                         document.body
                     )}
             </nav>

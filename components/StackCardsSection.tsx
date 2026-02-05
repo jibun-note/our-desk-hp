@@ -192,7 +192,14 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relativ bg-gradient-to-b from-[#f9f2e8] via-[#f5ebe0] to-[#f3e9da] py-16 md:py-24" aria-label={sectionLabel}>
+        <section className="relative bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
+            style={{
+                backgroundImage: "linear-gradient(rgb(255, 255, 255, 0.45), rgb(255, 255, 255, 0.65)),url(/images/AdobeStock_321344810_Preview.jpeg)",
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+                backgroundRepeat: 'no-repeat',
+            }}
+        >
             {/* minHeight を 220vh にし、スクロール量を稼いでスタックアニメーションの区間を確保 */}
             <div
                 ref={containerRef}
@@ -237,7 +244,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                         <span className="font-display inline-block text-2xl md:text-4xl font-extrabold text-primary-500/60 tabular-nums mb-2 md:mb-4" aria-hidden="true">
                                             {cardNumber}
                                         </span>
-                                        <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-xl md:text-3xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-normal md:whitespace-nowrap`} />
+                                        <GradientHeading text={card.title} className={`${card.titleClass ?? 'text-lg md:text-3xl'} font-extrabold mb-3 md:mb-5 block drop-shadow-sm whitespace-normal md:whitespace-nowrap`} />
                                         <motion.div
                                             initial={{ opacity: 0, y: 24 }}
                                             {...(isNarrow
