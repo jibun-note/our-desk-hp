@@ -196,13 +196,8 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
     }, [])
 
     return (
-        <section className="relative z-20 bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 rounded-3xl" aria-label={sectionLabel}
-            style={{
-                backgroundImage: "linear-gradient(rgb(255, 255, 255, 0.45), rgb(255, 255, 255, 0.65)),url(/images/AdobeStock_321344810_Preview.jpeg)",
-                backgroundSize: 'cover',
-                backgroundPosition: 'center',
-                backgroundRepeat: 'no-repeat',
-            }}
+        <section className="relative z-20 bg-gradient-to-b from-[#FFF8E7] via-[#FFEFD6] to-[#FFE8CC] py-16 md:py-24 " aria-label={sectionLabel}
+
         >
             {background != null && (
                 <div className="absolute inset-0 z-10 overflow-hidden pointer-events-none rounded-3xl" aria-hidden="true">
