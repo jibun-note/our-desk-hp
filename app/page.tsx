@@ -3,6 +3,7 @@ import Particles from '@/components/ui/Particles'
 import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSection'
 import SectionWave from '@/components/SectionWave'
 import StrengthCards from '@/components/StrengthCards'
+import SwipeToNextSection from '@/components/SwipeToNextSection'
 import GradientHeading from '@/components/ui/GradientHeading'
 
 const stackCards: StackCardItem[] = [
@@ -159,45 +160,47 @@ export default function Home() {
                 </div>
             </section>
 
-            {/* セクション3: OurDeskの強み */}
-            <section className="relative pt-20 pb-12 md:py-20">
-                {/* 見出しと説明文 - PCのみ表示 */}
-                <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                    <GradientHeading
-                        text="OurDeskの強み"
-                        className="text-2xl md:text-4xl font-bold mb-4 text-gray-800"
-                        as="h2"
-                    />
-                    <div
-                        className="w-20 h-1 mx-auto mb-4"
-                        style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
-                    />
-                    <div className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
-                        <SplitText
-                            text="OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。"
-                            html='OurDeskは、伴走型キャリア支援という仕組みを通して、<br />女性の<span class="text-gradient-hero">「働きたい」</span>を育てています。'
-                            tag="p"
-                            className="leading-relaxed"
-                            splitType="chars"
-                            delay={30}
-                            duration={0.8}
-                            ease="power3.out"
-                            from={{ opacity: 0, y: 20 }}
-                            to={{ opacity: 1, y: 0 }}
-                            threshold={0.1}
-                            rootMargin="-50px"
+            {/* セクション3: OurDeskの強み（スマホで左スワイプで次セクションへ） */}
+            <SwipeToNextSection targetSectionId="stack-cards-section">
+                <section className="relative pt-20 pb-12 md:py-20">
+                    {/* 見出しと説明文 - PCのみ表示 */}
+                    <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
+                        <GradientHeading
+                            text="OurDeskの強み"
+                            className="text-2xl md:text-4xl font-bold mb-4 text-gray-800"
+                            as="h2"
                         />
+                        <div
+                            className="w-20 h-1 mx-auto mb-4"
+                            style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
+                        />
+                        <div className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
+                            <SplitText
+                                text="OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。"
+                                html='OurDeskは、伴走型キャリア支援という仕組みを通して、<br />女性の<span class="text-gradient-hero">「働きたい」</span>を育てています。'
+                                tag="p"
+                                className="leading-relaxed"
+                                splitType="chars"
+                                delay={30}
+                                duration={0.8}
+                                ease="power3.out"
+                                from={{ opacity: 0, y: 20 }}
+                                to={{ opacity: 1, y: 0 }}
+                                threshold={0.1}
+                                rootMargin="-50px"
+                            />
+                        </div>
                     </div>
-                </div>
-                {/* 画像を横いっぱいに表示 */}
-                <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[2000px] mx-auto px-0 md:px-6">
-                    <StrengthCards />
-                </div>
-            </section>
+                    {/* 画像を横いっぱいに表示 */}
+                    <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[2000px] mx-auto px-0 md:px-6">
+                        <StrengthCards />
+                    </div>
+                </section>
+            </SwipeToNextSection>
 
 
             {/* Scroll Stack: カードのみスクロールに合わせて暗→明に変化 */}
-            <StackCardsSection cards={stackCards} />
+            <StackCardsSection id="stack-cards-section" cards={stackCards} />
 
         </main>
     )
