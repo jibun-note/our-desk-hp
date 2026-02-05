@@ -8,7 +8,7 @@
 type Position = 'top' | 'bottom'
 
 const BG_COLORS: Record<Position, string> = {
-    'top': '#fcf7f8',
+    'top': '#FFF8E7',
     'bottom': '#FFE8CC',
 }
 
