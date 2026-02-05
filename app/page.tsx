@@ -53,7 +53,7 @@ export default function Home() {
                             preload="metadata"
                             aria-hidden="true"
                         >
-                            <source src="/AdobeStock_487035634_Video_HD_Preview.mp4" type="video/mp4" />
+                            <source src="/Adobe Express - AdobeStock_487035634.mp4" type="video/mp4" />
                         </video>
                         {/* コンテンツ - 動画要素内に配置 */}
                         <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-16 pointer-events-none">

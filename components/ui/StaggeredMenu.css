@@ -76,6 +76,7 @@
 	font-weight: 500;
 	line-height: 1;
 	overflow: visible;
+	padding-right: 3rem;
 }
 
 .sm-toggle:focus-visible {
@@ -365,6 +366,10 @@
 }
 
 @media (max-width: 640px) {
+	.sm-toggle {
+		padding-right: 0.5rem;
+	}
+
 	.staggered-menu-panel {
 		width: 50%;
 		min-width: 260px;
