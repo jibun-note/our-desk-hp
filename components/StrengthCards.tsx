@@ -27,21 +27,21 @@ export default function StrengthCards() {
             step: 1,
             title: '学びの場を提供',
             description: '女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。経験がなくても、ここから始められます。',
-            imagePath: '/images/AdobeStock_1408184906_Preview.jpeg',
+            imagePath: '/images/AdobeStock_537141193.jpeg',
             imagePosition: 'left'
         },
         {
             step: 2,
             title: 'キャリア面談',
             description: '国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。あなたらしいキャリアを見つけましょう。',
-            imagePath: '/images/AdobeStock_537141193_Preview.jpeg',
+            imagePath: '/images/AdobeStock_1408184906.jpeg',
             imagePosition: 'right'
         },
         {
             step: 3,
             title: '仕事につなげる',
             description: 'その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。',
-            imagePath: '/images/AdobeStock_399162949_Preview.jpeg',
+            imagePath: '/images/AdobeStock_399162949.jpeg',
             imagePosition: 'left'
         }
     ]
