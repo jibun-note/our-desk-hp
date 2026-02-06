@@ -34,6 +34,10 @@ const config: Config = {
                     900: '#1a1a1a',
                 },
             },
+            zIndex: {
+                background: '0',
+                content: '10',
+            },
         },
     },
     plugins: [],
