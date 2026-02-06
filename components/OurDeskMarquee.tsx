@@ -21,7 +21,7 @@ type Props = {
   visible?: boolean
   /** true: セクション下部に合わせる（最後のカードと一緒に上へスライドするとき） */
   alignBottom?: boolean
-  /** スクロール戻し時: このビューポートY(px)に固定して4枚目に追従 */
+  /** このビューポートY(px)に固定（1枚目中央などに張り付く） */
   followTop?: number | null
 }
 
@@ -29,10 +29,10 @@ export default function OurDeskMarquee({ fixed = false, visible = true, alignBot
   const rowClass =
     'flex shrink-0 items-center text-[clamp(2.5rem,10vw,7rem)] font-extrabold tracking-tight text-white whitespace-nowrap select-none'
 
-  // followTop: スクロール戻しで4枚目に追従（ビューポートYで固定）
-  // fixed: ビューポート中央
+  // followTop: このビューポートY(px)に固定
+  // fixed かつ followTop なし: ビューポート中央
   // alignBottom: セクション下部（下方向スクロールで上に流れる）
-  // それ以外: 1枚目カード中央
+  // それ以外（absolute）: 1枚目カード中央のフォールバック
   const useFixed = fixed || (followTop != null && Number.isFinite(followTop))
   const contentPositionStyle =
     followTop != null && Number.isFinite(followTop)
