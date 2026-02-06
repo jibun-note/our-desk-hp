@@ -25,6 +25,7 @@ export interface StaggeredMenuProps {
     displayItemNumbering?: boolean;
     className?: string;
     logoUrl?: string;
+    logoAlt?: string;
     menuButtonColor?: string;
     openMenuButtonColor?: string;
     accentColor?: string;
@@ -45,7 +46,8 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
     displaySocials = true,
     displayItemNumbering = true,
     className,
-    logoUrl = '/OurDesk_logo.png',
+    logoUrl = '/src/assets/logos/reactbits-gh-white.svg',
+    logoAlt = 'Logo',
     menuButtonColor = '#fff',
     openMenuButtonColor = '#fff',
     changeMenuColorOnOpen = true,
@@ -419,14 +421,14 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                         <Link href={logoHref} className="sm-logo-link">
                             <motion.div
                                 className="sm-logo"
-                                aria-label="Logo"
+                                aria-label={logoAlt}
                                 whileHover={{ scale: 1.08, opacity: 0.9 }}
                                 whileTap={{ scale: 0.96 }}
                                 transition={{ duration: 0.15, ease: 'easeOut' }}
                             >
                                 <Image
                                     src={logoUrl || '/OurDesk_logo.png'}
-                                    alt="Logo"
+                                    alt={logoAlt}
                                     className="sm-logo-img"
                                     width={110}
                                     height={24}
@@ -434,10 +436,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                             </motion.div>
                         </Link>
                     ) : (
-                        <div className="sm-logo" aria-label="Logo">
+                        <div className="sm-logo" aria-label={logoAlt}>
                             <Image
                                 src={logoUrl || '/OurDesk_logo.png'}
-                                alt="Logo"
+                                alt={logoAlt}
                                 className="sm-logo-img"
                                 width={110}
                                 height={24}

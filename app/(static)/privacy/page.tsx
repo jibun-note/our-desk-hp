@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
 import HeroSection from '@/components/HeroSection'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-    title: 'Privacy Policy | OurDesk株式会社',
-    description: 'OurDesk株式会社のプライバシーポリシー',
-}
+export const metadata = createPageMetadata(
+    '/privacy/',
+    'Privacy Policy | OurDesk株式会社',
+    'OurDesk株式会社のプライバシーポリシー'
+)
 
 export default function PrivacyPage() {
     return (

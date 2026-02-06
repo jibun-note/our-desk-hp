@@ -40,6 +40,11 @@ const stackCards: StackCardItem[] = [
     },
 ]
 
+export const metadata = {
+    title: 'OurDesk株式会社',
+    description: 'OurDesk株式会社の公式ホームページ',
+}
+
 export default function Home() {
 
 

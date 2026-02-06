@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://our-desk.co.jp/sitemap.xml

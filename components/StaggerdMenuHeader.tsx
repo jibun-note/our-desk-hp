@@ -24,6 +24,7 @@ export default function StaggerdMenuHeader() {
                 displaySocials={false}
                 displayItemNumbering={true}
                 logoUrl="/OurDesk_logo.png"
+                logoAlt="OurDesk株式会社"
                 logoHref="/"
                 menuButtonColor="#333333"
                 openMenuButtonColor="#333333"
