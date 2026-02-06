@@ -1,4 +1,5 @@
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { motion } from 'motion/react';
 import { gsap } from 'gsap';
@@ -425,11 +426,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                                 whileTap={{ scale: 0.96 }}
                                 transition={{ duration: 0.15, ease: 'easeOut' }}
                             >
-                                <img
-                                    src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+                                <Image
+                                    src={logoUrl || '/OurDesk_logo.png'}
                                     alt={logoAlt}
                                     className="sm-logo-img"
-                                    draggable={false}
                                     width={110}
                                     height={24}
                                 />
@@ -437,11 +437,10 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                         </Link>
                     ) : (
                         <div className="sm-logo" aria-label={logoAlt}>
-                            <img
-                                src={logoUrl || '/src/assets/logos/reactbits-gh-white.svg'}
+                            <Image
+                                src={logoUrl || '/OurDesk_logo.png'}
                                 alt={logoAlt}
                                 className="sm-logo-img"
-                                draggable={false}
                                 width={110}
                                 height={24}
                             />
