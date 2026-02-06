@@ -129,7 +129,7 @@ npx serve@latest out
 
 - **メタデータ**: 各ページの title・description、OG/Twitter カード、canonical を設定。ルートは `app/layout.tsx`、静的ページは `lib/seo.ts` の `createPageMetadata` で統一。
 - **サイトマップ**: `public/sitemap.xml` を静的ファイルとして配置。ビルド時に `out/sitemap.xml` に含まれ、本番では `https://our-desk.co.jp/sitemap.xml` で配信。
-- **robots.txt**: `app/robots.ts` によりビルド時に `/robots.txt` が生成され、`out/robots.txt` に含まれる。本番では `https://our-desk.co.jp/robots.txt` で配信。
+- **robots.txt**: `public/robots.txt` を静的ファイルとして配置。ビルド時に `out/robots.txt` に含まれ、本番では `https://our-desk.co.jp/robots.txt` で配信。
 - **構造化データ**: Organization および WebSite の JSON-LD を `components/JsonLd.tsx` で定義し、ルートレイアウト（`app/layout.tsx`）の `<head>` 内で出力。
 
 ## プロジェクト構造
@@ -139,7 +139,6 @@ our-desk-hp/
 ├── app/                    # Next.js App Router
 │   ├── layout.tsx         # ルートレイアウト（メタデータ・JsonLd）
 │   ├── page.tsx           # トップページ
-│   ├── robots.ts          # robots.txt 生成
 │   ├── (static)/          # ルートグループ（静的ページ）
 │   │   ├── layout.tsx     # 静的ページ用レイアウト
 │   │   ├── about-us/      # About usページ
@@ -165,6 +164,7 @@ our-desk-hp/
 ├── public/                # 静的ファイル（画像、動画など）
 │   ├── OurDesk_logo.png   # ロゴ画像
 │   ├── sitemap.xml        # サイトマップ（静的エクスポート用）
+│   ├── robots.txt         # robots.txt（静的エクスポート用）
 │   ├── eye-catch-movie.mp4 # アイキャッチ動画
 │   └── .htaccess          # Apache設定ファイル
 └── ...設定ファイル
