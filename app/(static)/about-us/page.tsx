@@ -1,5 +1,7 @@
 import HeroSection from '@/components/HeroSection'
+import GradientHeading from '@/components/ui/GradientHeading'
 import { createPageMetadata } from '@/lib/seo'
+import Image from 'next/image'
 
 export const metadata = createPageMetadata(
     '/about-us/',
@@ -44,10 +46,6 @@ export default function AboutUsPage() {
                                 fill
                                 className="object-cover"
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                onError={(e) => {
-                                    const t = e.target as HTMLImageElement
-                                    t.style.display = 'none'
-                                }}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-orange-900/20 to-transparent pointer-events-none" />
                         </div>
@@ -124,10 +122,6 @@ export default function AboutUsPage() {
                                 fill
                                 className="object-cover"
                                 sizes="(max-width: 768px) 100vw, 50vw"
-                                onError={(e) => {
-                                    const t = e.target as HTMLImageElement
-                                    t.style.display = 'none'
-                                }}
                             />
                             <div className="absolute inset-0 bg-gradient-to-t from-orange-900/20 to-transparent pointer-events-none" />
                         </div>
