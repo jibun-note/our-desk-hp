@@ -2,6 +2,7 @@
 
 import { motion } from 'motion/react'
 import React, { useCallback, useEffect, useState } from 'react'
+import { useSwipeable } from 'react-swipeable'
 
 // スライドの型定義
 type Slide = {
@@ -69,6 +70,12 @@ export default function StrengthCards() {
         setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
     }, [])
 
+    // モバイル用スワイプハンドラ
+    const swipeHandlers = useSwipeable({
+        onSwipedLeft: () => nextSlide(),
+        onSwipedRight: () => prevSlide(),
+    })
+
     return (
         <div
             className="relative"
@@ -88,8 +95,8 @@ export default function StrengthCards() {
                         </h2>
                     </div>
 
-                    {/* スライドコンテナ */}
-                    <div className="relative" style={{ minHeight: '500px' }}>
+                    {/* スライドコンテナ（スワイプ対応） */}
+                    <div className="relative" style={{ minHeight: '500px' }} {...swipeHandlers}>
                         {slides.map((slide, index) => (
                             <motion.div
                                 key={index}
