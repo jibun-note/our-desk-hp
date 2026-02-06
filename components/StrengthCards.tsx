@@ -191,7 +191,7 @@ export default function StrengthCards() {
                 </div>
 
                 {/* ナビゲーション：前ボタン | インジケーター | 次ボタン */}
-                <div className="flex items-center justify-between max-w-2xl mx-auto gap-3 mt-12 px-4">
+                <div className="flex items-center justify-between gap-4 mt-12 px-4 max-w-2xl mx-auto">
                     <button
                         onClick={prevSlide}
                         className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300"
