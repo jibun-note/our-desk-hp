@@ -5,33 +5,37 @@ import StackCardsWithFixedMarquee from '@/components/StackCardsWithFixedMarquee'
 import SectionWave from '@/components/SectionWave'
 import StrengthCards from '@/components/StrengthCards'
 import SwipeToNextSection from '@/components/SwipeToNextSection'
-import GradientHeading from '@/components/ui/GradientHeading'
+import { contentWithLineBreaks } from '@/lib/contentHighlight'
 
 const stackCards: StackCardItem[] = [
     {
         title: 'OurDeskの人材育成方針',
-        content: '私たちが大切にしているのは、\n働きたい \n人の力になりたい\n誰かを支える仕事がしたい\nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも\n大切に育てています。',
+        content: contentWithLineBreaks('私たちが大切にしているのは、\n働きたい！ \n人の力になりたい！ \n誰かを支える仕事がしたい！ \nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも\n大切に育てています。'),
         imageOrder: 'right',
         imageSrc: '/images/イキイキした写真.png',
+        numberLabel: 'HUMAN RESOURCE DEVELOPMENT',
     },
     {
         title: 'OurDeskを支える基盤',
-        content: 'OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名 定着率は常に90%以上、人事支援・キャリア支援の実績多数。\n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。',
+        content: contentWithLineBreaks('OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名、定着率は常に90%以上\n人事支援・キャリア支援の実績多数！ \n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。'),
         imageOrder: 'left',
         imageSrc: '/images/ノイゲート写真.png',
+        numberLabel: 'THE FOUNDATION OF OurDesk',
     },
     {
         title: 'OurDeskのミッション',
-        content: '私たちは、「働きたい」という気持ちが、仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、\n自分らしい働き方を選びながら、誰かの役に立てる。\nそんなキャリアの形を、一人ひとりと一緒につくっていく会社です。',
+        content: contentWithLineBreaks('私たちは、「働きたい」という気持ちが、\n 仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、\n自分らしい働き方を選びながら、誰かの役に立てる。\nそんなキャリアの形を、一人ひとりと一緒につくっていく会社です。'),
         imageOrder: 'right',
         imageSrc: '/images/ライフステージ写真.png',
+        numberLabel: 'OurDesk\'s MISSION',
     },
     {
         title: '女性のキャリア支援',
         titleClass: 'text-xl md:text-3xl',
-        content: '出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。',
+        content: contentWithLineBreaks('出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。'),
         imageOrder: 'left',
         imageSrc: '/images/親子写真.png',
+        numberLabel: 'WOMEN CAREER SUPPORT',
     },
 ]
 
@@ -110,7 +114,7 @@ export default function Home() {
             </section>
 
             {/* セクション2: 「働きたい」を、ちゃんと育てる */}
-            <section className="relative pt-16 pb-16 px-4 md:pt-40 md:pb-40 md:px-6">
+            <section className="relative pt-16  px-4 md:pt-40 md:pb-40 md:px-6">
                 <div className="absolute inset-0 z-20 pointer-events-none">
                     {/* スマホ用：パーティクル数のみ減らす */}
                     <div className="block md:hidden">
@@ -163,14 +167,10 @@ export default function Home() {
 
             {/* セクション3: OurDeskの強み（スマホで左スワイプで次セクションへ） */}
             <SwipeToNextSection targetSectionId="stack-cards-section">
-                <section className="relative pt-20 pb-12 md:py-20">
+                <section className="relative pt-20 pb-12 md:py-20 md:mb-20">
                     {/* 見出しと説明文 - PCのみ表示 */}
                     <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                        <GradientHeading
-                            text="OurDeskの強み"
-                            className="text-2xl md:text-4xl font-bold mb-4 text-gray-800"
-                            as="h2"
-                        />
+                        <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
                         <div
                             className="w-20 h-1 mx-auto mb-4"
                             style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
@@ -200,10 +200,10 @@ export default function Home() {
             </SwipeToNextSection>
 
 
-            <SectionWave position='top' />
+
             {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
             <StackCardsWithFixedMarquee cards={stackCards} />
-            <SectionWave position='bottom' />
+
 
         </main>
     )
