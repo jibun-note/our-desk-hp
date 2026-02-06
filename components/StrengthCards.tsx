@@ -89,7 +89,7 @@ export default function StrengthCards() {
                     </div>
 
                     {/* スライドコンテナ */}
-                    <div className="relative" style={{ minHeight: '600px' }}>
+                    <div className="relative" style={{ minHeight: '500px' }}>
                         {slides.map((slide, index) => (
                             <motion.div
                                 key={index}
@@ -152,17 +152,16 @@ export default function StrengthCards() {
                     </div>
 
                     {/* インジケーター - 説明文のすぐ下に固定配置（スライドの外） */}
-                    <div className="flex justify-center gap-3 mt-2 px-4">
+                    <div className="flex justify-center gap-2 mt-2 px-4">
                         {slides.map((_, slideIndex) => (
                             <button
                                 key={slideIndex}
                                 onClick={() => goToSlide(slideIndex)}
-                                className="transition-all duration-300 py-2 px-1"
+                                className="transition-all duration-300 p-1"
                                 aria-label={`スライド${slideIndex + 1}を表示`}
                             >
                                 <div
-                                    className={`h-2 rounded-full ${slideIndex === currentSlide ? 'w-12' : 'w-8 bg-gray-300'
-                                        }`}
+                                    className={`w-2.5 h-2.5 rounded-full transition-all duration-300 ${slideIndex === currentSlide ? 'scale-110' : 'bg-gray-300'}`}
                                     style={slideIndex === currentSlide ? { background: '#F08300' } : undefined}
                                 />
                             </button>
@@ -184,18 +183,17 @@ export default function StrengthCards() {
                     ))}
                 </div>
 
-                {/* インジケーター */}
+                {/* インジケーター（カプセル型） */}
                 <div className="flex justify-center gap-3 mt-12 px-4">
                     {slides.map((_, index) => (
                         <button
                             key={index}
                             onClick={() => goToSlide(index)}
-                            className="group/dot relative"
+                            className="transition-all duration-300 py-2 px-1"
                             aria-label={`スライド${index + 1}を表示`}
                         >
                             <div
-                                className={`h-1 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-12' : 'w-8 bg-gray-300'
-                                    }`}
+                                className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-12' : 'w-8 bg-gray-300'}`}
                                 style={index === currentSlide ? { background: '#F08300' } : undefined}
                             />
                         </button>
@@ -263,15 +261,6 @@ const SlideItem = ({ slide, isActive }: SlideItemProps) => {
                             background: 'linear-gradient(to top, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.10) 100%)'
                         }}
                     />
-                    {/* 番号表示 */}
-                    <div
-                        className={`absolute top-8 z-10 ${isImageLeft ? 'left-8' : 'right-8'
-                            }`}
-                    >
-                        <span className="text-7xl font-bold text-white/30">
-                            0{slide.step}
-                        </span>
-                    </div>
                 </div>
 
                 {/* PC時の説明エリア */}
