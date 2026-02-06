@@ -28,14 +28,14 @@ export default function StrengthCards() {
             step: 1,
             title: '学びの場を提供',
             description: '女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。経験がなくても、ここから始められます。',
-            imagePath: '/images/AdobeStock_537141193.jpeg',
+            imagePath: '/images/AdobeStock_1408184906.jpeg',
             imagePosition: 'left'
         },
         {
             step: 2,
             title: 'キャリア面談',
             description: '国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。あなたらしいキャリアを見つけましょう。',
-            imagePath: '/images/AdobeStock_1408184906.jpeg',
+            imagePath: '/images/AdobeStock_537141193.jpeg',
             imagePosition: 'right'
         },
         {
@@ -190,42 +190,45 @@ export default function StrengthCards() {
                     ))}
                 </div>
 
-                {/* インジケーター（カプセル型） */}
-                <div className="flex justify-center gap-3 mt-12 px-4">
-                    {slides.map((_, index) => (
-                        <button
-                            key={index}
-                            onClick={() => goToSlide(index)}
-                            className="transition-all duration-300 py-2 px-1"
-                            aria-label={`スライド${index + 1}を表示`}
-                        >
-                            <div
-                                className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-12' : 'w-8 bg-gray-300'}`}
-                                style={index === currentSlide ? { background: '#F08300' } : undefined}
-                            />
-                        </button>
-                    ))}
-                </div>
+                {/* ナビゲーション：前ボタン | インジケーター | 次ボタン */}
+                <div className="flex items-center justify-between max-w-2xl mx-auto gap-3 mt-12 px-4">
+                    <button
+                        onClick={prevSlide}
+                        className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300"
+                        aria-label="前のスライド"
+                    >
+                        <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+                        </svg>
+                    </button>
 
-                {/* ナビゲーションボタン */}
-                <button
-                    onClick={prevSlide}
-                    className="absolute left-4 md:left-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-40"
-                    aria-label="前のスライド"
-                >
-                    <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-                    </svg>
-                </button>
-                <button
-                    onClick={nextSlide}
-                    className="absolute right-4 md:right-8 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300 z-40"
-                    aria-label="次のスライド"
-                >
-                    <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-                    </svg>
-                </button>
+                    {/* インジケーター（カプセル型） */}
+                    <div className="flex gap-3 py-2">
+                        {slides.map((_, index) => (
+                            <button
+                                key={index}
+                                onClick={() => goToSlide(index)}
+                                className="transition-all duration-300 px-1"
+                                aria-label={`スライド${index + 1}を表示`}
+                            >
+                                <div
+                                    className={`h-2 rounded-full transition-all duration-300 ${index === currentSlide ? 'w-12' : 'w-8 bg-gray-300'}`}
+                                    style={index === currentSlide ? { background: '#F08300' } : undefined}
+                                />
+                            </button>
+                        ))}
+                    </div>
+
+                    <button
+                        onClick={nextSlide}
+                        className="flex-shrink-0 w-12 h-12 md:w-14 md:h-14 bg-white/90 hover:bg-white rounded-full shadow-lg flex items-center justify-center transition-all duration-300"
+                        aria-label="次のスライド"
+                    >
+                        <svg className="w-6 h-6 text-gray-800" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                        </svg>
+                    </button>
+                </div>
             </div>
         </div>
     )
@@ -249,7 +252,7 @@ const SlideItem = ({ slide, isActive }: SlideItemProps) => {
             <div className="grid grid-cols-2 gap-0 h-full w-full">
                 {/* 画像エリア */}
                 <div
-                    className={`relative h-auto ${isImageLeft ? 'order-1' : 'order-2'
+                    className={`relative h-auto rounded-2xl overflow-hidden ${isImageLeft ? 'order-1' : 'order-2'
                         }`}
                 >
                     <div

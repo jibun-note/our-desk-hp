@@ -25,7 +25,6 @@ export default function DeskTopHeader() {
                 displayItemNumbering={true}
                 logoUrl="/OurDesk_logo.png"
                 logoHref="/"
-                companyName="OurDesk株式会社"
                 menuButtonColor="#333333"
                 openMenuButtonColor="#333333"
                 changeMenuColorOnOpen={false}
