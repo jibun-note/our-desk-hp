@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react'
 import { createPortal } from 'react-dom'
 import { motion, useScroll, useMotionValueEvent } from 'motion/react'
 import { cn } from '@/lib/utils'
-import DeskTopHeader from './DeskTopHeader'
+import StaggerdMenuHeader from './StaggerdMenuHeader'
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
@@ -16,13 +16,14 @@ export default function Header() {
     }, [])
 
     useMotionValueEvent(scrollY, 'change', (latest) => {
-        setIsScrolled(latest > 10)
+        const next = latest > 10
+        setIsScrolled((prev) => (prev === next ? prev : next))
     })
 
     return (
         <motion.header
             className={cn(
-                'bg-white sticky top-0 z-50 backdrop-blur-sm',
+                'bg-white sticky top-0 z-50',
                 isScrolled ? 'shadow-sm' : 'shadow-md'
             )}
             initial={{ opacity: 1 }}
@@ -41,7 +42,7 @@ export default function Header() {
                 {mounted &&
                     createPortal(
                         <div className="fixed inset-0 z-[60] pointer-events-none">
-                            <DeskTopHeader />
+                            <StaggerdMenuHeader />
                         </div>,
                         document.body
                     )}

@@ -2,18 +2,21 @@
 @tailwind components;
 @tailwind utilities;
 
-/* スクロールスナップ用: html を明示的なスクロールコンテナに */
+/* スクロールコンテナ */
 html {
 	height: 100%;
 	overflow-y: scroll;
 	overflow-x: hidden;
-	scroll-snap-type: y proximity;
-	scroll-padding-top: 5rem; /* 固定ヘッダー分 */
 }
 
 body {
 	color: #333333;
 	background: #ffffff;
+}
+
+/* アンカーリンク・scrollIntoView 時に固定ヘッダー分の余白を確保 */
+#stack-cards-section {
+	scroll-margin-top: 5rem;
 }
 
 /* ヒーロー用テキストグラデーション (#FDD000 → #F08300) */

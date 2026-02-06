@@ -1,8 +1,11 @@
 'use client'
 
 import { motion } from 'motion/react'
-import React, { useCallback, useEffect, useState } from 'react'
+import Image from 'next/image'
+import React, { useCallback, useEffect, useState, useLayoutEffect } from 'react'
 import { useSwipeable } from 'react-swipeable'
+
+const MOBILE_BREAKPOINT = 768
 
 // スライドの型定義
 type Slide = {
@@ -22,6 +25,14 @@ type SlideItemProps = {
 export default function StrengthCards() {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [isHovered, setIsHovered] = useState(false)
+    const [isNarrow, setIsNarrow] = useState(true)
+
+    useLayoutEffect(() => {
+        const check = () => setIsNarrow(typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT)
+        check()
+        window.addEventListener('resize', check)
+        return () => window.removeEventListener('resize', check)
+    }, [])
 
     const slides: Slide[] = [
         {
@@ -82,7 +93,8 @@ export default function StrengthCards() {
             onMouseEnter={() => setIsHovered(true)}
             onMouseLeave={() => setIsHovered(false)}
         >
-            {/* スマホ版（768px未満） */}
+            {/* スマホ版（768px未満） - ビューポート幅に応じて1つだけマウント */}
+            {isNarrow && (
             <div className="block md:hidden">
                 <div className="relative">
                     {/* 大胆な見出し - 画像の右上に薄いグレー（透明度80%）で配置 */}
@@ -112,14 +124,12 @@ export default function StrengthCards() {
                                 <div className="relative h-full">
                                     {/* 画像エリア */}
                                     <div className="relative h-[380px] rounded-2xl overflow-hidden shadow-xl mb-4">
-                                        {/* 背景画像 */}
-                                        <div
-                                            className="absolute inset-0"
-                                            style={{
-                                                backgroundImage: `url(${slide.imagePath})`,
-                                                backgroundSize: 'cover',
-                                                backgroundPosition: 'center',
-                                            }}
+                                        <Image
+                                            src={slide.imagePath}
+                                            alt=""
+                                            fill
+                                            className="object-cover object-center"
+                                            sizes="100vw"
                                         />
 
                                         {/* オーバーレイ - 上部を暗く（白文字の視認性向上） */}
@@ -176,8 +186,10 @@ export default function StrengthCards() {
                     </div>
                 </div>
             </div>
+            )}
 
-            {/* PC版（768px以上） - 既存の全幅左右交互レイアウト */}
+            {/* PC版（768px以上） - ビューポート幅に応じて1つだけマウント */}
+            {!isNarrow && (
             <div className="hidden md:block relative">
                 {/* スライドコンテナ */}
                 <div className="relative min-h-[500px]">
@@ -230,6 +242,7 @@ export default function StrengthCards() {
                     </button>
                 </div>
             </div>
+            )}
         </div>
     )
 }
@@ -252,17 +265,15 @@ const SlideItem = ({ slide, isActive }: SlideItemProps) => {
             <div className="grid grid-cols-2 gap-0 h-full w-full">
                 {/* 画像エリア */}
                 <div
-                    className={`relative h-auto rounded-2xl overflow-hidden ${isImageLeft ? 'order-1' : 'order-2'
+                    className={`relative h-full min-h-0 rounded-2xl overflow-hidden ${isImageLeft ? 'order-1' : 'order-2'
                         }`}
                 >
-                    <div
-                        className="absolute inset-0"
-                        style={{
-                            backgroundImage: `url(${slide.imagePath})`,
-                            backgroundSize: 'cover',
-                            backgroundPosition: 'center',
-                            backgroundRepeat: 'no-repeat',
-                        }}
+                    <Image
+                        src={slide.imagePath}
+                        alt=""
+                        fill
+                        className="object-cover object-center"
+                        sizes="50vw"
                     />
                     {/* PC用の軽いグラデーションオーバーレイ */}
                     <div

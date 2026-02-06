@@ -17,6 +17,9 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="ja">
+            <head>
+                <link rel="preload" href="/images/AdobeStock_321344810.jpeg" as="image" />
+            </head>
             <body className={inter.className} suppressHydrationWarning>
                 <Layout>{children}</Layout>
             </body>
