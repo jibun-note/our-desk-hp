@@ -1,6 +1,5 @@
 import SplitText from '@/components/ui/SplitText'
 import ParticlesSection from '@/components/sections/ParticlesSection'
-import LazySection from '@/components/sections/LazySection'
 import { type StackCardItem } from '@/components/sections/StackCardsSection'
 import StackCardsSectionBlock from '@/components/sections/StackCardsSectionBlock'
 import { type StrengthCardItem } from '@/components/sections/StrengthCards'
@@ -164,11 +163,9 @@ export default function Home() {
                 {/* セクション2: 「働きたい」を、ちゃんと育てる */}
                 <section className="relative pt-16  px-4 md:pt-40 md:pb-40 md:px-6">
                     <div className="absolute inset-0 z-25 pointer-events-none">
-                        <LazySection placeholderHeight="100%" rootMargin="400px">
-                            <div className="absolute inset-0 w-full h-full">
-                                <ParticlesSection />
-                            </div>
-                        </LazySection>
+                        <div className="absolute inset-0 w-full h-full">
+                            <ParticlesSection />
+                        </div>
                     </div>
                     <div className="flex flex-col items-center justify-center container mx-auto max-w-4xl relative z-10">
                         <h2 className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-balance text-center">
