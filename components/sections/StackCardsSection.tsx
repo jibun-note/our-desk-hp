@@ -70,7 +70,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
             {/* 背景画像（Next.js Image で最適化・プリロード） */}
             <div className="absolute inset-0 z-0 rounded-3xl overflow-hidden bg-[#FFF8E7] md:hidden">
                 <Image
-                    src="/images/stack-cards/01.jpeg"
+                    src="/images/stack-cards/00.jpeg"
                     alt="OurDeskの取り組みセクションの背景"
                     fill
                     className="object-cover object-center"
