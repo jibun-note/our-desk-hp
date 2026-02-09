@@ -1,4 +1,4 @@
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
 import Layout from '@/components/layout/Layout'
@@ -6,9 +6,12 @@ import JsonLd from '@/components/seo/JsonLd'
 
 const inter = Inter({ subsets: ['latin'] })
 
+export const viewport: Viewport = {
+    themeColor: '#F08300',
+}
+
 export const metadata: Metadata = {
     metadataBase: new URL('https://our-desk.co.jp'),
-    themeColor: '#F08300',
     title: {
         default: 'OurDesk株式会社',
         template: '%s | OurDesk株式会社',
