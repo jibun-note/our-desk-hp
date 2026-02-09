@@ -14,6 +14,8 @@ html {
 body {
 	color: #333333;
 	background: #ffffff;
+	overflow-x: hidden;
+	max-width: 100%;
 }
 
 /* ヒーロー用テキストグラデーション (#FDD000 → #F08300) */

@@ -43,7 +43,7 @@ export default function Home() {
 
 
     return (
-        <main className="min-h-screen">
+        <main className="min-h-screen overflow-x-hidden">
             {/* セクション1: アイキャッチ */}
             <section className="relative md:bg-white min-h-[50vh] md:min-h-[80vh] py-12 md:py-20 overflow-hidden">
                 {/* 動画コンテナ */}
