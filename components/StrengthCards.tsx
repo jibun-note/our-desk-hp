@@ -2,10 +2,11 @@
 
 import { motion } from 'motion/react'
 import Image from 'next/image'
-import React, { useCallback, useEffect, useState, useLayoutEffect } from 'react'
-import { useSwipeable } from 'react-swipeable'
+import React, { useCallback, useEffect, useRef, useState, useLayoutEffect } from 'react'
 
 const MOBILE_BREAKPOINT = 768
+const DRAG_THRESHOLD_PX = 60
+const DRAG_CLAMP_RATIO = 0.5
 
 // スライドの型定義
 type Slide = {
@@ -26,6 +27,14 @@ export default function StrengthCards() {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [isHovered, setIsHovered] = useState(false)
     const [isNarrow, setIsNarrow] = useState(true)
+    const [dragX, setDragX] = useState(0)
+    const [isDragging, setIsDragging] = useState(false)
+    const [containerWidth, setContainerWidth] = useState(0)
+    const carouselRef = useRef<HTMLDivElement>(null)
+    const touchStartX = useRef(0)
+    const touchStartY = useRef(0)
+    const dragXRef = useRef(0)
+    dragXRef.current = dragX
 
     useLayoutEffect(() => {
         const check = () => setIsNarrow(typeof window !== 'undefined' && window.innerWidth < MOBILE_BREAKPOINT)
@@ -33,6 +42,16 @@ export default function StrengthCards() {
         window.addEventListener('resize', check)
         return () => window.removeEventListener('resize', check)
     }, [])
+
+    useLayoutEffect(() => {
+        const el = carouselRef.current
+        if (!el) return
+        const update = () => setContainerWidth(el.offsetWidth)
+        update()
+        const ro = new ResizeObserver(update)
+        ro.observe(el)
+        return () => ro.disconnect()
+    }, [isNarrow])
 
     const slides: Slide[] = [
         {
@@ -64,7 +83,7 @@ export default function StrengthCards() {
 
         const interval = setInterval(() => {
             setCurrentSlide((prev) => (prev + 1) % slides.length)
-        }, 4000)
+        }, 7000)
 
         return () => clearInterval(interval)
     }, [isHovered])
@@ -81,11 +100,45 @@ export default function StrengthCards() {
         setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
     }, [])
 
-    // モバイル用スワイプハンドラ
-    const swipeHandlers = useSwipeable({
-        onSwipedLeft: () => nextSlide(),
-        onSwipedRight: () => prevSlide(),
-    })
+    const commitNext = useCallback(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length)
+        setDragX((dx) => dx + containerWidth)
+        requestAnimationFrame(() => setDragX(0))
+    }, [containerWidth])
+
+    const commitPrev = useCallback(() => {
+        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
+        setDragX((dx) => dx - containerWidth)
+        requestAnimationFrame(() => setDragX(0))
+    }, [containerWidth])
+
+    const handleTouchStart = useCallback((e: React.TouchEvent) => {
+        if (e.touches.length === 0) return
+        touchStartX.current = e.touches[0].clientX
+        touchStartY.current = e.touches[0].clientY
+        setIsDragging(true)
+    }, [])
+
+    const handleTouchMove = useCallback(
+        (e: React.TouchEvent) => {
+            if (e.touches.length === 0) return
+            const dx = e.touches[0].clientX - touchStartX.current
+            const dy = e.touches[0].clientY - touchStartY.current
+            const maxDrag = containerWidth * DRAG_CLAMP_RATIO
+            const clamped = Math.max(-maxDrag, Math.min(maxDrag, dx))
+            setDragX(clamped)
+            if (Math.abs(dx) > Math.abs(dy)) e.preventDefault()
+        },
+        [containerWidth]
+    )
+
+    const handleTouchEnd = useCallback(() => {
+        setIsDragging(false)
+        const dx = dragXRef.current
+        if (dx < -DRAG_THRESHOLD_PX) commitNext()
+        else if (dx > DRAG_THRESHOLD_PX) commitPrev()
+        else setDragX(0)
+    }, [commitNext, commitPrev])
 
     return (
         <div
@@ -107,65 +160,86 @@ export default function StrengthCards() {
                         </h2>
                     </div>
 
-                    {/* スライドコンテナ（スワイプ対応） */}
-                    <div className="relative" style={{ minHeight: '500px' }} {...swipeHandlers}>
-                        {slides.map((slide, index) => (
+                    {/* スライドコンテナ（スワイプに追従するドラッグアニメーション）。ここで始まったスワイプは画像切り替えのみで次セクションへ飛ばない */}
+                    <div
+                        ref={carouselRef}
+                        className="relative overflow-hidden touch-pan-y"
+                        style={{ minHeight: '500px' }}
+                        data-swipe-carousel
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                        onTouchCancel={handleTouchEnd}
+                    >
+                        {containerWidth > 0 ? (
                             <motion.div
-                                key={index}
-                                className="absolute inset-0 px-4"
-                                initial={{ opacity: 0, x: 20 }}
-                                animate={{
-                                    opacity: index === currentSlide ? 1 : 0,
-                                    x: index === currentSlide ? 0 : 20,
-                                    pointerEvents: index === currentSlide ? 'auto' : 'none'
-                                }}
-                                transition={{ duration: 0.8, ease: 'easeInOut' }}
+                                className="flex"
+                                style={{ width: slides.length * containerWidth }}
+                                animate={{ x: -currentSlide * containerWidth + dragX }}
+                                transition={
+                                    isDragging
+                                        ? { duration: 0 }
+                                        : { type: 'spring', stiffness: 400, damping: 35 }
+                                }
                             >
-                                <div className="relative h-full">
-                                    {/* 画像エリア */}
-                                    <div className="relative h-[380px] rounded-2xl overflow-hidden shadow-xl mb-4">
-                                        <Image
-                                            src={slide.imagePath}
-                                            alt=""
-                                            fill
-                                            className="object-cover object-center"
-                                            sizes="100vw"
-                                        />
+                                {slides.map((slide, index) => (
+                                    <div
+                                        key={index}
+                                        className="flex-shrink-0 px-4"
+                                        style={{ width: containerWidth }}
+                                    >
+                                        <div className="relative h-full w-full">
+                                            {/* 画像エリア */}
+                                            <div className="relative w-full h-[380px] rounded-2xl overflow-hidden shadow-xl mb-4">
+                                                <Image
+                                                    src={slide.imagePath}
+                                                    alt=""
+                                                    fill
+                                                    className="object-cover object-center"
+                                                    sizes="100vw"
+                                                />
 
-                                        {/* オーバーレイ - 上部を暗く（白文字の視認性向上） */}
-                                        <div
-                                            className="absolute inset-0"
-                                            style={{
-                                                background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 40%, transparent 60%, rgba(0,0,0,0.6) 100%)'
-                                            }}
-                                        />
+                                                {/* オーバーレイ - 上部を暗く（白文字の視認性向上） */}
+                                                <div
+                                                    className="absolute inset-0"
+                                                    style={{
+                                                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 40%, transparent 60%, rgba(0,0,0,0.6) 100%)'
+                                                    }}
+                                                />
 
-                                        {/* カード内タイトル - 下部 */}
-                                        <div className="absolute bottom-0 left-0 right-0 p-6">
-                                            <div className="mb-2">
-                                                <span className="text-xs font-semibold tracking-wider text-yellow-400">
-                                                    POINT {String(slide.step).padStart(2, '0')}
-                                                </span>
+                                                {/* カード内タイトル - 下部 */}
+                                                <div className="absolute bottom-0 left-0 right-0 p-6">
+                                                    <div className="mb-2">
+                                                        <span className="text-xs font-semibold tracking-wider text-yellow-400">
+                                                            POINT {String(slide.step).padStart(2, '0')}
+                                                        </span>
+                                                    </div>
+                                                    <h3 className="text-2xl font-bold text-white leading-tight mb-3">
+                                                        {slide.title}
+                                                    </h3>
+                                                    <div
+                                                        className="w-12 h-1"
+                                                        style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
+                                                    />
+                                                </div>
                                             </div>
-                                            <h3 className="text-2xl font-bold text-white leading-tight mb-3">
-                                                {slide.title}
-                                            </h3>
-                                            <div
-                                                className="w-12 h-1"
-                                                style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
-                                            />
+
+                                            {/* 説明文エリア - 画像の下 */}
+                                            <div className="px-2 mb-4">
+                                                <p className="text-base text-gray-700 leading-relaxed">
+                                                    {slide.description}
+                                                </p>
+                                            </div>
                                         </div>
                                     </div>
-
-                                    {/* 説明文エリア - 画像の下 */}
-                                    <div className="px-2 mb-4">
-                                        <p className="text-base text-gray-700 leading-relaxed">
-                                            {slide.description}
-                                        </p>
-                                    </div>
-                                </div>
+                                ))}
                             </motion.div>
-                        ))}
+                        ) : (
+                            /* 幅取得前のフォールバック */
+                            <div className="absolute inset-0 px-4">
+                                <div className="relative h-[380px] rounded-2xl overflow-hidden shadow-xl mb-4 bg-gray-200" />
+                            </div>
+                        )}
                     </div>
 
                     {/* インジケーター - 説明文のすぐ下に固定配置（スライドの外） */}
@@ -260,7 +334,7 @@ const SlideItem = ({ slide, isActive }: SlideItemProps) => {
                 y: isActive ? 0 : 20,
                 pointerEvents: isActive ? 'auto' : 'none'
             }}
-            transition={{ duration: 0.8, ease: 'easeInOut' }}
+            transition={{ duration: 1.2, ease: 'easeInOut' }}
         >
             <div className="grid grid-cols-2 gap-0 h-full w-full">
                 {/* 画像エリア */}

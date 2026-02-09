@@ -50,6 +50,8 @@ export default function Home() {
 
     return (
         <main className="min-h-screen">
+            {/* 横スクロール防止（スタックセクションは overflow の外に出して sticky を維持） */}
+            <div className="overflow-x-hidden">
             {/* セクション1: アイキャッチ */}
             <section className="relative md:bg-white min-h-[50vh] md:min-h-[80vh] py-12 md:py-20 overflow-hidden">
                 {/* 動画コンテナ */}
@@ -188,12 +190,15 @@ export default function Home() {
             <div className="hidden md:block">
                 <SectionWave position="top" />
             </div>
+            </div>
             {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
             <LazySection placeholderHeight="250vh" rootMargin="800px">
                 <StackCardsWithFixedMarquee cards={stackCards} />
             </LazySection>
+            <div className="overflow-x-hidden">
             <div className="hidden md:block">
                 <SectionWave position="bottom" />
+            </div>
             </div>
 
 
