@@ -57,7 +57,7 @@ export default function StrengthSection({ cards }: Props) {
     return (
         <>
             {/* セクション3: OurDeskの強み（スマホで左スワイプで次セクションへ） */}
-            <section className="relative pt-20 pb-12 md:py-20 md:mb-20" aria-label="OurDeskの強み">
+            <section className="relative pt-20 pb-6 md:py-20 md:mb-20" aria-label="OurDeskの強み">
                 <LazySection placeholderHeight="650px" rootMargin="400px">
                     <MobileSwipeToNextSection targetSectionId="stack-cards-section">
                         <Section3HeadingDesktop />
