@@ -1,4 +1,4 @@
-const BASE_URL = 'https://our-desk.co.jp'
+import { BASE_URL } from '@/lib/seo'
 
 const organizationJsonLd = {
     '@context': 'https://schema.org',

@@ -128,7 +128,7 @@ npx serve@latest out
 本プロジェクトでは以下のSEO対応を実施しています（ベース URL: `https://our-desk.co.jp`）。
 
 - **メタデータ**: 各ページの title・description、OG/Twitter カード、canonical を設定。ルートは `app/layout.tsx`、静的ページは `lib/seo.ts` の `createPageMetadata` で統一。
-- **サイトマップ**: `public/sitemap.xml` を静的ファイルとして配置。ビルド時に `out/sitemap.xml` に含まれ、本番では `https://our-desk.co.jp/sitemap.xml` で配信。
+- **サイトマップ**: `app/sitemap.ts` でビルド時にサイトマップを生成。`output: 'export'` 対応のため `dynamic = 'force-static'` を指定。新規ページ追加時は `app/sitemap.ts` の `ROUTES` 配列にパス・changefreq・priority を追加すること。
 - **robots.txt**: `public/robots.txt` を静的ファイルとして配置。ビルド時に `out/robots.txt` に含まれ、本番では `https://our-desk.co.jp/robots.txt` で配信。
 - **構造化データ**: Organization および WebSite の JSON-LD を `components/JsonLd.tsx` で定義し、ルートレイアウト（`app/layout.tsx`）の `<head>` 内で出力。
 
@@ -147,6 +147,7 @@ our-desk-hp/
 │   │   ├── recruit/       # Recruitページ
 │   │   ├── contact/       # お問い合わせページ
 │   │   └── privacy/       # プライバシーポリシーページ
+│   ├── sitemap.ts         # サイトマップ生成（ビルド時に /sitemap.xml を出力）
 │   ├── not-found.tsx      # 404ページ
 │   └── globals.css        # グローバルスタイル
 ├── components/            # 再利用可能なコンポーネント
@@ -168,7 +169,6 @@ our-desk-hp/
 │   │   ├── strength-cards/
 │   │   ├── stack-cards/
 │   │   └── about-us/
-│   ├── sitemap.xml        # サイトマップ（静的エクスポート用）
 │   ├── robots.txt         # robots.txt（静的エクスポート用）
 │   └── .htaccess          # Apache設定ファイル
 └── ...設定ファイル

@@ -1,4 +1,5 @@
 import HeroSection from '@/components/sections/HeroSection'
+import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import GradientHeading from '@/components/ui/GradientHeading'
 import { createPageMetadata } from '@/lib/seo'
 import Image from 'next/image'
@@ -11,7 +12,9 @@ export const metadata = createPageMetadata(
 
 export default function AboutUsPage() {
     return (
-        <main className="min-h-screen bg-white">
+        <>
+            <BreadcrumbJsonLdServer path="/about-us/" name="About Us" />
+            <main className="min-h-screen bg-white">
             {/* 1. ヒーローセクション（Companyページと同じスタイル） */}
             <HeroSection title="About Us" description="OurDeskについて" />
 
@@ -262,5 +265,6 @@ export default function AboutUsPage() {
                 </div>
             </section>
         </main>
+        </>
     )
 }
