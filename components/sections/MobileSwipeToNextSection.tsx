@@ -12,7 +12,7 @@ type Props = {
     targetSectionId: string
 }
 
-export default function SwipeToNextSection({ children, targetSectionId }: Props) {
+export default function MobileSwipeToNextSection({ children, targetSectionId }: Props) {
     const touchStartX = useRef<number | null>(null)
     const touchStartedOnCarousel = useRef(false)
 

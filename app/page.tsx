@@ -2,11 +2,10 @@ import SplitText from '@/components/ui/SplitText'
 import ParticlesSection from '@/components/sections/ParticlesSection'
 import LazySection from '@/components/sections/LazySection'
 import { type StackCardItem } from '@/components/sections/StackCardsSection'
-import StackCardsWithFixedMarquee from '@/components/sections/StackCardsWithFixedMarquee'
-import StrengthCards from '@/components/sections/StrengthCards'
-import SwipeToNextSection from '@/components/sections/SwipeToNextSection'
+import StackCardsSectionBlock from '@/components/sections/StackCardsSectionBlock'
+import { type StrengthCardItem } from '@/components/sections/StrengthCards'
+import StrengthSection from '@/components/sections/StrengthSection'
 import { contentWithLineBreaks } from '@/lib/contentHighlight'
-import SectionWave from '@/components/sections/SectionWave'
 
 const stackCards: StackCardItem[] = [
     {
@@ -44,6 +43,33 @@ const stackCards: StackCardItem[] = [
     },
 ]
 
+const strengthCards: StrengthCardItem[] = [
+    {
+        step: 1,
+        title: '学びの場を提供',
+        description: '女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。経験がなくても、ここから始められます。',
+        imagePath: '/images/strength-cards/01.jpeg',
+        imagePosition: 'left',
+        imageAlt: '女性向け研修で学ぶ様子',
+    },
+    {
+        step: 2,
+        title: 'キャリア面談',
+        description: '国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。あなたらしいキャリアを見つけましょう。',
+        imagePath: '/images/strength-cards/02.jpeg',
+        imagePosition: 'right',
+        imageAlt: 'キャリア面談の様子',
+    },
+    {
+        step: 3,
+        title: '仕事につなげる',
+        description: 'その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。',
+        imagePath: '/images/strength-cards/03.jpeg',
+        imagePosition: 'left',
+        imageAlt: '仕事につなげるサポートの様子',
+    },
+]
+
 const SITE_URL = 'https://our-desk.co.jp'
 
 export const metadata = {
@@ -61,12 +87,11 @@ export const metadata = {
 }
 
 export default function Home() {
-
-
     return (
         <main className="min-h-screen">
             {/* 横スクロール防止（スタックセクションは overflow の外に出して sticky を維持） */}
             <div className="overflow-x-hidden">
+
                 {/* セクション1: アイキャッチ */}
                 <section className="relative md:bg-white min-h-[50vh] md:min-h-[80vh] py-12 md:py-20 overflow-hidden">
                     {/* 動画コンテナ */}
@@ -166,55 +191,13 @@ export default function Home() {
                     </div>
                 </section>
 
-                {/* セクション3: OurDeskの強み（スマホで左スワイプで次セクションへ） */}
-                <LazySection placeholderHeight="650px" rootMargin="600px">
-                    <SwipeToNextSection targetSectionId="stack-cards-section">
-                        <section className="relative pt-20 pb-12 md:py-20 md:mb-20">
-                            {/* 見出しと説明文 - PCのみ表示 */}
-                            <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                                <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
-                                <div
-                                    className="w-20 h-1 mx-auto mb-4"
-                                    style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
-                                />
-                                <div className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
-                                    <SplitText
-                                        text="OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。"
-                                        html='OurDeskは、伴走型キャリア支援という仕組みを通して、<br />女性の<span class="text-gradient-hero">「働きたい」</span>を育てています。'
-                                        tag="p"
-                                        className="leading-relaxed"
-                                        splitType="chars"
-                                        delay={30}
-                                        duration={0.8}
-                                        ease="power3.out"
-                                        from={{ opacity: 0, y: 20 }}
-                                        to={{ opacity: 1, y: 0 }}
-                                        threshold={0.1}
-                                        rootMargin="-50px"
-                                    />
-                                </div>
-                            </div>
-                            {/* 画像を横いっぱいに表示 */}
-                            <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[2000px] mx-auto px-0 md:px-6">
-                                <StrengthCards />
-                            </div>
-                        </section>
-                    </SwipeToNextSection>
-                </LazySection>
+                {/* セクション3: OurDeskの強み */}
+                <StrengthSection cards={strengthCards} />
 
-                <div className="hidden md:block">
-                    <SectionWave position="top" />
-                </div>
             </div>
-            {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
-            <LazySection placeholderHeight="250vh" rootMargin="800px">
-                <StackCardsWithFixedMarquee cards={stackCards} />
-            </LazySection>
-            <div className="overflow-x-hidden">
-                <div className="hidden md:block">
-                    <SectionWave position="bottom" />
-                </div>
-            </div>
+
+            {/* セクション4: カードがスクロールするセクション（OurDesk マーキー付き） */}
+            <StackCardsSectionBlock cards={stackCards} />
 
 
         </main>

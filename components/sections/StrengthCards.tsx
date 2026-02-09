@@ -8,8 +8,15 @@ const MOBILE_BREAKPOINT = 768
 const DRAG_THRESHOLD_PX = 60
 const DRAG_CLAMP_RATIO = 0.5
 
-// スライドの型定義
-type Slide = {
+/** 表示中＋隣1枚だけ画像をマウントするか */
+function shouldLoadImage(index: number, currentSlide: number, total: number): boolean {
+    if (total <= 0) return false
+    const prev = (currentSlide - 1 + total) % total
+    const next = (currentSlide + 1) % total
+    return index === currentSlide || index === prev || index === next
+}
+
+export type StrengthCardItem = {
     step: number
     title: string
     description: string
@@ -18,13 +25,19 @@ type Slide = {
     imageAlt: string
 }
 
-// 個別のスライドコンポーネントの型定義
 type SlideItemProps = {
-    slide: Slide
+    slide: StrengthCardItem
     isActive: boolean
+    currentSlide: number
+    slideIndex: number
+    slidesLength: number
 }
 
-export default function StrengthCards() {
+type Props = {
+    cards: StrengthCardItem[]
+}
+
+export default function StrengthCards({ cards }: Props) {
     const [currentSlide, setCurrentSlide] = useState(0)
     const [isHovered, setIsHovered] = useState(false)
     const [isNarrow, setIsNarrow] = useState(true)
@@ -54,67 +67,38 @@ export default function StrengthCards() {
         return () => ro.disconnect()
     }, [isNarrow])
 
-    const slides: Slide[] = [
-        {
-            step: 1,
-            title: '学びの場を提供',
-            description: '女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。経験がなくても、ここから始められます。',
-            imagePath: '/images/strength-cards/01.jpeg',
-            imagePosition: 'left',
-            imageAlt: '女性向け研修で学ぶ様子',
-        },
-        {
-            step: 2,
-            title: 'キャリア面談',
-            description: '国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。あなたらしいキャリアを見つけましょう。',
-            imagePath: '/images/strength-cards/02.jpeg',
-            imagePosition: 'right',
-            imageAlt: 'キャリア面談の様子',
-        },
-        {
-            step: 3,
-            title: '仕事につなげる',
-            description: 'その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。',
-            imagePath: '/images/strength-cards/03.jpeg',
-            imagePosition: 'left',
-            imageAlt: '仕事につなげるサポートの様子',
-        },
-    ]
-
     // 自動スライド制御（スマホのみ）
     useEffect(() => {
         if (isHovered) return
 
         const interval = setInterval(() => {
-            setCurrentSlide((prev) => (prev + 1) % slides.length)
+            setCurrentSlide((prev) => (prev + 1) % cards.length)
         }, 7000)
 
         return () => clearInterval(interval)
-    }, [isHovered])
+    }, [isHovered, cards.length])
 
     const goToSlide = useCallback((index: number) => {
         setCurrentSlide(index)
     }, [])
 
     const nextSlide = useCallback(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length)
-    }, [])
+        setCurrentSlide((prev) => (prev + 1) % cards.length)
+    }, [cards.length])
 
     const prevSlide = useCallback(() => {
-        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-    }, [])
+        setCurrentSlide((prev) => (prev - 1 + cards.length) % cards.length)
+    }, [cards.length])
 
     const commitNext = useCallback(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length)
-        setDragX((dx) => dx + containerWidth)
-        requestAnimationFrame(() => setDragX(0))
-    }, [containerWidth])
+        setCurrentSlide((prev) => (prev + 1) % cards.length)
+        setDragX(0)
+    }, [cards.length])
 
     const commitPrev = useCallback(() => {
-        setCurrentSlide((prev) => (prev - 1 + slides.length) % slides.length)
-        setDragX((dx) => dx - containerWidth)
-        requestAnimationFrame(() => setDragX(0))
-    }, [containerWidth])
+        setCurrentSlide((prev) => (prev - 1 + cards.length) % cards.length)
+        setDragX(0)
+    }, [cards.length])
 
     const handleTouchStart = useCallback((e: React.TouchEvent) => {
         if (e.touches.length === 0) return
@@ -143,6 +127,8 @@ export default function StrengthCards() {
         else if (dx > DRAG_THRESHOLD_PX) commitPrev()
         else setDragX(0)
     }, [commitNext, commitPrev])
+
+    if (cards.length === 0) return null
 
     return (
         <div
@@ -176,40 +162,44 @@ export default function StrengthCards() {
                         onTouchCancel={handleTouchEnd}
                     >
                         {containerWidth > 0 ? (
-                            <motion.div
+                            <div
                                 className="flex"
-                                style={{ width: slides.length * containerWidth }}
-                                animate={{ x: -currentSlide * containerWidth + dragX }}
-                                transition={
-                                    isDragging
-                                        ? { duration: 0 }
-                                        : { type: 'spring', stiffness: 400, damping: 35 }
-                                }
+                                style={{
+                                    width: cards.length * containerWidth,
+                                    transform: `translateX(${-currentSlide * containerWidth + dragX}px)`,
+                                    transition: isDragging ? 'none' : 'transform 0.25s ease-out',
+                                    willChange: isDragging ? 'transform' : 'auto',
+                                }}
                             >
-                                {slides.map((slide, index) => (
+                                {cards.map((slide, index) => (
                                     <div
                                         key={index}
                                         className="flex-shrink-0 px-4"
                                         style={{ width: containerWidth }}
                                     >
                                         <div className="relative h-full w-full">
-                                            {/* 画像エリア */}
+                                            {/* 画像エリア（表示中＋隣のみ Image、他はプレースホルダー） */}
                                             <div className="relative w-full h-[380px] rounded-2xl overflow-hidden shadow-xl mb-4">
-                                                <Image
-                                                    src={slide.imagePath}
-                                                    alt={slide.imageAlt}
-                                                    fill
-                                                    className="object-cover object-center"
-                                                    sizes="100vw"
-                                                />
-
-                                                {/* オーバーレイ - 上部を暗く（白文字の視認性向上） */}
-                                                <div
-                                                    className="absolute inset-0"
-                                                    style={{
-                                                        background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 40%, transparent 60%, rgba(0,0,0,0.6) 100%)'
-                                                    }}
-                                                />
+                                                {shouldLoadImage(index, currentSlide, cards.length) ? (
+                                                    <>
+                                                        <Image
+                                                            src={slide.imagePath}
+                                                            alt={slide.imageAlt}
+                                                            fill
+                                                            className="object-cover object-center"
+                                                            sizes="100vw"
+                                                        />
+                                                        {/* オーバーレイ - 上部を暗く（白文字の視認性向上） */}
+                                                        <div
+                                                            className="absolute inset-0"
+                                                            style={{
+                                                                background: 'linear-gradient(to bottom, rgba(0,0,0,0.3) 0%, rgba(0,0,0,0.1) 40%, transparent 60%, rgba(0,0,0,0.6) 100%)'
+                                                            }}
+                                                        />
+                                                    </>
+                                                ) : (
+                                                    <div className="absolute inset-0 bg-gray-200" aria-hidden />
+                                                )}
 
                                                 {/* カード内タイトル - 下部 */}
                                                 <div className="absolute bottom-0 left-0 right-0 p-6">
@@ -237,7 +227,7 @@ export default function StrengthCards() {
                                         </div>
                                     </div>
                                 ))}
-                            </motion.div>
+                            </div>
                         ) : (
                             /* 幅取得前のフォールバック */
                             <div className="absolute inset-0 px-4">
@@ -248,7 +238,7 @@ export default function StrengthCards() {
 
                     {/* インジケーター - 説明文のすぐ下に固定配置（スライドの外） */}
                     <div className="flex justify-center gap-2 mt-2 px-4">
-                        {slides.map((_, slideIndex) => (
+                        {cards.map((_, slideIndex) => (
                             <button
                                 key={slideIndex}
                                 onClick={() => goToSlide(slideIndex)}
@@ -271,11 +261,14 @@ export default function StrengthCards() {
             <div className="hidden md:block relative">
                 {/* スライドコンテナ */}
                 <div className="relative min-h-[500px]">
-                    {slides.map((slide, index) => (
+                    {cards.map((slide, index) => (
                         <SlideItem
                             key={index}
                             slide={slide}
                             isActive={index === currentSlide}
+                            currentSlide={currentSlide}
+                            slideIndex={index}
+                            slidesLength={cards.length}
                         />
                     ))}
                 </div>
@@ -294,7 +287,7 @@ export default function StrengthCards() {
 
                     {/* インジケーター（カプセル型） */}
                     <div className="flex gap-3 py-2">
-                        {slides.map((_, index) => (
+                        {cards.map((_, index) => (
                             <button
                                 key={index}
                                 onClick={() => goToSlide(index)}
@@ -325,9 +318,10 @@ export default function StrengthCards() {
     )
 }
 
-// 個別のスライドコンポーネント
-const SlideItem = ({ slide, isActive }: SlideItemProps) => {
+// 個別のスライドコンポーネント（画像は表示中＋隣のみマウント）
+const SlideItem = ({ slide, isActive, currentSlide, slideIndex, slidesLength }: SlideItemProps) => {
     const isImageLeft = slide.imagePosition === 'left'
+    const showImage = shouldLoadImage(slideIndex, currentSlide, slidesLength)
 
     return (
         <motion.div
@@ -341,25 +335,31 @@ const SlideItem = ({ slide, isActive }: SlideItemProps) => {
             transition={{ duration: 1.2, ease: 'easeInOut' }}
         >
             <div className="grid grid-cols-2 gap-0 h-full w-full">
-                {/* 画像エリア */}
+                {/* 画像エリア（表示中＋隣のみ Image） */}
                 <div
                     className={`relative h-full min-h-0 rounded-2xl overflow-hidden ${isImageLeft ? 'order-1' : 'order-2'
                         }`}
                 >
-                    <Image
-                        src={slide.imagePath}
-                        alt={slide.imageAlt}
-                        fill
-                        className="object-cover object-center"
-                        sizes="50vw"
-                    />
-                    {/* PC用の軽いグラデーションオーバーレイ */}
-                    <div
-                        className="absolute inset-0"
-                        style={{
-                            background: 'linear-gradient(to top, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.10) 100%)'
-                        }}
-                    />
+                    {showImage ? (
+                        <>
+                            <Image
+                                src={slide.imagePath}
+                                alt={slide.imageAlt}
+                                fill
+                                className="object-cover object-center"
+                                sizes="50vw"
+                            />
+                            {/* PC用の軽いグラデーションオーバーレイ */}
+                            <div
+                                className="absolute inset-0"
+                                style={{
+                                    background: 'linear-gradient(to top, rgba(0,0,0,0.20) 0%, rgba(0,0,0,0.10) 100%)'
+                                }}
+                            />
+                        </>
+                    ) : (
+                        <div className="absolute inset-0 bg-gray-200" aria-hidden />
+                    )}
                 </div>
 
                 {/* PC時の説明エリア */}
