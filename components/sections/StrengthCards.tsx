@@ -1,8 +1,9 @@
 'use client'
 
 import Image from 'next/image'
-import React from 'react'
+import { useEffect, useState } from 'react'
 import {
+    type CarouselApi,
     Carousel,
     CarouselContent,
     CarouselItem,
@@ -27,9 +28,11 @@ type Props = {
 function StrengthSlide({
     slide,
     showImage,
+    priority = false,
 }: {
     slide: StrengthCardItem
     showImage: boolean
+    priority?: boolean
 }) {
     const isImageLeft = slide.imagePosition === 'left'
     return (
@@ -57,6 +60,7 @@ function StrengthSlide({
                                 fill
                                 className="object-cover object-center"
                                 sizes="(max-width: 768px) 100vw, 50vw"
+                                priority={priority}
                             />
                             <div
                                 className="absolute inset-0"
@@ -150,17 +154,35 @@ function StrengthCardsNav({ cardsLength }: { cardsLength: number }) {
 }
 
 export default function StrengthCards({ cards }: Props) {
+    const [emblaApi, setEmblaApi] = useState<CarouselApi | null>(null)
+
+    useEffect(() => {
+        if (!emblaApi) return
+        const onLoad = () => emblaApi.reInit()
+        if (document.readyState === 'complete') {
+            onLoad()
+        } else {
+            window.addEventListener('load', onLoad)
+            return () => window.removeEventListener('load', onLoad)
+        }
+    }, [emblaApi])
+
     if (cards.length === 0) return null
 
     return (
         <div className="relative">
-            <div data-swipe-carousel className="relative" style={{ minHeight: '500px' }}>
+            <div
+                data-swipe-carousel
+                className="relative [touch-action:pan-y_pinch-zoom]"
+                style={{ minHeight: '500px' }}
+            >
                 <Carousel
                     opts={{
                         align: 'start',
                         loop: true,
                     }}
                     className="w-full"
+                    setApi={setEmblaApi}
                 >
                     <CarouselContent className="ml-0">
                         {cards.map((slide, index) => (
@@ -168,6 +190,7 @@ export default function StrengthCards({ cards }: Props) {
                                 <StrengthSlide
                                     slide={slide}
                                     showImage={true}
+                                    priority={index <= 1}
                                 />
                             </CarouselItem>
                         ))}
