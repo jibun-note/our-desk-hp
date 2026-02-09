@@ -12,8 +12,6 @@ html {
 body {
 	color: #333333;
 	background: #ffffff;
-	overflow-x: hidden;
-	max-width: 100%;
 }
 
 /* アンカーリンク・scrollIntoView 時に固定ヘッダー分の余白を確保 */
