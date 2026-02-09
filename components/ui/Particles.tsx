@@ -17,6 +17,8 @@ interface ParticlesProps {
     disableRotation?: boolean;
     pixelRatio?: number;
     className?: string;
+    /** true のとき、ビューポート外では requestAnimationFrame を止める */
+    pauseWhenHidden?: boolean;
 }
 
 const defaultColors: string[] = ['#ffffff', '#ffffff', '#ffffff'];
@@ -115,10 +117,12 @@ const Particles: React.FC<ParticlesProps> = ({
     cameraDistance = 20,
     disableRotation = false,
     pixelRatio = 1,
-    className
+    className,
+    pauseWhenHidden = false
 }) => {
     const containerRef = useRef<HTMLDivElement>(null);
     const mouseRef = useRef<{ x: number; y: number }>({ x: 0, y: 0 });
+    const isVisibleRef = useRef(true);
 
     useEffect(() => {
         const container = containerRef.current;
@@ -201,11 +205,15 @@ const Particles: React.FC<ParticlesProps> = ({
 
         const particles = new Mesh(gl, { mode: gl.POINTS, geometry, program });
 
-        let animationFrameId: number;
+        let animationFrameId: number | null = null;
         let lastTime = performance.now();
         let elapsed = 0;
 
         const update = (t: number) => {
+            if (pauseWhenHidden && !isVisibleRef.current) {
+                animationFrameId = null;
+                return;
+            }
             animationFrameId = requestAnimationFrame(update);
             const delta = t - lastTime;
             lastTime = t;
@@ -230,14 +238,38 @@ const Particles: React.FC<ParticlesProps> = ({
             renderer.render({ scene: particles, camera });
         };
 
+        const startLoop = () => {
+            if (animationFrameId == null) {
+                lastTime = performance.now();
+                animationFrameId = requestAnimationFrame(update);
+            }
+        };
+
+        let io: IntersectionObserver | null = null;
+        if (pauseWhenHidden) {
+            io = new IntersectionObserver(
+                ([entry]) => {
+                    isVisibleRef.current = entry.isIntersecting;
+                    if (entry.isIntersecting) {
+                        startLoop();
+                    }
+                },
+                { threshold: 0 }
+            );
+            io.observe(container);
+        }
+
         animationFrameId = requestAnimationFrame(update);
 
         return () => {
+            io?.disconnect();
             window.removeEventListener('resize', resize);
             if (moveParticlesOnHover) {
                 container.removeEventListener('mousemove', handleMouseMove);
             }
-            cancelAnimationFrame(animationFrameId);
+            if (animationFrameId != null) {
+                cancelAnimationFrame(animationFrameId);
+            }
             if (container.contains(gl.canvas)) {
                 container.removeChild(gl.canvas);
             }
@@ -254,7 +286,8 @@ const Particles: React.FC<ParticlesProps> = ({
         sizeRandomness,
         cameraDistance,
         disableRotation,
-        pixelRatio
+        pixelRatio,
+        pauseWhenHidden
     ]);
 
     return <div ref={containerRef} className={`relative w-full h-full ${className}`} />;

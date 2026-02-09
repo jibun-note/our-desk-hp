@@ -1,11 +1,12 @@
 import SplitText from '@/components/ui/SplitText'
-import Particles from '@/components/ui/Particles'
+import ParticlesSection from '@/components/ParticlesSection'
+import LazySection from '@/components/LazySection'
 import { type StackCardItem } from '@/components/StackCardsSection'
 import StackCardsWithFixedMarquee from '@/components/StackCardsWithFixedMarquee'
-import SectionWave from '@/components/SectionWave'
 import StrengthCards from '@/components/StrengthCards'
 import SwipeToNextSection from '@/components/SwipeToNextSection'
 import { contentWithLineBreaks } from '@/lib/contentHighlight'
+import SectionWave from '@/components/SectionWave'
 
 const stackCards: StackCardItem[] = [
     {
@@ -39,6 +40,11 @@ const stackCards: StackCardItem[] = [
     },
 ]
 
+export const metadata = {
+    title: 'OurDesk株式会社',
+    description: 'OurDesk株式会社の公式ホームページ',
+}
+
 export default function Home() {
 
 
@@ -58,7 +64,7 @@ export default function Home() {
                             preload="metadata"
                             aria-hidden="true"
                         >
-                            <source src="/Adobe Express - AdobeStock_487035634.mp4" type="video/mp4" />
+                            <source src="/アイキャッチ.mp4" type="video/mp4" />
                         </video>
                         {/* コンテンツ - 動画要素内に配置 */}
                         <div className="absolute inset-0 flex items-end justify-end z-10 p-4 md:p-16 pointer-events-none">
@@ -115,34 +121,12 @@ export default function Home() {
 
             {/* セクション2: 「働きたい」を、ちゃんと育てる */}
             <section className="relative pt-16  px-4 md:pt-40 md:pb-40 md:px-6">
-                <div className="absolute inset-0 z-20 pointer-events-none">
-                    {/* スマホ用：パーティクル数のみ減らす */}
-                    <div className="block md:hidden">
-                        <Particles
-                            particleColors={["#f69104"]}
-                            particleCount={50}
-                            particleSpread={6}
-                            speed={0.06}
-                            particleBaseSize={130}
-                            moveParticlesOnHover={false}
-                            alphaParticles
-                            disableRotation={false}
-                            pixelRatio={1}
-                        />
-                    </div>
-                    {/* デスクトップ用：パーティクル数を減らす */}
-                    <Particles
-                        particleColors={["#f69104"]}
-                        particleCount={100}
-                        particleSpread={6}
-                        speed={0.06}
-                        particleBaseSize={130}
-                        moveParticlesOnHover={false}
-                        alphaParticles
-                        disableRotation={false}
-                        pixelRatio={1}
-                        className="hidden md:block"
-                    />
+                <div className="absolute inset-0 z-25 pointer-events-none">
+                    <LazySection placeholderHeight="100%" rootMargin="400px">
+                        <div className="absolute inset-0 w-full h-full">
+                            <ParticlesSection />
+                        </div>
+                    </LazySection>
                 </div>
                 <div className="flex flex-col items-center justify-center container mx-auto max-w-4xl relative z-10">
                     <SplitText
@@ -166,43 +150,51 @@ export default function Home() {
             </section>
 
             {/* セクション3: OurDeskの強み（スマホで左スワイプで次セクションへ） */}
-            <SwipeToNextSection targetSectionId="stack-cards-section">
-                <section className="relative pt-20 pb-12 md:py-20 md:mb-20">
-                    {/* 見出しと説明文 - PCのみ表示 */}
-                    <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                        <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
-                        <div
-                            className="w-20 h-1 mx-auto mb-4"
-                            style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
-                        />
-                        <div className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
-                            <SplitText
-                                text="OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。"
-                                html='OurDeskは、伴走型キャリア支援という仕組みを通して、<br />女性の<span class="text-gradient-hero">「働きたい」</span>を育てています。'
-                                tag="p"
-                                className="leading-relaxed"
-                                splitType="chars"
-                                delay={30}
-                                duration={0.8}
-                                ease="power3.out"
-                                from={{ opacity: 0, y: 20 }}
-                                to={{ opacity: 1, y: 0 }}
-                                threshold={0.1}
-                                rootMargin="-50px"
+            <LazySection placeholderHeight="650px" rootMargin="600px">
+                <SwipeToNextSection targetSectionId="stack-cards-section">
+                    <section className="relative pt-20 pb-12 md:py-20 md:mb-20">
+                        {/* 見出しと説明文 - PCのみ表示 */}
+                        <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
+                            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
+                            <div
+                                className="w-20 h-1 mx-auto mb-4"
+                                style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
                             />
+                            <div className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
+                                <SplitText
+                                    text="OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。"
+                                    html='OurDeskは、伴走型キャリア支援という仕組みを通して、<br />女性の<span class="text-gradient-hero">「働きたい」</span>を育てています。'
+                                    tag="p"
+                                    className="leading-relaxed"
+                                    splitType="chars"
+                                    delay={30}
+                                    duration={0.8}
+                                    ease="power3.out"
+                                    from={{ opacity: 0, y: 20 }}
+                                    to={{ opacity: 1, y: 0 }}
+                                    threshold={0.1}
+                                    rootMargin="-50px"
+                                />
+                            </div>
                         </div>
-                    </div>
-                    {/* 画像を横いっぱいに表示 */}
-                    <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[2000px] mx-auto px-0 md:px-6">
-                        <StrengthCards />
-                    </div>
-                </section>
-            </SwipeToNextSection>
+                        {/* 画像を横いっぱいに表示 */}
+                        <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[2000px] mx-auto px-0 md:px-6">
+                            <StrengthCards />
+                        </div>
+                    </section>
+                </SwipeToNextSection>
+            </LazySection>
 
-
-
+            <div className="hidden md:block">
+                <SectionWave position="top" />
+            </div>
             {/* Scroll Stack: OurDesk マーキー付き（1枚目と一緒に下から→中央で止まる→最後のカードと一緒に上に消える） */}
-            <StackCardsWithFixedMarquee cards={stackCards} />
+            <LazySection placeholderHeight="250vh" rootMargin="800px">
+                <StackCardsWithFixedMarquee cards={stackCards} />
+            </LazySection>
+            <div className="hidden md:block">
+                <SectionWave position="bottom" />
+            </div>
 
 
         </main>

@@ -2,6 +2,8 @@
 
 Next.js 16、TypeScript、Tailwind CSSを使用したSSG（Static Site Generation）対応の会社ホームページです。
 
+**本番サイト**: [https://our-desk.co.jp](https://our-desk.co.jp)
+
 ## 技術スタック
 
 - **Next.js 16**: Reactフレームワーク（App Router使用）
@@ -31,6 +33,8 @@ npm run dev
 ブラウザで [http://localhost:3000](http://localhost:3000) を開いて確認してください。
 
 ## ビルドとデプロイ
+
+本番サイトは **[https://our-desk.co.jp](https://our-desk.co.jp)** で公開されています。
 
 ### 静的サイトのビルド
 
@@ -91,6 +95,7 @@ npx serve@latest out
 - [ ] ナビゲーションが正常に動作する
 - [ ] 画像が正しく表示される
 - [ ] モバイル表示が正常である
+- [ ] `/sitemap.xml` および `/robots.txt` が正しく配信される
 
 #### よくある問題と解決方法
 
@@ -118,12 +123,21 @@ npx serve@latest out
 - GitHub Pages
 - AWS S3 + CloudFront
 
+## SEO
+
+本プロジェクトでは以下のSEO対応を実施しています（ベース URL: `https://our-desk.co.jp`）。
+
+- **メタデータ**: 各ページの title・description、OG/Twitter カード、canonical を設定。ルートは `app/layout.tsx`、静的ページは `lib/seo.ts` の `createPageMetadata` で統一。
+- **サイトマップ**: `public/sitemap.xml` を静的ファイルとして配置。ビルド時に `out/sitemap.xml` に含まれ、本番では `https://our-desk.co.jp/sitemap.xml` で配信。
+- **robots.txt**: `public/robots.txt` を静的ファイルとして配置。ビルド時に `out/robots.txt` に含まれ、本番では `https://our-desk.co.jp/robots.txt` で配信。
+- **構造化データ**: Organization および WebSite の JSON-LD を `components/JsonLd.tsx` で定義し、ルートレイアウト（`app/layout.tsx`）の `<head>` 内で出力。
+
 ## プロジェクト構造
 
 ```
 our-desk-hp/
 ├── app/                    # Next.js App Router
-│   ├── layout.tsx         # ルートレイアウト
+│   ├── layout.tsx         # ルートレイアウト（メタデータ・JsonLd）
 │   ├── page.tsx           # トップページ
 │   ├── (static)/          # ルートグループ（静的ページ）
 │   │   ├── layout.tsx     # 静的ページ用レイアウト
@@ -139,14 +153,18 @@ our-desk-hp/
 │   ├── Header.tsx         # ヘッダー/ナビゲーション
 │   ├── Footer.tsx         # フッター
 │   ├── Layout.tsx         # 共通レイアウト
+│   ├── JsonLd.tsx        # JSON-LD 構造化データ（Organization / WebSite）
 │   ├── HeroSection.tsx   # ヒーローセクション
 │   └── ui/                # UIコンポーネント
 │       ├── SplitText.tsx  # テキスト分割アニメーション
 │       └── Particles.tsx  # パーティクルエフェクト
 ├── lib/                   # ユーティリティ関数
+│   ├── seo.ts             # 静的ページ用メタデータ生成（createPageMetadata）
 │   └── utils.ts           # 共通ユーティリティ
 ├── public/                # 静的ファイル（画像、動画など）
 │   ├── OurDesk_logo.png   # ロゴ画像
+│   ├── sitemap.xml        # サイトマップ（静的エクスポート用）
+│   ├── robots.txt         # robots.txt（静的エクスポート用）
 │   ├── eye-catch-movie.mp4 # アイキャッチ動画
 │   └── .htaccess          # Apache設定ファイル
 └── ...設定ファイル

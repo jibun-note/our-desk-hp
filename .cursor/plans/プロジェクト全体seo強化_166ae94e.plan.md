@@ -5,7 +5,7 @@ todos: []
 isProject: false
 ---
 
-# プロジェクト全体のSEO強化プラン
+# プロジェクト全体の SEO 強化プラン
 
 ## 現状
 
@@ -22,10 +22,10 @@ isProject: false
 
 **対象**: [app/layout.tsx](app/layout.tsx)
 
-- **metadataBase**: 本番ドメイン `**https://our-desk.co.jp**` を設定。Canonical と OG 画像の絶対URLに使用。
-- **title**: `default` と `template: '%s | OurDesk株式会社'` を設定し、子ページは「ページ名 | OurDesk株式会社」に統一。
+- **metadataBase**: 本番ドメイン `**https://our-desk.co.jp**` を設定。Canonical と OG 画像の絶対 URL に使用。
+- **title**: `default` と `template: '%s | OurDesk株式会社'` を設定し、子ページは「ページ名 | OurDesk 株式会社」に統一。
 - **description**: 現状の文言を維持または少し拡張。
-- **openGraph**: `title`, `description`, `type: 'website'`, `locale: 'ja_JP'`, `siteName`。`metadataBase` があれば OG 画像（例: `/OurDesk_logo.png`）を絶対URLで指定。
+- **openGraph**: `title`, `description`, `type: 'website'`, `locale: 'ja_JP'`, `siteName`。`metadataBase` があれば OG 画像（例: `/OurDesk_logo.png`）を絶対 URL で指定。
 - **twitter**: `card: 'summary_large_image'`, `title`, `description`。
 - **robots**: `index, follow`（必要に応じて後で変更）。
 - **alternates.canonical**: ルートでは不要（各ページで設定するため）。
@@ -39,8 +39,8 @@ isProject: false
 **対象**: [app/(static)/about-us/page.tsx](<app/(static)/about-us/page.tsx>), [app/(static)/company/page.tsx](<app/(static)/company/page.tsx>), [app/(static)/contact/page.tsx](<app/(static)/contact/page.tsx>), [app/(static)/privacy/page.tsx](<app/(static)/privacy/page.tsx>), [app/(static)/recruit/page.tsx](<app/(static)/recruit/page.tsx>), [app/(static)/service/page.tsx](<app/(static)/service/page.tsx>)
 
 - 現状の `title` / `description` を維持しつつ、以下を追加:
-    - **openGraph**: `title`, `description`, `url`（canonical と同一）。必要なら `type: 'website'`。
-    - **alternates.canonical**: 当該ページの絶対URL（`metadataBase` + パス。`trailingSlash: true` なら末尾スラッシュ付き）。
+  - **openGraph**: `title`, `description`, `url`（canonical と同一）。必要なら `type: 'website'`。
+  - **alternates.canonical**: 当該ページの絶対 URL（`metadataBase` + パス。`trailingSlash: true` なら末尾スラッシュ付き）。
 
 共通化する場合は、`lib/seo.ts` などで「パス・title・description を受け取り Metadata を返す」関数を用意し、各ページでそれを利用する形にするとよい。
 
@@ -50,9 +50,9 @@ isProject: false
 
 **方式**: App Router の [app/sitemap.ts](app/sitemap.ts) を追加（Next.js がビルド時に静的エクスポートでも sitemap を生成する想定）。
 
-- **URL一覧**: `/`, `/about-us/`, `/company/`, `/contact/`, `/privacy/`, `/recruit/`, `/service/`（`trailingSlash: true` に合わせる）。
-- **各エントリ**: `url`（絶対URL）、`lastModified`（例: `new Date()`）、`changeFrequency`、`priority`（トップは 1.0、他は 0.8 など）。
-- **ベースURL**: `**https://our-desk.co.jp**`（`metadataBase` と同一）。
+- **URL 一覧**: `/`, `/about-us/`, `/company/`, `/contact/`, `/privacy/`, `/recruit/`, `/service/`（`trailingSlash: true` に合わせる）。
+- **各エントリ**: `url`（絶対 URL）、`lastModified`（例: `new Date()`）、`changeFrequency`、`priority`（トップは 1.0、他は 0.8 など）。
+- **ベース URL**: `**https://our-desk.co.jp**`（`metadataBase` と同一）。
 
 静的エクスポートで `sitemap.ts` がビルドエラーになる場合は、`public/sitemap.xml` を手動で用意する代替案を検討する。
 
@@ -83,7 +83,7 @@ isProject: false
 - **404**: [app/not-found.tsx](app/not-found.tsx) はメタデータを export できないため、今回の対象外でよい。
 - **画像**: [components/Header.tsx](components/Header.tsx) と [components/Footer.tsx](components/Footer.tsx) の `Image` にはすでに `alt="OurDesk株式会社"` が付いているため、そのまま利用可能。
 - **言語**: ルートの `<html lang="ja">` は設定済み。
-- **本番URL**: サイトマップ・robots・Canonical・OG のベースURLは `**https://our-desk.co.jp**` で統一する。
+- **本番 URL**: サイトマップ・robots・Canonical・OG のベース URL は `**https://our-desk.co.jp**` で統一する。
 
 ---
 
@@ -91,14 +91,14 @@ isProject: false
 
 **対象**: [README.md](README.md)
 
-SEO対応を反映し、運用・デプロイ時の参照用に以下を追記・修正する。
+SEO 対応を反映し、運用・デプロイ時の参照用に以下を追記・修正する。
 
-- **本番URLの明記**: 「ビルドとデプロイ」または冒頭付近で、本番サイト **[https://our-desk.co.jp](https://our-desk.co.jp)** を記載する（任意だが推奨）。
+- **本番 URL の明記**: 「ビルドとデプロイ」または冒頭付近で、本番サイト **[https://our-desk.co.jp](https://our-desk.co.jp)** を記載する（任意だが推奨）。
 - **SEO セクションの追加**: 新規セクション「SEO」を設け、次の内容を簡潔に記載する。
-    - メタデータ: 各ページの title・description、OG/Twitter カード、canonical（ベースURL: `https://our-desk.co.jp`）。
-    - サイトマップ: `app/sitemap.ts` によりビルド時に `/sitemap.xml` が生成されること。静的エクスポート時は `out/sitemap.xml` に含まれること。
-    - robots.txt: `app/robots.ts` により `/robots.txt` が生成されること（または `public/robots.txt` を利用する場合の記載）。
-    - 構造化データ: Organization および WebSite の JSON-LD をルートで出力していること。
+  - メタデータ: 各ページの title・description、OG/Twitter カード、canonical（ベース URL: `https://our-desk.co.jp`）。
+  - サイトマップ: `app/sitemap.ts` によりビルド時に `/sitemap.xml` が生成されること。静的エクスポート時は `out/sitemap.xml` に含まれること。
+  - robots.txt: `app/robots.ts` により `/robots.txt` が生成されること（または `public/robots.txt` を利用する場合の記載）。
+  - 構造化データ: Organization および WebSite の JSON-LD をルートで出力していること。
 - **プロジェクト構造の更新**: `app/sitemap.ts`、`app/robots.ts`、および作成した場合は `lib/seo.ts`・`components/JsonLd.tsx` を一覧に追加する。
 - **デプロイチェックリストの更新**: デプロイ後の確認事項に「`/sitemap.xml` および `/robots.txt` が正しく配信されること」を追加する（任意）。
 

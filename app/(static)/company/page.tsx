@@ -1,10 +1,11 @@
-import type { Metadata } from 'next'
 import HeroSection from '@/components/HeroSection'
+import { createPageMetadata } from '@/lib/seo'
 
-export const metadata: Metadata = {
-    title: 'Company | OurDesk株式会社',
-    description: 'OurDesk株式会社の役員紹介、グループ体制、会社概要、アクセス情報をご紹介します。',
-}
+export const metadata = createPageMetadata(
+    '/company/',
+    'Company | OurDesk株式会社',
+    'OurDesk株式会社の役員紹介、グループ体制、会社概要、アクセス情報をご紹介します。'
+)
 
 export default function CompanyPage() {
     return (
