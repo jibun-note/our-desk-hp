@@ -19,7 +19,7 @@ export default function NotFound() {
                         ホームに戻る
                     </Link>
                     <Link
-                        href="/contact"
+                        href="/contact/"
                         className="bg-gray-200 text-gray-800 px-6 py-3 rounded-lg font-semibold hover:bg-gray-300 transition-colors min-h-[44px] flex items-center justify-center"
                     >
                         お問い合わせ

@@ -5,12 +5,20 @@ const organizationJsonLd = {
     '@type': 'Organization',
     name: 'OurDesk株式会社',
     url: BASE_URL,
-    logo: `${BASE_URL}/OurDesk_logo.png`,
+    logo: `${BASE_URL}/images/shared/our-desk-logo.png`,
     description: 'OurDesk株式会社の公式ホームページ',
+    address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'JP',
+        addressRegion: '東京都',
+        addressLocality: '港区',
+        streetAddress: '南青山1-15-27 YMビル1階',
+    },
     contactPoint: {
         '@type': 'ContactPoint',
         url: `${BASE_URL}/contact/`,
         contactType: 'customer service',
+        areaServed: 'JP',
     },
 }
 

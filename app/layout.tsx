@@ -1,13 +1,14 @@
 import type { Metadata } from 'next'
 import { Inter } from 'next/font/google'
 import './globals.css'
-import Layout from '@/components/Layout'
-import JsonLd from '@/components/JsonLd'
+import Layout from '@/components/layout/Layout'
+import JsonLd from '@/components/seo/JsonLd'
 
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
     metadataBase: new URL('https://our-desk.co.jp'),
+    themeColor: '#F08300',
     title: {
         default: 'OurDesk株式会社',
         template: '%s | OurDesk株式会社',
@@ -21,7 +22,7 @@ export const metadata: Metadata = {
         siteName: 'OurDesk株式会社',
         images: [
             {
-                url: '/OurDesk_logo.png',
+                url: '/images/shared/our-desk-logo.png',
                 width: 1200,
                 height: 630,
                 alt: 'OurDesk株式会社',

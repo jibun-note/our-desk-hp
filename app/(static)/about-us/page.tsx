@@ -1,4 +1,4 @@
-import HeroSection from '@/components/HeroSection'
+import HeroSection from '@/components/sections/HeroSection'
 import GradientHeading from '@/components/ui/GradientHeading'
 import { createPageMetadata } from '@/lib/seo'
 import Image from 'next/image'
@@ -41,7 +41,7 @@ export default function AboutUsPage() {
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
                         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-orange-100 to-yellow-100 order-2 md:order-1">
                             <Image
-                                src="/images/AdobeStock_832084528.jpeg"
+                                src="/images/about-us/01.jpeg"
                                 alt="私たちの使命"
                                 fill
                                 className="object-cover"
@@ -117,7 +117,7 @@ export default function AboutUsPage() {
                         </div>
                         <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-orange-100 to-yellow-100">
                             <Image
-                                src="/images/AdobeStock_33524197_Preview.jpeg"
+                                src="/images/about-us/02.jpeg"
                                 alt="OurDeskが目指す未来"
                                 fill
                                 className="object-cover"
@@ -239,7 +239,7 @@ export default function AboutUsPage() {
                 {/* 背景画像 */}
                 <div className="absolute inset-0 z-background" aria-hidden>
                     <Image
-                        src="/images/AdobeStock_275188548_Preview.jpeg"
+                        src="/images/about-us/03.jpeg"
                         alt=""
                         fill
                         className="object-cover"

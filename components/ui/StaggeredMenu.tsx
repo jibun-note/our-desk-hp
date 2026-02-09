@@ -427,7 +427,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                                 transition={{ duration: 0.15, ease: 'easeOut' }}
                             >
                                 <Image
-                                    src={logoUrl || '/OurDesk_logo.png'}
+                                    src={logoUrl || '/images/shared/our-desk-logo.png'}
                                     alt={logoAlt}
                                     className="sm-logo-img"
                                     width={110}
@@ -438,7 +438,7 @@ export const StaggeredMenu: React.FC<StaggeredMenuProps> = ({
                     ) : (
                         <div className="sm-logo" aria-label={logoAlt}>
                             <Image
-                                src={logoUrl || '/OurDesk_logo.png'}
+                                src={logoUrl || '/images/shared/our-desk-logo.png'}
                                 alt={logoAlt}
                                 className="sm-logo-img"
                                 width={110}

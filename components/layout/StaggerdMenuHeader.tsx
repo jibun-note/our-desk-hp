@@ -3,11 +3,11 @@
 import { StaggeredMenu, type StaggeredMenuItem } from '@/components/ui/StaggeredMenu'
 
 const menuItems: StaggeredMenuItem[] = [
-    { href: '/service', label: 'Service', ariaLabel: 'Service ページへ' },
-    { href: '/about-us', label: 'About us', ariaLabel: 'About us ページへ' },
-    { href: '/company', label: 'Company', ariaLabel: 'Company ページへ' },
-    { href: '/recruit', label: 'Recruit', ariaLabel: 'Recruit ページへ' },
-    { href: '/contact', label: 'Contact', ariaLabel: 'Contact ページへ' },
+    { href: '/service/', label: 'Service', ariaLabel: 'Service ページへ' },
+    { href: '/about-us/', label: 'About us', ariaLabel: 'About us ページへ' },
+    { href: '/company/', label: 'Company', ariaLabel: 'Company ページへ' },
+    { href: '/recruit/', label: 'Recruit', ariaLabel: 'Recruit ページへ' },
+    { href: '/contact/', label: 'Contact', ariaLabel: 'Contact ページへ' },
 ].map(({ href, label }) => ({
     label,
     ariaLabel: `${label} ページへ`,
@@ -23,7 +23,7 @@ export default function StaggerdMenuHeader() {
                 items={menuItems}
                 displaySocials={false}
                 displayItemNumbering={true}
-                logoUrl="/OurDesk_logo.png"
+                logoUrl="/images/shared/our-desk-logo.png"
                 logoAlt="OurDesk株式会社"
                 logoHref="/"
                 menuButtonColor="#333333"

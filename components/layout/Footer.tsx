@@ -18,7 +18,7 @@ export default function Footer() {
                             transition={{ duration: 0.15, ease: 'easeOut' }}
                         >
                             <Image
-                                src="/OurDesk_logo.png"
+                                src="/images/shared/our-desk-logo.png"
                                 alt="OurDesk株式会社"
                                 fill
                                 className="object-contain"
@@ -41,7 +41,7 @@ export default function Footer() {
                                     transition={{ duration: 0.15, ease: 'easeOut' }}
                                 >
                                     <Link
-                                        href="/service"
+                                        href="/service/"
                                         className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block text-sm md:text-base font-medium"
                                     >
                                         Service
@@ -60,7 +60,7 @@ export default function Footer() {
                                     transition={{ duration: 0.15, ease: 'easeOut' }}
                                 >
                                     <Link
-                                        href="/about-us"
+                                        href="/about-us/"
                                         className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block text-sm md:text-base font-medium"
                                     >
                                         About us
@@ -79,7 +79,7 @@ export default function Footer() {
                                     transition={{ duration: 0.15, ease: 'easeOut' }}
                                 >
                                     <Link
-                                        href="/company"
+                                        href="/company/"
                                         className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block text-sm md:text-base font-medium"
                                     >
                                         Company
@@ -98,7 +98,7 @@ export default function Footer() {
                                     transition={{ duration: 0.15, ease: 'easeOut' }}
                                 >
                                     <Link
-                                        href="/recruit"
+                                        href="/recruit/"
                                         className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block text-sm md:text-base font-medium"
                                     >
                                         Recruit
@@ -117,7 +117,7 @@ export default function Footer() {
                                     transition={{ duration: 0.15, ease: 'easeOut' }}
                                 >
                                     <Link
-                                        href="/contact"
+                                        href="/contact/"
                                         className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block text-sm md:text-base font-medium"
                                     >
                                         Contact
@@ -142,7 +142,7 @@ export default function Footer() {
                                     transition={{ duration: 0.15, ease: 'easeOut' }}
                                 >
                                     <Link
-                                        href="/privacy"
+                                        href="/privacy/"
                                         className="relative text-gray-800 hover:text-primary-500 transition-colors duration-150 group block text-sm md:text-base"
                                     >
                                         Privacy Policy

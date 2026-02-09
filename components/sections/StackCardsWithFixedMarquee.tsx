@@ -5,8 +5,8 @@
  * マーキーはビューポート中央に固定表示。4枚目が画面上端を過ぎたらセクション下部について消える。
  */
 import React, { useRef, useState, useLayoutEffect } from 'react'
-import OurDeskMarquee from '@/components/OurDeskMarquee'
-import StackCardsSection, { type StackCardItem } from '@/components/StackCardsSection'
+import OurDeskMarquee from '@/components/sections/OurDeskMarquee'
+import StackCardsSection, { type StackCardItem } from '@/components/sections/StackCardsSection'
 
 const STICKY_BREAKPOINT = 768
 const FIRST_CARD_TOP_REM_NARROW = 6

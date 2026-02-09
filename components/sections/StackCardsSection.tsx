@@ -16,6 +16,8 @@ export type StackCardItem = {
     titleClass?: string
     /** 画像を表示する場合のパス（例: /images/xxx.png） */
     imageSrc?: string
+    /** 画像の代替テキスト（SEO・アクセシビリティ）。未指定時は title を使用 */
+    imageAlt?: string
     /** タイトル直下に表示するラベル（例: / HUMAN RESOURCE DEVELOPMENT） */
     numberLabel?: string
 }
@@ -68,8 +70,8 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
             {/* 背景画像（Next.js Image で最適化・プリロード） */}
             <div className="absolute inset-0 z-0 rounded-3xl overflow-hidden bg-[#FFF8E7] md:hidden">
                 <Image
-                    src="/images/モバイル用背景.jpeg"
-                    alt=""
+                    src="/images/stack-cards/01.jpeg"
+                    alt="OurDeskの取り組みセクションの背景"
                     fill
                     className="object-cover object-center"
                     sizes="100vw"
@@ -131,7 +133,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                             aria-hidden="true"
                                         >
                                             {card.imageSrc ? (
-                                                <Image src={card.imageSrc} alt="" fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
+                                                <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
                                             ) : (
                                                 <span className="text-sm text-gray-400">写真・画像用</span>
                                             )}
@@ -158,7 +160,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                             aria-hidden="true"
                                         >
                                             {card.imageSrc ? (
-                                                <Image src={card.imageSrc} alt="" fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
+                                                <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
                                             ) : (
                                                 <span className="text-sm text-gray-400">写真・画像用</span>
                                             )}

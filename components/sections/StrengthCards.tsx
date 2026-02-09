@@ -15,6 +15,7 @@ type Slide = {
     description: string
     imagePath: string
     imagePosition: 'left' | 'right'
+    imageAlt: string
 }
 
 // 個別のスライドコンポーネントの型定義
@@ -58,23 +59,26 @@ export default function StrengthCards() {
             step: 1,
             title: '学びの場を提供',
             description: '女性向け研修制度を通じて、仕事に必要なスキルや考え方を学べる環境を整えています。経験がなくても、ここから始められます。',
-            imagePath: '/images/AdobeStock_1408184906.jpeg',
-            imagePosition: 'left'
+            imagePath: '/images/strength-cards/01.jpeg',
+            imagePosition: 'left',
+            imageAlt: '女性向け研修で学ぶ様子',
         },
         {
             step: 2,
             title: 'キャリア面談',
             description: '国家資格を持つキャリアコンサルタントが、一人ひとりと向き合い、人生や働き方の目標を一緒に考えます。あなたらしいキャリアを見つけましょう。',
-            imagePath: '/images/AdobeStock_537141193.jpeg',
-            imagePosition: 'right'
+            imagePath: '/images/strength-cards/02.jpeg',
+            imagePosition: 'right',
+            imageAlt: 'キャリア面談の様子',
         },
         {
             step: 3,
             title: '仕事につなげる',
             description: 'その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。',
-            imagePath: '/images/AdobeStock_399162949.jpeg',
-            imagePosition: 'left'
-        }
+            imagePath: '/images/strength-cards/03.jpeg',
+            imagePosition: 'left',
+            imageAlt: '仕事につなげるサポートの様子',
+        },
     ]
 
     // 自動スライド制御（スマホのみ）
@@ -193,7 +197,7 @@ export default function StrengthCards() {
                                             <div className="relative w-full h-[380px] rounded-2xl overflow-hidden shadow-xl mb-4">
                                                 <Image
                                                     src={slide.imagePath}
-                                                    alt=""
+                                                    alt={slide.imageAlt}
                                                     fill
                                                     className="object-cover object-center"
                                                     sizes="100vw"
@@ -344,7 +348,7 @@ const SlideItem = ({ slide, isActive }: SlideItemProps) => {
                 >
                     <Image
                         src={slide.imagePath}
-                        alt=""
+                        alt={slide.imageAlt}
                         fill
                         className="object-cover object-center"
                         sizes="50vw"

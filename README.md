@@ -84,8 +84,8 @@ npx serve@latest out
 **ビルド前の確認事項**
 
 - [ ] すべてのコンテンツが最新であることを確認
-- [ ] ロゴファイル（`OurDesk_logo.png`）が`public`ディレクトリに配置されていることを確認
-- [ ] 動画ファイル（`eye-catch-movie.mp4`）が`public`ディレクトリに配置されていることを確認
+- [ ] ロゴファイル（`public/images/shared/our-desk-logo.png`）が配置されていることを確認
+- [ ] ヒーロー動画（`public/images/home/01.mp4`）が配置されていることを確認
 - [ ] 開発サーバー（`npm run dev`）で動作確認
 
 **デプロイ後の確認事項**
@@ -162,10 +162,14 @@ our-desk-hp/
 │   ├── seo.ts             # 静的ページ用メタデータ生成（createPageMetadata）
 │   └── utils.ts           # 共通ユーティリティ
 ├── public/                # 静的ファイル（画像、動画など）
-│   ├── OurDesk_logo.png   # ロゴ画像
+│   ├── images/            # ページ別ディレクトリ
+│   │   ├── home/          # トップ用（01.mp4 など）
+│   │   ├── shared/        # 共通（our-desk-logo.png, neugate-logo.jpg）
+│   │   ├── strength-cards/
+│   │   ├── stack-cards/
+│   │   └── about-us/
 │   ├── sitemap.xml        # サイトマップ（静的エクスポート用）
 │   ├── robots.txt         # robots.txt（静的エクスポート用）
-│   ├── eye-catch-movie.mp4 # アイキャッチ動画
 │   └── .htaccess          # Apache設定ファイル
 └── ...設定ファイル
 ```
