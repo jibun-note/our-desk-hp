@@ -1,12 +1,11 @@
 'use client'
 
 import Image from 'next/image'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import {
     Carousel,
     CarouselContent,
     CarouselItem,
-    type CarouselApi,
     useCarousel,
 } from '@/components/ui/carousel'
 import { cn } from '@/lib/utils'
@@ -101,8 +100,8 @@ function StrengthSlide({
 }
 
 /** Carousel 内で useCarousel を使うナビ（前・ドット・次） */
-function StrengthCardsNav({ selectedIndex, cardsLength }: { selectedIndex: number; cardsLength: number }) {
-    const { api, scrollPrev, scrollNext, canScrollPrev, canScrollNext } = useCarousel()
+function StrengthCardsNav({ cardsLength }: { cardsLength: number }) {
+    const { api, scrollPrev, scrollNext, canScrollPrev, canScrollNext, selectedIndex } = useCarousel()
     return (
         <div className="flex items-center justify-between gap-2 md:gap-4 px-4 mt-2 md:mt-8 max-w-2xl mx-auto">
             <button
@@ -151,26 +150,12 @@ function StrengthCardsNav({ selectedIndex, cardsLength }: { selectedIndex: numbe
 }
 
 export default function StrengthCards({ cards }: Props) {
-    const [api, setApi] = useState<CarouselApi | null>(null)
-    const [selectedIndex, setSelectedIndex] = useState(0)
-
-    useEffect(() => {
-        if (!api) return
-        const onSelect = () => setSelectedIndex(api.selectedScrollSnap())
-        onSelect()
-        api.on('select', onSelect)
-        return () => {
-            api.off('select', onSelect)
-        }
-    }, [api])
-
     if (cards.length === 0) return null
 
     return (
         <div className="relative">
             <div data-swipe-carousel className="relative" style={{ minHeight: '500px' }}>
                 <Carousel
-                    setApi={setApi}
                     opts={{
                         align: 'start',
                         loop: true,
@@ -187,7 +172,7 @@ export default function StrengthCards({ cards }: Props) {
                             </CarouselItem>
                         ))}
                     </CarouselContent>
-                    <StrengthCardsNav selectedIndex={selectedIndex} cardsLength={cards.length} />
+                    <StrengthCardsNav cardsLength={cards.length} />
                 </Carousel>
             </div>
         </div>
