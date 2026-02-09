@@ -20,9 +20,10 @@ body {
 }
 
 /* ヒーロー用テキストグラデーション (#FDD000 → #F08300) */
-/* GSAP SplitText で文字が .split-char に分割されるため、子要素にグラデーションを適用 */
+/* GSAP SplitText で .split-char / .split-word に分割されるため、子要素にグラデーションを適用 */
 .text-gradient-hero,
-.text-gradient-hero .split-char {
+.text-gradient-hero .split-char,
+.text-gradient-hero .split-word {
 	background: linear-gradient(to right, #fdd000, #f08300);
 	-webkit-background-clip: text;
 	background-clip: text;

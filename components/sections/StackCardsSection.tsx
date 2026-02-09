@@ -118,7 +118,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                     if (lastCardRef != null && i === cards.length - 1) lastCardRef.current = el
                                 }}
                                 /* sticky + top ずらしでスクロール時にカードが重なって見える。z-10 でマーキーの上に表示 */
-                                className={`sticky z-10 min-h-0 md:min-h-[58vh] lg:min-h-[52vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 transition-[background-color] duration-700 ease-in-out px-7 py-4 md:py-7 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
+                                className={`sticky z-10 min-h-0 md:min-h-[58vh] lg:min-h-[52vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-4 md:py-7 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
                                 style={{
                                     top: `${stickyTopRem}rem`,
                                     background: 'rgb(255,255,255)',

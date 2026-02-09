@@ -171,20 +171,11 @@ export default function Home() {
                         </LazySection>
                     </div>
                     <div className="flex flex-col items-center justify-center container mx-auto max-w-4xl relative z-10">
-                        <SplitText
-                            tag="h2"
-                            text="「働きたい」をちゃんと育てる。"
-                            html={'<span class="text-gradient-hero">「働きたい」</span>を<br />ちゃんと育てる。'}
-                            className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-balance"
-                            splitType="chars"
-                            delay={50}
-                            duration={0.8}
-                            ease="power3.out"
-                            from={{ opacity: 0, y: 24 }}
-                            to={{ opacity: 1, y: 0 }}
-                            threshold={0.1}
-                            rootMargin="-50px"
-                        />
+                        <h2 className="text-xl md:text-3xl font-bold mb-6 text-gray-800 text-balance text-center">
+                            <span className="text-gradient-hero">「働きたい」</span>を
+                            <br />
+                            ちゃんと育てる。
+                        </h2>
                         <p className="text-base md:text-lg text-gray-700 leading-relaxed text-pretty text-center">
                             「働きたい」想いは、自然に生まれるものではありません。<br />OurDeskはその気持ちを育て、仕事につなげる仕組みを作っています。
                         </p>

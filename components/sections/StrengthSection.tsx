@@ -1,7 +1,6 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import SplitText from '@/components/ui/SplitText'
 import LazySection from '@/components/sections/LazySection'
 import StrengthCards, { type StrengthCardItem } from '@/components/sections/StrengthCards'
 import MobileSwipeToNextSection from '@/components/sections/MobileSwipeToNextSection'
@@ -10,7 +9,7 @@ import SectionWave from '@/components/sections/SectionWave'
 const MOBILE_BREAKPOINT_PX = 768
 
 /**
- * セクション3の見出し。デスクトップ（768px以上）のときだけ表示。モバイルでは SplitText/GSAP を走らせない。
+ * セクション3の見出し。デスクトップ（768px以上）のときだけ表示。アニメなし・静的な表示。
  */
 function Section3HeadingDesktop() {
     const [isDesktop, setIsDesktop] = useState(false)
@@ -29,22 +28,11 @@ function Section3HeadingDesktop() {
                 className="w-20 h-1 mx-auto mb-4"
                 style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
             />
-            <div className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto">
-                <SplitText
-                    text="OurDeskは、伴走型キャリア支援という仕組みを通して、女性の「働きたい」を育てています。"
-                    html='OurDeskは、伴走型キャリア支援という仕組みを通して、<br />女性の<span class="text-gradient-hero">「働きたい」</span>を育てています。'
-                    tag="p"
-                    className="leading-relaxed"
-                    splitType="chars"
-                    delay={30}
-                    duration={0.8}
-                    ease="power3.out"
-                    from={{ opacity: 0, y: 20 }}
-                    to={{ opacity: 1, y: 0 }}
-                    threshold={0.1}
-                    rootMargin="-50px"
-                />
-            </div>
+            <p className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
+                OurDeskは、伴走型キャリア支援という仕組みを通して、
+                <br />
+                女性の<span className="text-gradient-hero">「働きたい」</span>を育てています。
+            </p>
         </div>
     )
 }
