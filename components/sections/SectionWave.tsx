@@ -4,6 +4,7 @@
  * セクション区切り用の波型デバイダー。
  * position="top": 次のセクションの上端が波型（次のセクション色で塗る）。
  * position="bottom": このセクションの下端が波型（グレーセクションのボトム用）。
+ * fill: 任意の色を指定（未指定時はデフォルト色を使用）
  */
 type Position = 'top' | 'bottom'
 
@@ -14,10 +15,12 @@ const BG_COLORS: Record<Position, string> = {
 
 export default function SectionWave({
     position = 'top',
+    fill: fillProp,
 }: {
     position?: Position
+    fill?: string
 }) {
-    const fill = BG_COLORS[position]
+    const fill = fillProp ?? BG_COLORS[position]
 
     if (position === 'bottom') {
         return (
@@ -40,11 +43,26 @@ export default function SectionWave({
 
     return (
         <div className="relative w-full flex-shrink-0 h-12 md:h-16" aria-hidden>
+            {/* スマホ用：SVG ごと出し分け（path の display が効かないため） */}
             <svg
-                className="absolute bottom-0 left-0 w-full h-full block"
+                className="absolute bottom-0 left-0 w-full h-full md:hidden"
                 viewBox="0 0 1440 80"
                 preserveAspectRatio="none"
                 xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
+            >
+                <path
+                    d="M0 80 L0 32 Q 720 38 1440 32 L 1440 80 Z"
+                    fill={fill}
+                />
+            </svg>
+            {/* PC用 */}
+            <svg
+                className="absolute bottom-0 left-0 w-full h-full hidden md:block"
+                viewBox="0 0 1440 80"
+                preserveAspectRatio="none"
+                xmlns="http://www.w3.org/2000/svg"
+                aria-hidden
             >
                 <path
                     d="M0 80 L0 50 Q 720 100 1440 50 L 1440 80 Z"
