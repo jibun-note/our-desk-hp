@@ -3,7 +3,7 @@ import ParticlesSection from '@/components/sections/ParticlesSection'
 export default function HomeIntroSection() {
     return (
         <section
-            className="relative pt-16 px-4 md:pt-40 md:pb-40 md:px-6"
+            className="relative pt-24 pb-24 px-4 md:pt-40 md:pb-40 md:px-6"
             aria-label="OurDeskの想い"
         >
             <div className="absolute inset-0 z-25 pointer-events-none" aria-hidden>
