@@ -1,4 +1,6 @@
+import ComingSoonBlock from '@/components/sections/ComingSoonBlock'
 import HeroSection from '@/components/sections/HeroSection'
+import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
 
 export const metadata = createPageMetadata(
@@ -10,15 +12,9 @@ export const metadata = createPageMetadata(
 export default function PrivacyPage() {
     return (
         <>
-            {/* ヒーローセクション */}
+            <BreadcrumbJsonLdServer path="/privacy/" name="Privacy Policy" />
             <HeroSection title="Privacy Policy" description="プライバシーポリシー" />
-            {/* コンテンツエリア */}
-            <div className="min-h-screen flex items-center justify-center bg-white">
-                <div className="text-center">
-                    <h2 className="text-4xl font-bold text-gray-800 mb-4">Coming Soon...</h2>
-                    <p className="text-lg text-gray-600">このページは準備中です。</p>
-                </div>
-            </div>
+            <ComingSoonBlock />
         </>
     )
 }

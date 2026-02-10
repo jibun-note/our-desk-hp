@@ -1,5 +1,3 @@
-'use client'
-
 import { StaggeredMenu, type StaggeredMenuItem } from '@/components/ui/StaggeredMenu'
 
 const menuItems: StaggeredMenuItem[] = [

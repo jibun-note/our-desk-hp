@@ -5,7 +5,7 @@
  * スクロールに連動してカードが重なって見える「スタック」効果を持つセクション。
  * sticky 配置で上に積み重なる見た目を実現する。
  */
-import React, { useState, useLayoutEffect } from 'react'
+import React from 'react'
 import Image from 'next/image'
 /** 1枚のスタックカードの表示内容・レイアウト指定 */
 export type StackCardItem = {
@@ -22,17 +22,19 @@ export type StackCardItem = {
     numberLabel?: string
 }
 
-/** この幅（px）未満を「狭い画面」とし、sticky の top を小さくしてセクションからはみ出しを防ぐ */
-const STICKY_BREAKPOINT = 768
-/** スマホ時のヘッダー高さ（約5rem）。sticky の top をこれより下にしてヘッダーに埋まらないようにする */
-const MOBILE_HEADER_TOP_REM = 5
-
 /**
- * カードの sticky top（rem）を算出する。
- * 小画面: ヘッダー下 + index×0.9rem / 大画面: 5 + index×1.25rem で、カードごとにずらして重なって見せる。
+ * カードの sticky top をレスポンシブクラスで指定。
+ * モバイル: 5 + index×0.9 rem / デスクトップ: 5 + index×1.25 rem
  */
-function getStickyTopRem(index: number, isNarrow: boolean): number {
-    return isNarrow ? MOBILE_HEADER_TOP_REM + index * 0.9 : 5 + index * 1.25
+const STICKY_TOP_CLASSES = [
+    'top-[5rem]',
+    'top-[5.9rem] md:top-[6.25rem]',
+    'top-[6.8rem] md:top-[7.5rem]',
+    'top-[7.7rem] md:top-[8.75rem]',
+] as const
+
+function getStickyTopClass(index: number): string {
+    return index < STICKY_TOP_CLASSES.length ? STICKY_TOP_CLASSES[index] : STICKY_TOP_CLASSES[STICKY_TOP_CLASSES.length - 1]
 }
 
 /** 2枚目以降のカード: 重なる前に「空振り」させるスクロール量（vh）。この分だけ margin-top を入れてスタックの間を稼ぐ */
@@ -54,17 +56,6 @@ type Props = {
 }
 
 export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', background, marqueeSticky = false, firstCardRef, lastCardRef }: Props) {
-    /** 狭い画面かどうか。true のとき sticky の top を小さくしてセクションからはみ出しを防ぐ */
-    const [isNarrow, setIsNarrow] = useState(false)
-
-    /** ビューポート幅で isNarrow を更新。リサイズ時も再計算し、sticky の top を切り替える */
-    useLayoutEffect(() => {
-        const checkNarrow = () => setIsNarrow(typeof window !== 'undefined' && window.innerWidth < STICKY_BREAKPOINT)
-        checkNarrow()
-        window.addEventListener('resize', checkNarrow)
-        return () => window.removeEventListener('resize', checkNarrow)
-    }, [])
-
     return (
         <section className="relative z-20 py-16 md:py-24 md:bg-gradient-to-b from-[#FFF8E7] to-[#FFE8CC] " aria-label={sectionLabel}>
             {/* 背景画像（Next.js Image で最適化・プリロード） */}
@@ -108,19 +99,15 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                 <div
                     className="relative z-20 container mx-auto max-w-6xl px-8 md:px-16 flex flex-col gap-8 md:gap-12"
                 >
-                    {cards.map((card, i) => {
-                        const stickyTopRem = getStickyTopRem(i, isNarrow)
-                        return (
+                    {cards.map((card, i) => (
                             <article
                                 key={i}
                                 ref={(el) => {
                                     if (firstCardRef != null && i === 0) firstCardRef.current = el
                                     if (lastCardRef != null && i === cards.length - 1) lastCardRef.current = el
                                 }}
-                                /* sticky + top ずらしでスクロール時にカードが重なって見える。z-10 でマーキーの上に表示 */
-                                className={`sticky z-10 min-h-0 md:min-h-[58vh] lg:min-h-[52vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 transition-[background-color] duration-700 ease-in-out px-7 py-4 md:py-7 ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
+                                className={`sticky z-10 min-h-0 md:min-h-[58vh] lg:min-h-[52vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-4 md:py-7 ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
                                 style={{
-                                    top: `${stickyTopRem}rem`,
                                     background: 'rgb(255,255,255)',
                                     ...(i >= 1 && { marginTop: `${STACK_DELAY_MARGIN_VH}vh` }),
                                 }}
@@ -168,8 +155,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                     )}
                                 </div>
                             </article>
-                        )
-                    })}
+                    ))}
                     {/* 最後のカードが sticky で重なって止まるまで必要な下方向の余白（STACK_END_SPACER_VH） */}
                     <div aria-hidden="true" style={{ minHeight: `${STACK_END_SPACER_VH}vh` }} />
                 </div>

@@ -1,10 +1,12 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import dynamic from 'next/dynamic'
 import { createPortal } from 'react-dom'
 import { motion, useScroll, useMotionValueEvent } from 'motion/react'
 import { cn } from '@/lib/utils'
-import StaggerdMenuHeader from './StaggerdMenuHeader'
+
+const StaggerdMenuHeader = dynamic(() => import('./StaggerdMenuHeader'), { ssr: false })
 
 export default function Header() {
     const [isScrolled, setIsScrolled] = useState(false)
