@@ -97,3 +97,12 @@ body {
 		animation: none;
 	}
 }
+
+/* 目次ナビ（モバイル横スクロール）のスクロールバー非表示 */
+.scrollbar-hide::-webkit-scrollbar {
+	display: none;
+}
+.scrollbar-hide {
+	-ms-overflow-style: none;
+	scrollbar-width: none;
+}
