@@ -22,12 +22,23 @@ const executives: { name: string; role: string; roleEn: string }[] = [
     { name: '大坪 誉弘', role: '取締役', roleEn: 'DIRECTOR' },
 ]
 
-/** 青山本社のGoogle Maps埋め込みURL */
-const MAP_EMBED_AOYAMA =
-    'https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E5%8D%97%E9%9D%92%E5%B1%B11-15-27+YM%E3%83%93%E3%83%AB1%E9%9A%8B&output=embed'
-/** ISAI AKASAKAオフィスのGoogle Maps埋め込みURL */
-const MAP_EMBED_ISAI =
-    'https://www.google.com/maps?q=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E8%B5%A4%E5%9D%825-2-33+ISAI+AKASAKA+1612&output=embed'
+/** アクセスセクション用：住所付近の地図画像を表示（画像は public/images/company/ に配置） */
+const ACCESS_LOCATIONS = [
+    {
+        title: '青山（本社）',
+        titleClassName: 'text-blue-400',
+        address: '東京都港区南青山1-15-27 YMビル1階',
+        imageSrc: '/images/company/map-aoyama.png',
+        imageAlt: '青山本社付近の地図',
+    },
+    {
+        title: 'ISAI AKASAKA（オフィス）',
+        titleClassName: 'text-primary-400',
+        address: '東京都港区赤坂5-2-33 ISAI AKASAKA 1612',
+        imageSrc: '/images/company/map-isai.png',
+        imageAlt: 'ISAI AKASAKAオフィス付近の地図',
+    },
+] as const
 
 export default function CompanyPage() {
     return (
@@ -44,14 +55,10 @@ export default function CompanyPage() {
                             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-balance mb-2">役員紹介</h2>
                             <div className="w-20 h-1 mb-0.5" style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }} />
                         </div>
-                        <div
-                            className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-300 border border-gray-300 rounded-xl overflow-hidden max-w-[1000px] mx-auto"
-                            role="list"
-                        >
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-300 border border-gray-300 rounded-xl overflow-hidden mx-auto list-none p-0 m-0">
                             {executives.map((exec, index) => (
-                                <div
+                                <li
                                     key={exec.name}
-                                    role="listitem"
                                     className="relative bg-white px-8 pt-12 pb-12 pl-16 md:px-12 md:pt-12 md:pb-12 md:pl-20 transition-all duration-200 ease-out group hover:bg-gray-50 hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.08)]"
                                 >
                                     <span className="absolute top-12 left-8 md:top-12 md:left-10 text-sm font-semibold text-gray-300 tabular-nums transition-colors duration-200 group-hover:text-primary-400">
@@ -68,9 +75,9 @@ export default function CompanyPage() {
                                             {exec.roleEn}
                                         </span>
                                     </div>
-                                </div>
+                                </li>
                             ))}
-                        </div>
+                        </ul>
                     </section>
 
                     {/* グループ体制：体制図画像を中央配置で表示 */}
@@ -153,47 +160,26 @@ export default function CompanyPage() {
                         </div>
                     </section>
 
-                    {/* アクセス：青山本社・ISAI AKASAKA の2拠点を2カラムで表示し、Google Maps を埋め込み */}
+                    {/* アクセス：青山本社・ISAI AKASAKA の2拠点を2カラムで表示（住所付近の地図画像） */}
                     <section id="access" className="scroll-mt-24">
                         <h2 className="text-2xl md:text-3xl font-bold text-white text-balance mb-2">アクセス</h2>
                         <div className="w-20 h-1 mb-8" style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }} />
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-                            <div>
-                                <h3 className="text-lg font-bold text-blue-400 mb-2">青山（本社）</h3>
-                                <p className="text-white text-pretty mb-4">
-                                    東京都港区南青山1-15-27 YMビル1階
-                                </p>
-                                <div className="aspect-video w-full overflow-hidden rounded-lg">
-                                    <iframe
-                                        src={MAP_EMBED_AOYAMA}
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title="青山本社の地図"
-                                    />
+                            {ACCESS_LOCATIONS.map((loc) => (
+                                <div key={loc.title}>
+                                    <h3 className={`text-lg font-bold mb-2 ${loc.titleClassName}`}>{loc.title}</h3>
+                                    <p className="text-white text-pretty mb-4">{loc.address}</p>
+                                    <div className="aspect-video w-full overflow-hidden rounded-lg relative">
+                                        <Image
+                                            src={loc.imageSrc}
+                                            alt={loc.imageAlt}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                        />
+                                    </div>
                                 </div>
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-bold text-primary-400 mb-2">ISAI AKASAKA（オフィス）</h3>
-                                <p className="text-white text-pretty mb-4">
-                                    東京都港区赤坂5-2-33 ISAI AKASAKA 1612
-                                </p>
-                                <div className="aspect-video w-full overflow-hidden rounded-lg">
-                                    <iframe
-                                        src={MAP_EMBED_ISAI}
-                                        width="100%"
-                                        height="100%"
-                                        style={{ border: 0 }}
-                                        allowFullScreen
-                                        loading="lazy"
-                                        referrerPolicy="no-referrer-when-downgrade"
-                                        title="ISAI AKASAKAオフィスの地図"
-                                    />
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </section>
                 </div>
