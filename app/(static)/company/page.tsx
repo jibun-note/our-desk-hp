@@ -6,7 +6,6 @@ import HeroSection from '@/components/sections/HeroSection'
 import WaveClipLayer from '@/components/sections/WaveClipLayer'
 import { createPageMetadata } from '@/lib/seo'
 import Image from 'next/image'
-import Link from 'next/link'
 
 /** ページのSEOメタデータ（title / description 等） */
 export const metadata = createPageMetadata(
@@ -15,20 +14,31 @@ export const metadata = createPageMetadata(
     'OurDesk株式会社の役員紹介、グループ体制、会社概要、アクセス情報をご紹介します。'
 )
 
-/** 役員紹介セクション用の一覧データ（名前・役職） */
-const executives = [
-    { name: '小宮山 陽大', role: '代表取締役' },
-    { name: '横山 悠亮', role: '取締役' },
-    { name: '石山 拓也', role: '取締役' },
-    { name: '大坪 誉弘', role: '取締役' },
-] as const
+/** 役員紹介セクション用の一覧データ（名前・役職・役職英表記） */
+const executives: { name: string; role: string; roleEn: string }[] = [
+    { name: '小宮山 陽大', role: '代表取締役', roleEn: 'CEO' },
+    { name: '横山 悠亮', role: '取締役', roleEn: 'DIRECTOR' },
+    { name: '石山 拓也', role: '取締役', roleEn: 'DIRECTOR' },
+    { name: '大坪 誉弘', role: '取締役', roleEn: 'DIRECTOR' },
+]
 
-/** 青山本社のGoogle Maps検索URL */
-const MAP_LINK_AOYAMA =
-    'https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E5%8D%97%E9%9D%92%E5%B1%B11-15-27+YM%E3%83%93%E3%83%AB'
-/** ISAI AKASAKAオフィスのGoogle Maps検索URL */
-const MAP_LINK_ISAI =
-    'https://www.google.com/maps/search/?api=1&query=%E6%9D%B1%E4%BA%AC%E9%83%BD%E6%B8%AF%E5%8C%BA%E8%B5%A4%E5%9D%825-2-33+ISAI+AKASAKA'
+/** アクセスセクション用：住所付近の地図画像を表示（画像は public/images/company/ に配置） */
+const ACCESS_LOCATIONS = [
+    {
+        title: '青山（本社）',
+        titleClassName: 'text-blue-400',
+        address: '東京都港区南青山1-15-27 YMビル1階',
+        imageSrc: '/images/company/map-aoyama.png',
+        imageAlt: '青山本社付近の地図',
+    },
+    {
+        title: 'ISAI AKASAKA（オフィス）',
+        titleClassName: 'text-primary-400',
+        address: '東京都港区赤坂5-2-33 ISAI AKASAKA 1612',
+        imageSrc: '/images/company/map-isai.png',
+        imageAlt: 'ISAI AKASAKAオフィス付近の地図',
+    },
+] as const
 
 export default function CompanyPage() {
     return (
@@ -39,25 +49,32 @@ export default function CompanyPage() {
             {/* メインコンテンツ（白背景）：ヘッダーとの境目を明確にする上部ボーダー */}
             <div className="bg-white border-t border-gray-200">
                 <div className="container mx-auto max-w-4xl px-4 pt-12 md:pt-16 pb-20 md:pb-28 space-y-20 md:space-y-24">
-                    {/* 役員紹介：executives をカード形式で一覧表示（イニシャルアイコン + 役職 + 名前） */}
+                    {/* 役員紹介：2x2グリッド・番号・役職（日英）のレイアウト */}
                     <section id="executives" className="scroll-mt-24">
-                        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-balance mb-2">役員紹介</h2>
-                        <div className="w-20 h-1 mb-8" style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }} />
-                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8">
-                            {executives.map((exec) => (
+                        <div className="mb-12">
+                            <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-balance mb-2">役員紹介</h2>
+                            <div className="w-20 h-1 mb-0.5" style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }} />
+                        </div>
+                        <ul className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-300 border border-gray-300 rounded-xl overflow-hidden mx-auto list-none p-0 m-0">
+                            {executives.map((exec, index) => (
                                 <li
                                     key={exec.name}
-                                    className="rounded-lg border border-gray-200 bg-white shadow-sm p-6 text-pretty"
+                                    className="relative bg-white px-8 pt-12 pb-12 pl-16 md:px-12 md:pt-12 md:pb-12 md:pl-20 transition-all duration-200 ease-out group hover:bg-gray-50 hover:shadow-[0_8px_24px_-8px_rgba(0,0,0,0.08)]"
                                 >
-                                    <div className="aspect-square max-w-[120px] mx-auto mb-4 rounded-full bg-gray-300 flex items-center justify-center text-gray-500 text-2xl font-bold">
-                                        {exec.name.charAt(0)}
-                                    </div>
-                                    <p className="text-sm font-medium text-primary-700 tabular-nums">
-                                        {exec.role}
-                                    </p>
-                                    <p className="text-lg font-bold text-gray-800 mt-1">
+                                    <span className="absolute top-12 left-8 md:top-12 md:left-10 text-sm font-semibold text-gray-300 tabular-nums transition-colors duration-200 group-hover:text-primary-400">
+                                        {String(index + 1).padStart(2, '0')}
+                                    </span>
+                                    <h3 className="text-xl md:text-[1.75rem] font-bold text-gray-900 mb-3 leading-tight text-pretty transition-transform duration-200 ease-out group-hover:translate-x-0.5">
                                         {exec.name}
-                                    </p>
+                                    </h3>
+                                    <div className="flex flex-wrap items-center gap-4">
+                                        <span className="text-base text-gray-600 font-normal">
+                                            {exec.role}
+                                        </span>
+                                        <span className="inline-block px-2.5 py-1 text-xs font-semibold text-primary-600 tracking-widest uppercase rounded-full bg-[#FFF6E5] transition-all duration-200 ease-out group-hover:translate-x-1 group-hover:scale-105 group-hover:bg-primary-100 group-hover:shadow-sm">
+                                            {exec.roleEn}
+                                        </span>
+                                    </div>
                                 </li>
                             ))}
                         </ul>
@@ -143,49 +160,26 @@ export default function CompanyPage() {
                         </div>
                     </section>
 
-                    {/* アクセス：青山本社・ISAI AKASAKA の2拠点を2カラムで表示し、各「地図を表示」で Google Maps を開く */}
+                    {/* アクセス：青山本社・ISAI AKASAKA の2拠点を2カラムで表示（住所付近の地図画像） */}
                     <section id="access" className="scroll-mt-24">
                         <h2 className="text-2xl md:text-3xl font-bold text-white text-balance mb-2">アクセス</h2>
                         <div className="w-20 h-1 mb-8" style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }} />
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
-                            <div>
-                                <h3 className="text-lg font-bold text-blue-400 mb-2">青山（本社）</h3>
-                                <p className="text-white text-pretty mb-4">
-                                    東京都港区南青山1-15-27 YMビル1階
-                                </p>
-                                <Link
-                                    href={MAP_LINK_AOYAMA}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white font-medium px-6 py-3 hover:bg-primary-700 transition-colors duration-200 group"
-                                >
-                                    地図を表示
-                                    <span className="inline-flex transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </span>
-                                </Link>
-                            </div>
-                            <div>
-                                <h3 className="text-lg font-bold text-primary-400 mb-2">ISAI AKASAKA（オフィス）</h3>
-                                <p className="text-white text-pretty mb-4">
-                                    東京都港区赤坂5-2-33 ISAI AKASAKA 1612
-                                </p>
-                                <Link
-                                    href={MAP_LINK_ISAI}
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    className="inline-flex items-center justify-center gap-2 rounded-full bg-black text-white font-medium px-6 py-3 hover:bg-primary-700 transition-colors duration-200 group"
-                                >
-                                    地図を表示
-                                    <span className="inline-flex transition-transform duration-200 group-hover:translate-x-0.5" aria-hidden>
-                                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden>
-                                            <path d="M5 12h14M12 5l7 7-7 7" />
-                                        </svg>
-                                    </span>
-                                </Link>
-                            </div>
+                            {ACCESS_LOCATIONS.map((loc) => (
+                                <div key={loc.title}>
+                                    <h3 className={`text-lg font-bold mb-2 ${loc.titleClassName}`}>{loc.title}</h3>
+                                    <p className="text-white text-pretty mb-4">{loc.address}</p>
+                                    <div className="aspect-video w-full overflow-hidden rounded-lg relative">
+                                        <Image
+                                            src={loc.imageSrc}
+                                            alt={loc.imageAlt}
+                                            fill
+                                            className="object-cover"
+                                            sizes="(max-width: 1024px) 100vw, 50vw"
+                                        />
+                                    </div>
+                                </div>
+                            ))}
                         </div>
                     </section>
                 </div>
