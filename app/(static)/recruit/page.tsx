@@ -1,20 +1,454 @@
-import ComingSoonBlock from '@/components/sections/ComingSoonBlock'
+import WaveClipLayer from '@/components/sections/WaveClipLayer'
 import HeroSection from '@/components/sections/HeroSection'
+import StaffVoices from '@/components/sections/StaffVoices'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
+import { cn } from '@/lib/utils'
+import Link from 'next/link'
 
 export const metadata = createPageMetadata(
     '/recruit/',
-    'Recruit | OurDesk株式会社',
-    'OurDesk株式会社の採用情報をご紹介します。'
+    '採用情報 | OurDesk株式会社',
+    'OurDeskの採用情報。「働きたい」という気持ちを育てる。スキルや経歴よりも、「誰かの役に立ちたい」という想いを大切にします。'
 )
+
+const WORK_STYLES = [
+    {
+        id: '01',
+        title: '業務委託',
+        label: '100% Remote',
+        description: '自分のペースで、好きな場所から。月数時間からでも大丈夫です。',
+        salaryAmount: '¥1,300',
+        salaryUnit: '～/時',
+        note: '業務ランクにより変動',
+    },
+    {
+        id: '02',
+        title: 'パート',
+        label: 'Flexible',
+        description: 'ライフスタイルに合わせて、無理のない範囲で。',
+        salaryAmount: '¥1,250',
+        salaryUnit: '～/時',
+        note: null,
+    },
+    {
+        id: '03',
+        title: '正社員',
+        label: 'Career',
+        description: '長く、キャリアとして一緒に歩んでいきたい方へ。',
+        salaryAmount: '¥210,000',
+        salaryUnit: '～/月',
+        note: '※経験・スキル・稼働状況に応じて決定',
+    },
+] as const
+
+const CAREER_PATHS = [
+    {
+        id: '01',
+        title: 'オフィスワーク未経験の方',
+        current: ['デスクワーク以外の仕事をしている', '将来、結婚や出産も視野に入れている'],
+        steps: [
+            'OurDeskと契約',
+            '月数時間からスタート',
+            '研修',
+            'メインに切り替え',
+            'ライフイベント後も柔軟な働き方実現',
+        ],
+    },
+    {
+        id: '02',
+        title: '子育て中で月50～100時間しか働けない方',
+        current: ['子どもは小学生', '以前は正社員、今はパート'],
+        steps: [
+            'キャリア面談',
+            '実務経験',
+            '資格取得',
+            '働き方拡大',
+            '正社員登用',
+        ],
+    },
+] as const
+
+const FAQ_ITEMS = [
+    {
+        q: '未経験でも大丈夫ですか？',
+        a: '研修制度があるため、問題ありません。「今できること」から始めて、少しずつスキルアップしていける環境を整えています。',
+    },
+    {
+        q: '稼働時間はどれくらい必要ですか？',
+        a: '月数時間からでも可能です。あなたのライフスタイルに合わせて、無理のない範囲で働けます。',
+    },
+    {
+        q: '子どもの体調不良で休めますか？',
+        a: 'チーム体制でフォローしますので、安心してください。急な休みにも対応できる体制を整えています。',
+    },
+] as const
+
+const FEATURES = [
+    {
+        num: '100%',
+        title: '完全リモート',
+        body: '全国どこからでも。通勤時間ゼロで、あなたの好きな場所から働けます。',
+    },
+    {
+        num: '月数時間',
+        title: '柔軟な働き方',
+        body: 'ライフスタイルに合わせて。家事や育児との両立もしやすい環境です。',
+    },
+    {
+        num: '未経験',
+        title: 'OK',
+        body: '研修制度完備。スキルは後から。まずは「働きたい」という気持ちを。',
+    },
+] as const
+
+const FLOW_STEPS = [
+    { num: 1, title: '希望する案件内容を秘書長と相談', subtitle: null },
+    { num: 2, title: 'お客様から案件が入ったタイミングでアサイン', subtitle: null },
+    { num: 3, title: '必要に応じてお客様との面談', subtitle: null },
+    { num: 4, title: '業務ランク・時給決定', subtitle: null },
+    { num: 5, title: '半年ごとに時給UP交渉が可能', subtitle: '成長に応じて、定期的に待遇を見直します' },
+] as const
+
+/** 画像がローカルにない場合のプレースホルダー（Unsplash） */
+const IMG = {
+    hero: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
+    team: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
+    avatar1: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80',
+    avatar2: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80',
+} as const
+
 
 export default function RecruitPage() {
     return (
         <>
-            <BreadcrumbJsonLdServer path="/recruit/" name="Recruit" />
-            <HeroSection title="Recruit" description="採用情報" />
-            <ComingSoonBlock />
+            <BreadcrumbJsonLdServer path="/recruit/" name="採用情報" />
+            <main className="min-h-screen bg-white">
+                {/* 1. Hero Section */}
+                <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" />
+
+                {/* 2. イントロダクション */}
+                <section className="flex items-center pt-0 pb-20 md:py-28 relative overflow-hidden bg-cream">
+                    <div className="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-16 items-center relative z-10 w-full">
+                        <div className="order-2 md:order-1 relative">
+                            {/* 装飾 Blob（見出しの左後ろに固定配置・形状アニメーションあり） */}
+                            <div
+                                className="absolute -top-10 -left-16 w-[26rem] h-[26rem] blob blob-float pointer-events-none"
+                                style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.18), rgba(240, 131, 0, 0.12))' }}
+                                aria-hidden
+                            />
+                            <h2 className="relative text-5xl md:text-6xl lg:text-7xl serif font-bold mb-8 text-gray-900 leading-tight">
+                                「働きたい」
+                                <br />
+                                という
+                                <br />
+                                気持ちを育てる
+                            </h2>
+                            <div className="divider-line mb-8" />
+                            <p className="text-xl md:text-2xl text-gray-600 mb-12 leading-relaxed">
+                                スキルや経歴よりも、
+                                <br />
+                                「誰かの役に立ちたい」という想い。
+                                <br />
+                                その気持ちを、私たちは大切に育てます。
+                            </p>
+                            <Link
+                                href="/contact/"
+                                className="px-10 py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300"
+                            >
+                                あなたらしい働き方を見つける
+                            </Link>
+                        </div>
+                        <div className="order-1 md:order-2">
+                            <div className="hero-photo relative w-full aspect-[6/5] md:aspect-[4/5] max-h-[520px] overflow-hidden bg-gray-200">
+                                <img
+                                    src={IMG.hero}
+                                    alt="笑顔で働く女性"
+                                    className="absolute inset-0 w-full h-full object-cover"
+                                />
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                {/* 3. 3つの特徴 */}
+                <section className="py-16 md:py-32 px-6 relative bg-cream">
+                    <div className="max-w-7xl mx-auto">
+                        <div className="grid md:grid-cols-3 gap-16">
+                            {FEATURES.map((item) => (
+                                <div key={item.num}>
+                                    <div className="feature-number mb-4 !text-[3rem] md:!text-[5rem]">{item.num}</div>
+                                    <div className="divider-line mb-6" />
+                                    <h3 className="text-xl md:text-2xl font-medium mb-4 text-gray-900">{item.title}</h3>
+                                    <p className="text-gray-600 leading-relaxed">{item.body}</p>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 4. 募集形態・待遇（3つの働き方） */}
+                <section className="wave-divider py-32">
+                    <div className="max-w-6xl mx-auto px-6">
+                        <div className="text-center mb-20">
+                            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
+                                3つの働き方
+                            </h2>
+                            <div className="divider-line mx-auto mb-4" />
+                            <p className="text-base md:text-lg text-gray-600">あなたのライフスタイルに合わせて選べます</p>
+                        </div>
+                        <div className="grid md:grid-cols-3 gap-8">
+                            {WORK_STYLES.map((item) => (
+                                <div
+                                    key={item.id}
+                                    className="card-organic p-10"
+                                >
+                                    <div
+                                        className={cn(
+                                            'text-5xl md:text-7xl serif font-bold mb-6 text-transparent bg-clip-text',
+                                            item.id === '02'
+                                                ? 'bg-gradient-to-br from-orange-500 to-yellow-400'
+                                                : 'bg-gradient-to-br from-yellow-400 to-orange-500'
+                                        )}
+                                    >
+                                        {item.id}
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-3 text-gray-900">
+                                        {item.title}
+                                    </h3>
+                                    <p className="text-sm text-orange-600 mb-6 font-medium tracking-wider uppercase">
+                                        {item.label}
+                                    </p>
+                                    <p className="text-gray-600 mb-8 leading-relaxed">{item.description}</p>
+                                    <div className="text-4xl font-bold text-gray-900">
+                                        {item.salaryAmount}
+                                        <span className="text-xl text-gray-500">{item.salaryUnit}</span>
+                                    </div>
+                                    {item.note && (
+                                        <p className="text-sm text-gray-500 mt-2">{item.note}</p>
+                                    )}
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* 5. キャリアの描き方 */}
+                <section
+                    className="relative py-32 px-6 overflow-hidden"
+                    style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.05) 0%, rgba(240, 131, 0, 0.05) 100%)' }}
+                >
+                    {/* 装飾 Blob */}
+                    <div
+                        className="absolute -top-20 -right-20 w-[30rem] h-[30rem] blob pointer-events-none"
+                        style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.08), rgba(240, 131, 0, 0.06))' }}
+                        aria-hidden="true"
+                    />
+                    <div className="max-w-6xl mx-auto relative z-10">
+                        <div className="text-center mb-20">
+                            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
+                                キャリアの描き方
+                            </h2>
+                            <div className="divider-line mx-auto mb-4" />
+                            <p className="text-base md:text-lg text-gray-600">
+                                働き方に「正解」はありません。あなたの人生に合ったキャリアを、一緒につくります。
+                            </p>
+                        </div>
+                        <div className="grid md:grid-cols-2 gap-12">
+                            {CAREER_PATHS.map((path) => (
+                                <div
+                                    key={path.id}
+                                    className="career-path-card"
+                                >
+                                    <div
+                                        className={cn(
+                                            'text-5xl serif font-bold mb-6 text-transparent bg-clip-text',
+                                            path.id === '02'
+                                                ? 'bg-gradient-to-br from-orange-500 to-yellow-400'
+                                                : 'bg-gradient-to-br from-yellow-400 to-orange-500'
+                                        )}
+                                    >
+                                        {path.id}
+                                    </div>
+                                    <h3 className="text-2xl font-bold mb-6 text-gray-900">{path.title}</h3>
+
+                                    <div className="bg-gradient-to-br from-orange-50 to-yellow-50 rounded-xl p-6 mb-8">
+                                        <p className="text-sm text-gray-500 mb-2">現在</p>
+                                        {path.current.map((c, i) => (
+                                            <p
+                                                key={c}
+                                                className={cn('text-gray-700', i < path.current.length - 1 && 'mb-1')}
+                                            >
+                                                {c}
+                                            </p>
+                                        ))}
+                                    </div>
+
+                                    <div className="space-y-4">
+                                        <p className="font-medium text-gray-900 mb-4">ステップ例</p>
+                                        {path.steps.map((step, i) => (
+                                            <div key={i} className="flex items-start gap-3">
+                                                <div className="w-2 h-2 rounded-full bg-orange-500 mt-2 flex-shrink-0" />
+                                                <p className="text-gray-600">{step}</p>
+                                            </div>
+                                        ))}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Wave: Section 5 → 6 */}
+                <div
+                    className="relative h-[80px]"
+                    style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.05) 0%, rgba(240, 131, 0, 0.05) 100%)' }}
+                    aria-hidden="true"
+                >
+                    <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#ffffff" />
+                    </svg>
+                </div>
+
+                {/* 6. 案件参画までの流れ */}
+                <section className="relative py-32 px-6 bg-white overflow-hidden">
+                    <div className="max-w-5xl mx-auto relative z-10">
+                        <div className="text-center mb-20">
+                            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
+                                案件参画までの流れ
+                            </h2>
+                            <div className="divider-line mx-auto" />
+                        </div>
+
+                        <div className="max-w-3xl mx-auto space-y-6">
+                            {FLOW_STEPS.map((step) => (
+                                <div key={step.num} className="card-organic p-8 flex items-start gap-6">
+                                    <div className="flex-shrink-0 w-12 h-12 rounded-full bg-gradient-to-br from-yellow-400 to-orange-500 flex items-center justify-center text-white font-bold text-xl">
+                                        {step.num}
+                                    </div>
+                                    <div className="flex-grow">
+                                        <h3 className="text-xl font-bold mb-2 text-gray-900">{step.title}</h3>
+                                        {step.subtitle && (
+                                            <p className="text-gray-600 text-sm mt-2">{step.subtitle}</p>
+                                        )}
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    </div>
+                </section>
+
+                {/* Wave: Section 6 → 8 */}
+                <div className="relative h-[80px] overflow-hidden" aria-hidden="true">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-orange-50/50" />
+                    <svg className="relative z-10 block w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,0 L0,0 Z" fill="#ffffff" />
+                    </svg>
+                </div>
+
+                {/* 8. よくある質問 */}
+                <section className="relative py-32 px-6 overflow-hidden">
+                    <div className="absolute inset-0 z-background bg-gradient-to-br from-primary-50/50 to-orange-50/50" aria-hidden />
+                    {/* 装飾 Blob */}
+                    <div
+                        className="absolute -bottom-16 -left-16 w-[22rem] h-[22rem] blob pointer-events-none z-[1]"
+                        style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.08), rgba(240, 131, 0, 0.05))' }}
+                        aria-hidden="true"
+                    />
+                    <div className="container mx-auto max-w-4xl relative z-content">
+                        <div className="text-center mb-20">
+                            <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
+                                よくある質問
+                            </h2>
+                            <div className="divider-line mx-auto" />
+                        </div>
+                        <ul className="space-y-6">
+                            {FAQ_ITEMS.map((item, i) => (
+                                <li key={i} className="bg-white rounded-2xl p-6 md:p-8 border border-gray-100 shadow-sm">
+                                    <h3 className="font-bold text-gray-800 mb-3 text-balance">Q. {item.q}</h3>
+                                    <p className="text-gray-700 text-pretty pl-0 md:pl-4 border-l-0 md:border-l-2 border-primary-300">
+                                        A. {item.a}
+                                    </p>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                </section>
+
+                {/* 9. スタッフの声（タイムライン形式） */}
+                <StaffVoices />
+
+
+                {/* 10. 統合メッセージ＆CTAセクション（左右分割 + Wave） */}
+                <div className="relative min-h-[40rem] lg:min-h-[45rem] bg-white">
+                    {/* Wave クリップされた背景レイヤー */}
+                    <WaveClipLayer idPrefix="recruit-cta">
+                        <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2">
+                            {/* 左側背景: 写真 + オーバーレイ */}
+                            <div className="relative">
+                                <img
+                                    src={IMG.team}
+                                    alt=""
+                                    className="w-full h-full object-cover"
+                                />
+                                <div className="absolute inset-0 bg-gradient-to-br from-black/70 via-black/60 to-orange-900/60" />
+                            </div>
+                            {/* 右側背景: ダークグラデーション */}
+                            <div className="bg-gradient-to-br from-gray-900 via-gray-800 to-orange-950" />
+                        </div>
+                    </WaveClipLayer>
+
+                    {/* コンテンツレイヤー（z-10 で波の上に） */}
+                    <div className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-[40rem] lg:min-h-[45rem]">
+                        {/* 左側: メッセージ */}
+                        <div className="flex items-center justify-center px-8 py-20 pt-28 md:pt-20">
+                            <div className="max-w-lg space-y-8 text-center lg:text-left">
+                                <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                                    効率じゃない。<br />
+                                    <span className="text-gradient-hero">想いだ。</span>
+                                </h2>
+                                <div className="divider-line mx-auto lg:mx-0" />
+
+                                <div className="text-white text-lg md:text-xl leading-relaxed space-y-5">
+                                    <p className="font-medium">スキルは後から</p>
+                                    <p className="text-white/90">でも想いは簡単には育ちません</p>
+                                    <p className="text-white/95 bg-white/10 backdrop-blur-sm rounded-xl p-5 border border-white/20">
+                                        誰かの役に立ちたい。支える仕事がしたい。前向きに働きたい。<br />
+                                        そんな気持ちを、私たちは大切にします。
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* 右側: CTA */}
+                        <div className="relative flex items-center justify-center px-8 py-20 overflow-hidden">
+                            {/* 装飾 Blob */}
+                            <div
+                                className="absolute top-16 right-10 w-72 h-72 blob"
+                                style={{ background: 'rgba(249, 115, 22, 0.25)' }}
+                                aria-hidden="true"
+                            />
+
+                            <div className="relative z-10 max-w-lg text-center space-y-10">
+                                <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight">
+                                    一緒に、<br />育てよう
+                                </h3>
+                                <div className="divider-line mx-auto" />
+                                <p className="text-xl md:text-2xl text-white/95 font-light">
+                                    「働きたい」という気持ちを。
+                                </p>
+                                <Link
+                                    href="/contact/"
+                                    className="inline-block bg-white text-orange-600 px-12 py-4 text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform"
+                                >
+                                    応募フォームへ進む
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </main>
         </>
     )
 }
+

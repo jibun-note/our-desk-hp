@@ -21,6 +21,7 @@ const config: Config = {
                     800: '#E07500',
                     900: '#D06600',
                 },
+                cream: '#FFF8E7',
                 gray: {
                     50: '#f9f9f9',
                     100: '#f0f0f0',

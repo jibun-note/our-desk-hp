@@ -97,3 +97,188 @@ body {
 		animation: none;
 	}
 }
+
+/* Recruit ページ用 */
+.serif {
+	font-family: 'Crimson Pro', serif;
+}
+.hero-photo {
+	border-radius: 0 0 0 12rem;
+	box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.1);
+}
+.card-organic {
+	background: white;
+	border-radius: 2rem;
+	transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.card-organic:hover {
+	transform: translateY(-0.5rem);
+	box-shadow: 0 24px 48px rgba(240, 131, 0, 0.15);
+}
+@media (prefers-reduced-motion: reduce) {
+	.card-organic:hover {
+		transform: none;
+	}
+}
+.divider-line {
+	width: 60px;
+	height: 3px;
+	background: linear-gradient(to right, #FDD000, #F08300);
+}
+.feature-number {
+	font-size: 5rem;
+	font-weight: 700;
+	line-height: 1;
+	background: linear-gradient(135deg, #FDD000, #F08300);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+	font-family: 'Crimson Pro', serif;
+}
+.career-path-card {
+	background: white;
+	border-radius: 2rem;
+	padding: 2.5rem;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+	transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+.career-path-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 16px 40px rgba(240, 131, 0, 0.12);
+}
+@media (prefers-reduced-motion: reduce) {
+	.career-path-card:hover {
+		transform: none;
+	}
+}
+
+/* Recruit: 有機的な形のBlob */
+.blob {
+	border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+	animation: blob-morph 20s ease-in-out infinite;
+}
+@keyframes blob-morph {
+	0%, 100% {
+		border-radius: 63% 37% 54% 46% / 55% 48% 52% 45%;
+	}
+	25% {
+		border-radius: 48% 52% 68% 32% / 42% 61% 39% 58%;
+	}
+	50% {
+		border-radius: 73% 27% 26% 74% / 55% 71% 29% 45%;
+	}
+	75% {
+		border-radius: 28% 72% 44% 56% / 49% 40% 60% 51%;
+	}
+}
+.blob-float {
+	animation: blob-float 6s ease-in-out infinite;
+}
+@keyframes blob-float {
+	0%, 100% {
+		transform: translateY(0);
+	}
+	50% {
+		transform: translateY(-20px);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.blob {
+		animation: none;
+	}
+	.blob-float {
+		animation: none;
+	}
+}
+
+/* StaffVoices: タブコンテンツ切り替えアニメーション */
+.tab-content {
+	animation: staffFadeIn 0.4s ease-out;
+}
+@keyframes staffFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.tab-content {
+		animation: none;
+	}
+}
+
+/* StaffVoices: モバイル用スワイプアイコン */
+.avatar-scroll {
+	display: flex;
+	gap: 1rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	height: 140px;
+	align-items: flex-start;
+}
+.avatar-scroll::-webkit-scrollbar {
+	display: none;
+}
+.avatar-item {
+	scroll-snap-align: center;
+	flex-shrink: 0;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	background: none;
+	border: none;
+	padding: 0;
+}
+.avatar-item.small {
+	width: 60px;
+	height: 60px;
+	opacity: 0.5;
+}
+.avatar-item.large {
+	width: 100px;
+	height: 100px;
+	opacity: 1;
+}
+.avatar-item.small:hover {
+	opacity: 0.8;
+}
+@media (prefers-reduced-motion: reduce) {
+	.avatar-item {
+		transition: none;
+	}
+}
+
+/* Recruit: Wave Divider（クリーム→白の境界の波型区切り） */
+.wave-divider {
+	position: relative;
+	background: white;
+}
+.wave-divider::before {
+	content: '';
+	position: absolute;
+	top: -50px;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+	background-size: cover;
+	pointer-events: none;
+}
+.wave-divider::after {
+	content: '';
+	position: absolute;
+	bottom: -50px;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+	background-size: cover;
+	pointer-events: none;
+	z-index: 1;
+}
