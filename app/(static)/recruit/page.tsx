@@ -347,11 +347,11 @@ export default function RecruitPage() {
                 </div>
 
                 {/* 8. よくある質問 */}
-                <section className="relative py-20 md:py-32 px-4 md:px-6 overflow-hidden">
+                <section className="relative py-20 md:py-32 px-4 md:px-6 overflow-x-clip">
                     <div className="absolute inset-0 z-background bg-gradient-to-br from-primary-50/50 to-orange-50/50" aria-hidden />
                     {/* 装飾 Blob */}
                     <div
-                        className="absolute -bottom-10 -left-10 w-[14rem] h-[14rem] md:-bottom-16 md:-left-16 md:w-[22rem] md:h-[22rem] blob pointer-events-none z-[1]"
+                        className="absolute bottom-4 left-4 w-[14rem] h-[14rem] md:bottom-6 md:left-6 md:w-[22rem] md:h-[22rem] blob pointer-events-none z-[1]"
                         style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.08), rgba(240, 131, 0, 0.05))' }}
                         aria-hidden="true"
                     />
@@ -374,6 +374,14 @@ export default function RecruitPage() {
                         </ul>
                     </div>
                 </section>
+
+                {/* Wave: Section 8 → 9 */}
+                <div className="relative h-[80px] overflow-hidden" aria-hidden="true">
+                    <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-orange-50/50" />
+                    <svg className="relative z-10 block w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#ffffff" />
+                    </svg>
+                </div>
 
                 {/* 9. スタッフの声（タイムライン形式） */}
                 <StaffVoices />
