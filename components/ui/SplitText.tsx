@@ -21,6 +21,10 @@ export interface SplitTextProps {
     to?: gsap.TweenVars;
     threshold?: number;
     rootMargin?: string;
+    /** false にすると ScrollTrigger を使わずマウント後に即アニメ（ヒーロー等で使用） */
+    useScrollTrigger?: boolean;
+    /** useScrollTrigger: false のとき、アニメ開始までの遅延（秒） */
+    startDelay?: number;
     tag?: 'h1' | 'h2' | 'h3' | 'h4' | 'h5' | 'h6' | 'p' | 'span';
     textAlign?: React.CSSProperties['textAlign'];
     onLetterAnimationComplete?: () => void;
@@ -38,6 +42,8 @@ const SplitText: React.FC<SplitTextProps> = ({
     to = { opacity: 1, y: 0 },
     threshold = 0.1,
     rootMargin = '-100px',
+    useScrollTrigger = true,
+    startDelay = 0,
     tag = 'p',
     textAlign = 'center',
     onLetterAnimationComplete
@@ -108,30 +114,30 @@ const SplitText: React.FC<SplitTextProps> = ({
                 reduceWhiteSpace: false,
                 onSplit: (self: GSAPSplitText) => {
                     assignTargets(self);
-                    return gsap.fromTo(
-                        targets,
-                        { ...from },
-                        {
-                            ...to,
-                            duration,
-                            ease,
-                            stagger: delay / 1000,
-                            scrollTrigger: {
-                                trigger: el,
-                                start,
-                                once: true,
-                                fastScrollEnd: true,
-                                anticipatePin: 0.4
-                            },
-                            onComplete: () => {
-                                animationCompletedRef.current = true;
-                                onCompleteRef.current?.();
-                            },
-                            willChange: 'transform, opacity',
-                            force3D: true,
-                            clearProps: 'willChange'
-                        }
-                    );
+                    const tweenVars: gsap.TweenVars = {
+                        ...to,
+                        duration,
+                        ease,
+                        stagger: delay / 1000,
+                        delay: startDelay,
+                        onComplete: () => {
+                            animationCompletedRef.current = true;
+                            onCompleteRef.current?.();
+                        },
+                        willChange: 'transform, opacity',
+                        force3D: true,
+                        clearProps: 'willChange'
+                    };
+                    if (useScrollTrigger) {
+                        tweenVars.scrollTrigger = {
+                            trigger: el,
+                            start,
+                            once: true,
+                            fastScrollEnd: true,
+                            anticipatePin: 0.4
+                        };
+                    }
+                    return gsap.fromTo(targets, { ...from }, tweenVars);
                 }
             });
             el._rbsplitInstance = splitInstance;
@@ -156,6 +162,8 @@ const SplitText: React.FC<SplitTextProps> = ({
                 JSON.stringify(to),
                 threshold,
                 rootMargin,
+                useScrollTrigger,
+                startDelay,
                 fontsLoaded
             ],
             scope: ref

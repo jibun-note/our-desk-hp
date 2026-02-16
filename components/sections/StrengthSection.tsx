@@ -8,7 +8,7 @@ type Props = {
 
 export default function StrengthSection({ cards }: Props) {
     return (
-        <section className="relative pt-20 pb-6 md:py-20 md:mb-20" aria-label="OurDeskの強み">
+        <section className="relative pb-6 md:pb-20 md:mb-20" aria-label="OurDeskの強み">
             {/* デスクトップ用見出し（768px以上で表示・CSSのみ） */}
             <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
                 <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
