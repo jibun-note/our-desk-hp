@@ -5,6 +5,50 @@ import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
 import { cn } from '@/lib/utils'
 import Link from 'next/link'
+import { Zen_Antique_Soft, Shippori_Mincho_B1, Zen_Old_Mincho, Klee_One, Hina_Mincho } from 'next/font/google'
+
+// ① Zen Antique Soft — レトロで柔らかい印象
+const zenAntiqueSoft = Zen_Antique_Soft({
+    weight: '400',
+    subsets: ['latin'],
+    preload: false,
+})
+
+// ② Shippori Mincho B1 — 上品で落ち着いた明朝体
+const shipporiMinchoB1 = Shippori_Mincho_B1({
+    weight: '700',
+    subsets: ['latin'],
+    preload: false,
+})
+
+// ③ Zen Old Mincho — クラシカルで温かみのある明朝体
+const zenOldMincho = Zen_Old_Mincho({
+    weight: '700',
+    subsets: ['latin'],
+    preload: false,
+})
+
+// ④ Klee One — 教科書体風、手書きっぽい温かさ
+const kleeOne = Klee_One({
+    weight: '600',
+    subsets: ['latin'],
+    preload: false,
+})
+
+// ⑤ Hina Mincho — 繊細で女性的な明朝体
+const hinaMincho = Hina_Mincho({
+    weight: '400',
+    subsets: ['latin'],
+    preload: false,
+})
+
+// ===== ここを切り替えて比較してください =====
+const selectedFont = shipporiMinchoB1  // ← ①〜⑤を入れ替えて試す
+// const selectedFont = zenAntiqueSoft     // ①
+// const selectedFont = shipporiMinchoB1   // ②
+// const selectedFont = zenOldMincho       // ③
+// const selectedFont = kleeOne            // ④
+// const selectedFont = hinaMincho         // ⑤
 
 export const metadata = createPageMetadata(
     '/recruit/',
@@ -137,27 +181,28 @@ export default function RecruitPage() {
                                 style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.18), rgba(240, 131, 0, 0.12))' }}
                                 aria-hidden
                             />
-                            <h2 className="relative text-3xl md:text-6xl lg:text-7xl serif font-bold mb-5 md:mb-8 text-gray-900 leading-tight">
+                            <h2 className={cn("relative text-3xl md:text-6xl lg:text-7xl font-bold mb-5 md:mb-8 text-gray-900 leading-tight", selectedFont.className)}>
                                 「働きたい」
                                 <br />
-                                という
+                                <span className="inline-block pl-[0.5em]">という</span>
                                 <br />
-                                気持ちを育てる
+                                <span className="inline-block pl-[0.5em]">気持ちを育てる</span>
                             </h2>
-                            <div className="divider-line mb-5 md:mb-8" />
-                            <p className="text-base md:text-2xl text-gray-600 mb-6 md:mb-12 leading-relaxed">
-                                スキルや経歴よりも、
-                                <br />
-                                「誰かの役に立ちたい」という想い。
-                                <br />
-                                その気持ちを、私たちは大切に育てます。
-                            </p>
-                            <Link
-                                href="/contact/"
-                                className="inline-block px-8 py-4 md:px-10 md:py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium text-base md:text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[48px] flex items-center justify-center"
-                            >
-                                あなたらしい働き方を見つける
-                            </Link>
+                            <div className="pl-[0.5em]">
+                                <p className="text-base md:text-2xl text-gray-600 mb-6 md:mb-12 leading-relaxed">
+                                    スキルや経歴よりも、
+                                    <br />
+                                    「誰かの役に立ちたい」という想い。
+                                    <br />
+                                    その気持ちを、私たちは大切に育てます。
+                                </p>
+                                <Link
+                                    href="/contact/"
+                                    className="inline-block px-8 py-4 md:px-10 md:py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium text-base md:text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[48px]"
+                                >
+                                    あなたらしい働き方を見つける
+                                </Link>
+                            </div>
                         </div>
                         <div className="order-1 md:order-2 -mr-4 md:mr-0 ml-auto md:ml-0 w-[90%] md:w-full">
                             <div className="hero-photo relative w-full aspect-[5/4] md:aspect-[4/5] max-h-[400px] md:max-h-[520px] overflow-hidden bg-gray-200">
