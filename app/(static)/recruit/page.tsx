@@ -154,10 +154,9 @@ const FLOW_STEPS = [
     { num: 5, title: '半年ごとに時給UP交渉が可能', subtitle: '成長に応じて、定期的に待遇を見直します' },
 ] as const
 
-/** 画像がローカルにない場合のプレースホルダー（Unsplash） */
 const IMG = {
-    hero: 'https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?w=800&q=80',
-    team: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80',
+    hero: '/images/recruit/intro.png',
+    ctaBg: '/images/recruit/cta-bg.png',
     avatar1: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=200&q=80',
     avatar2: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=200&q=80',
 } as const
@@ -167,74 +166,86 @@ export default function RecruitPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/recruit/" name="採用情報" />
-            <main className="min-h-screen bg-white">
+            <main className="min-h-screen bg-white relative">
                 {/* 1. Hero Section */}
-                <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" />
+                <div className="relative z-[1]">
+                    <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" />
+                </div>
 
-                {/* 2. イントロダクション */}
-                <section className="flex items-center pt-8 pb-16 md:py-28 relative overflow-hidden bg-cream">
-                    <div className="max-w-7xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10 w-full">
-                        <div className="order-2 md:order-1 relative">
-                            {/* 装飾 Blob（見出しの左後ろに固定配置・形状アニメーションあり） */}
-                            <div
-                                className="absolute -top-6 -left-6 w-[12rem] h-[12rem] md:-top-10 md:-left-16 md:w-[26rem] md:h-[26rem] blob blob-float pointer-events-none"
-                                style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.18), rgba(240, 131, 0, 0.12))' }}
-                                aria-hidden
-                            />
-                            <h2 className={cn("relative text-3xl md:text-6xl lg:text-7xl font-bold mb-5 md:mb-8 text-gray-900 leading-tight", selectedFont.className)}>
-                                「働きたい」
-                                <br />
-                                <span className="inline-block pl-[0.5em]">という</span>
-                                <br />
-                                <span className="inline-block pl-[0.5em]">気持ちを育てる</span>
-                            </h2>
-                            <div className="pl-[0.5em]">
-                                <p className="text-base md:text-2xl text-gray-600 mb-6 md:mb-12 leading-relaxed">
-                                    スキルや経歴よりも、
-                                    <br />
-                                    「誰かの役に立ちたい」という想い。
-                                    <br />
-                                    その気持ちを、私たちは大切に育てます。
-                                </p>
-                                <Link
-                                    href="/contact/"
-                                    className="inline-block px-8 py-4 md:px-10 md:py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium text-base md:text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[48px]"
-                                >
-                                    あなたらしい働き方を見つける
-                                </Link>
-                            </div>
-                        </div>
-                        <div className="order-1 md:order-2 -mr-4 md:mr-0 ml-auto md:ml-0 w-[90%] md:w-full">
-                            <div className="hero-photo relative w-full aspect-[5/4] md:aspect-[4/5] max-h-[400px] md:max-h-[520px] overflow-hidden bg-gray-200">
-                                <img
-                                    src={IMG.hero}
-                                    alt="笑顔で働く女性"
-                                    className="absolute inset-0 w-full h-full object-cover"
-                                />
-                            </div>
-                        </div>
-                    </div>
-                </section>
+                {/* 2+3 共通ラッパー: 同じ背景色なので blob がセクション境界で切れないよう統合 */}
+                <div className="relative z-[2] bg-[#fffdf5]">
+                    {/* Blob装飾: ラベンダー雲（イントロ〜特徴にかけて自然に流れる） */}
+                    <div
+                        className="absolute blob-cloud drift-diagonal pointer-events-none top-[60vw] md:top-[5vw] left-[-15vw] w-[55vw] h-[55vw] md:w-[40vw] md:h-[40vw]"
+                        style={{ background: 'rgba(178, 186, 230, 0.25)' }}
+                        aria-hidden="true"
+                    />
 
-                {/* 3. 3つの特徴 */}
-                <section className="py-16 md:py-32 px-4 md:px-6 relative bg-cream">
-                    <div className="max-w-7xl mx-auto">
-                        <div className="grid md:grid-cols-3 gap-10 md:gap-16">
-                            {FEATURES.map((item) => (
-                                <div key={item.num}>
-                                    <div className="feature-number mb-4 !text-[2rem] md:!text-[5rem]">{item.num}</div>
-                                    <div className="divider-line mb-6" />
-                                    <h3 className="text-lg md:text-2xl font-medium mb-4 text-gray-900">{item.title}</h3>
-                                    <p className="text-gray-600 leading-relaxed">{item.body}</p>
+                    {/* 2. イントロダクション */}
+                    <section className="relative flex items-center pt-8 pb-16 md:py-28">
+                        <div className="max-w-7xl mx-auto px-4 md:px-6 grid md:grid-cols-2 gap-10 md:gap-16 items-center relative z-10 w-full">
+                            <div className="order-2 md:order-1 relative">
+                                <h2 className={cn("relative text-3xl md:text-6xl lg:text-7xl font-bold mb-5 md:mb-8 text-gray-900 leading-tight", selectedFont.className)}>
+                                    「働きたい」
+                                    <br />
+                                    <span className="inline-block pl-[0.5em]">という</span>
+                                    <br />
+                                    <span className="inline-block pl-[0.5em]">気持ちを育てる</span>
+                                </h2>
+                                <div className="pl-[0.5em]">
+                                    <p className="text-base md:text-2xl text-gray-600 mb-6 md:mb-12 leading-relaxed">
+                                        スキルや経歴よりも、
+                                        <br />
+                                        「誰かの役に立ちたい」という想い。
+                                        <br />
+                                        その気持ちを、私たちは大切に育てます。
+                                    </p>
+                                    <Link
+                                        href="/contact/"
+                                        className="inline-block px-8 py-4 md:px-10 md:py-4 bg-gradient-to-r from-yellow-400 to-orange-500 text-white font-medium text-base md:text-lg rounded-full shadow-xl hover:shadow-2xl hover:scale-105 transition-all duration-300 min-h-[48px]"
+                                    >
+                                        あなたらしい働き方を見つける
+                                    </Link>
                                 </div>
-                            ))}
+                            </div>
+                            <div className="order-1 md:order-2 -mr-4 md:mr-0 ml-auto md:ml-0 w-[90%] md:w-full">
+                                <div className="hero-photo relative w-full aspect-[5/4] md:aspect-[4/5] max-h-[400px] md:max-h-[520px] overflow-hidden bg-gray-200">
+                                    <img
+                                        src={IMG.hero}
+                                        alt="笑顔で働く女性"
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    />
+                                </div>
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+
+                    {/* 3. 3つの特徴 */}
+                    <section className="relative py-16 md:py-32 px-4 md:px-6">
+                        {/* Blob装飾: クリーム卵（右下にはみ出す → 下のセクションが上に被さり隠す） */}
+                        <div
+                            className="absolute blob-egg drift-breathe pointer-events-none bottom-[10vw] md:bottom-[-10vw] right-[-10vw] w-[55vw] h-[55vw] md:w-[33vw] md:h-[33vw]"
+                            style={{ background: 'rgba(253, 232, 166, 0.28)' }}
+                            aria-hidden="true"
+                        />
+                        <div className="max-w-7xl mx-auto relative z-10">
+                            <div className="grid md:grid-cols-3 gap-10 md:gap-16">
+                                {FEATURES.map((item) => (
+                                    <div key={item.num}>
+                                        <div className="feature-number mb-4 !text-[2rem] md:!text-[5rem]">{item.num}</div>
+                                        <div className="divider-line mb-6" />
+                                        <h3 className="text-lg md:text-2xl font-medium mb-4 text-gray-900">{item.title}</h3>
+                                        <p className="text-gray-600 leading-relaxed">{item.body}</p>
+                                    </div>
+                                ))}
+                            </div>
+                        </div>
+                    </section>
+                </div>
 
                 {/* 4. 募集形態・待遇（3つの働き方） */}
-                <section className="wave-divider py-20 md:py-32">
-                    <div className="max-w-6xl mx-auto px-4 md:px-6">
+                <section className="wave-divider relative z-[5] bg-white py-20 md:py-32">
+                    <div className="max-w-6xl mx-auto px-4 md:px-6 relative z-10">
                         <div className="text-center mb-12 md:mb-20">
                             <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
                                 3つの働き方
@@ -278,15 +289,26 @@ export default function RecruitPage() {
                     </div>
                 </section>
 
-                {/* 5. キャリアの描き方 */}
-                <section
-                    className="relative py-20 md:py-32 px-4 md:px-6 overflow-hidden"
-                    style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.05) 0%, rgba(240, 131, 0, 0.05) 100%)' }}
+                {/* Wave: Section 4 → 5 */}
+                <div
+                    className="relative z-[6] h-[80px] bg-white"
+                    aria-hidden="true"
                 >
-                    {/* 装飾 Blob */}
+                    <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#fffdf5" />
+                    </svg>
+                </div>
+
+                {/* 5. キャリアの描き方 */}
+                <section className="relative z-[7] bg-[#fffdf5] py-20 md:py-32 px-4 md:px-6">
+                    {/* Blob装飾: ピンク滴（右上にはみ出す → 下のセクションが上に被さり隠す） */}
                     <div
-                        className="absolute -top-10 -right-10 w-[16rem] h-[16rem] md:-top-20 md:-right-20 md:w-[30rem] md:h-[30rem] blob pointer-events-none"
-                        style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.08), rgba(240, 131, 0, 0.06))' }}
+                        className="absolute blob-drop drift-rotate pointer-events-none w-[62vw] h-[72vw] md:w-[37vw] md:h-[43vw]"
+                        style={{
+                            top: '-8vw',
+                            right: '-12vw',
+                            background: 'rgba(235, 180, 178, 0.2)',
+                        }}
                         aria-hidden="true"
                     />
                     <div className="max-w-6xl mx-auto relative z-10">
@@ -346,8 +368,7 @@ export default function RecruitPage() {
 
                 {/* Wave: Section 5 → 6 */}
                 <div
-                    className="relative h-[80px]"
-                    style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.05) 0%, rgba(240, 131, 0, 0.05) 100%)' }}
+                    className="relative z-[8] h-[80px] bg-[#fffdf5]"
                     aria-hidden="true"
                 >
                     <svg className="absolute bottom-0 w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
@@ -356,7 +377,17 @@ export default function RecruitPage() {
                 </div>
 
                 {/* 6. 案件参画までの流れ */}
-                <section className="relative py-20 md:py-32 px-4 md:px-6 bg-white overflow-hidden">
+                <section className="relative z-[9] bg-white py-20 md:py-32 px-4 md:px-6">
+                    {/* Blob装飾: ラベンダー角（左にはみ出す → Wave の白い切れ目を避ける） */}
+                    <div
+                        className="absolute blob-angular drift-orbit pointer-events-none w-[62vw] h-[62vw] md:w-[37vw] md:h-[37vw]"
+                        style={{
+                            bottom: '3vw',
+                            left: '-22vw',
+                            background: 'rgba(178, 186, 230, 0.2)',
+                        }}
+                        aria-hidden="true"
+                    />
                     <div className="max-w-5xl mx-auto relative z-10">
                         <div className="text-center mb-12 md:mb-20">
                             <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
@@ -384,23 +415,25 @@ export default function RecruitPage() {
                 </section>
 
                 {/* Wave: Section 6 → 8 */}
-                <div className="relative h-[80px] overflow-hidden" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-orange-50/50" />
+                <div className="relative z-[10] h-[80px] overflow-hidden bg-[#fefcf7]" aria-hidden="true">
                     <svg className="relative z-10 block w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,0 L0,0 Z" fill="#ffffff" />
                     </svg>
                 </div>
 
                 {/* 8. よくある質問 */}
-                <section className="relative py-20 md:py-32 px-4 md:px-6 overflow-x-clip">
-                    <div className="absolute inset-0 z-background bg-gradient-to-br from-primary-50/50 to-orange-50/50" aria-hidden />
-                    {/* 装飾 Blob */}
+                <section className="relative z-[11] bg-[#fefcf7] py-20 md:py-32 px-4 md:px-6">
+                    {/* Blob装飾: クリームスプラッシュ（右にはみ出す → 下のセクションが上に被さり隠す） */}
                     <div
-                        className="absolute bottom-4 left-4 w-[14rem] h-[14rem] md:bottom-6 md:left-6 md:w-[22rem] md:h-[22rem] blob pointer-events-none z-[1]"
-                        style={{ background: 'linear-gradient(135deg, rgba(253, 208, 0, 0.08), rgba(240, 131, 0, 0.05))' }}
+                        className="absolute blob-splash drift-horizontal pointer-events-none w-[80vw] h-[34vw] md:w-[47vw] md:h-[20vw]"
+                        style={{
+                            top: '15vw',
+                            right: '-18vw',
+                            background: 'rgba(253, 232, 166, 0.22)',
+                        }}
                         aria-hidden="true"
                     />
-                    <div className="container mx-auto max-w-4xl relative z-content">
+                    <div className="container mx-auto max-w-4xl relative z-10">
                         <div className="text-center mb-12 md:mb-20">
                             <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800 text-balance">
                                 よくある質問
@@ -421,26 +454,39 @@ export default function RecruitPage() {
                 </section>
 
                 {/* Wave: Section 8 → 9 */}
-                <div className="relative h-[80px] overflow-hidden" aria-hidden="true">
-                    <div className="absolute inset-0 bg-gradient-to-br from-primary-50/50 to-orange-50/50" />
+                <div className="relative z-[12] h-[80px] overflow-hidden bg-[#fefcf7]" aria-hidden="true">
                     <svg className="relative z-10 block w-full h-full" viewBox="0 0 1440 120" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
                         <path d="M0,60 C240,120 480,0 720,60 C960,120 1200,0 1440,60 L1440,120 L0,120 Z" fill="#ffffff" />
                     </svg>
                 </div>
 
                 {/* 9. スタッフの声（タイムライン形式） */}
-                <StaffVoices />
+                <div className="relative z-[13] bg-white">
+                    {/* Blob装飾: ソフトピンク雲（左上にはみ出す → カードの背面に表示） */}
+                    <div
+                        className="absolute blob-cloud drift-vertical pointer-events-none w-[62vw] h-[62vw] md:w-[37vw] md:h-[37vw]"
+                        style={{
+                            top: '-5vw',
+                            left: '-12vw',
+                            background: 'rgba(235, 180, 178, 0.18)',
+                        }}
+                        aria-hidden="true"
+                    />
+                    <div className="relative z-10 [&>section]:bg-transparent">
+                        <StaffVoices />
+                    </div>
+                </div>
 
 
                 {/* 10. 統合メッセージ＆CTAセクション（左右分割 + Wave） */}
-                <div className="relative min-h-[40rem] lg:min-h-[45rem] bg-white">
+                <div className="relative z-[14] min-h-[40rem] lg:min-h-[45rem] bg-white">
                     {/* Wave クリップされた背景レイヤー */}
                     <WaveClipLayer idPrefix="recruit-cta">
                         <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2">
                             {/* 左側背景: 写真 + オーバーレイ */}
                             <div className="relative">
                                 <img
-                                    src={IMG.team}
+                                    src={IMG.ctaBg}
                                     alt=""
                                     className="w-full h-full object-cover"
                                 />
@@ -477,8 +523,12 @@ export default function RecruitPage() {
                         <div className="relative flex items-center justify-center px-6 py-16 md:px-8 md:py-20 overflow-hidden">
                             {/* 装飾 Blob */}
                             <div
-                                className="absolute top-16 right-10 w-72 h-72 blob"
-                                style={{ background: 'rgba(249, 115, 22, 0.25)' }}
+                                className="absolute blob-egg drift-breathe w-[35vw] h-[35vw] md:w-[20vw] md:h-[20vw]"
+                                style={{
+                                    top: '4.5vw',
+                                    right: '2.8vw',
+                                    background: 'rgba(249, 115, 22, 0.25)',
+                                }}
                                 aria-hidden="true"
                             />
 
