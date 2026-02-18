@@ -1,5 +1,6 @@
 'use client'
 
+import HeadingLine from '@/components/ui/HeadingLine'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import {
@@ -88,13 +89,10 @@ function StrengthSlide({
                                 POINT 0{slide.step}
                             </span>
                         </div>
-                        <h3 className="text-xl md:text-4xl font-bold mb-3 md:mb-6 text-gray-800 leading-tight">
+                        <h3 className="text-xl md:text-4xl font-bold mb-1 text-gray-800 leading-tight">
                             {slide.title}
                         </h3>
-                        <div
-                            className="w-12 md:w-16 h-1 mb-3 md:mb-6"
-                            style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
-                        />
+                        <HeadingLine variant={6} className="mb-3 md:mb-6" />
                         <p className="text-sm md:text-lg text-gray-700 leading-relaxed">{slide.description}</p>
                     </div>
                 </div>
