@@ -98,6 +98,54 @@ body {
 	}
 }
 
+/* HeroSection: 双葉芽吹きインジケーター（② Sprouting Seed）
+   出るだけ: 茎が伸びる(0–18%) → 葉が開く(12–44%、オーバーシュート1.08) → そのまま表示 */
+@keyframes heroSproutStem {
+	0%   { transform: scaleY(0); }
+	18%  { transform: scaleY(1); }
+	100% { transform: scaleY(1); }
+}
+@keyframes heroSproutLeafLeft {
+	0%   { opacity: 0; transform: scale(0); }
+	12%  { opacity: 0; transform: scale(0); }
+	28%  { opacity: 1; transform: scale(1.08); }
+	44%  { opacity: 1; transform: scale(1); }
+	100% { opacity: 1; transform: scale(1); }
+}
+@keyframes heroSproutLeafRight {
+	0%   { opacity: 0; transform: scale(0); }
+	12%  { opacity: 0; transform: scale(0); }
+	30%  { opacity: 1; transform: scale(1.08); }
+	46%  { opacity: 1; transform: scale(1); }
+	100% { opacity: 1; transform: scale(1); }
+}
+/* animation-delay はコンポーネント側から inline style で渡す */
+.hero-sprout-stem {
+	transform-origin: 28px 52px; /* SVG内の根元座標(根元固定でscaleY) */
+	transform: scaleY(0);
+	animation: heroSproutStem 2.8s ease-in-out forwards;
+}
+/* <g> 要素のアニメーション — transform-origin は style でコンポーネント側から指定 */
+.hero-sprout-leaf-left {
+	opacity: 0;
+	animation: heroSproutLeafLeft 2.8s ease-in-out forwards;
+}
+.hero-sprout-leaf-right {
+	opacity: 0;
+	animation: heroSproutLeafRight 2.8s ease-in-out forwards;
+}
+@media (prefers-reduced-motion: reduce) {
+	.hero-sprout-stem,
+	.hero-sprout-leaf-left,
+	.hero-sprout-leaf-right {
+		animation: none;
+	}
+	.hero-sprout-leaf-left,
+	.hero-sprout-leaf-right {
+		opacity: 0;
+	}
+}
+
 /* Recruit ページ用 */
 .serif {
 	font-family: 'Crimson Pro', serif;

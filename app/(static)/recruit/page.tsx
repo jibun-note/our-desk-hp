@@ -32,20 +32,16 @@ export default function RecruitPage() {
         <>
             <BreadcrumbJsonLdServer path="/recruit/" name="採用情報" />
             <main className="min-h-screen bg-white relative">
-                {/* 1. Hero Section */}
-                <div className="relative z-[1]">
-                    <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" />
-                </div>
-
-                {/* 2+3 共通ラッパー: 同じ背景色なので blob がセクション境界で切れないよう統合 */}
-                <div className="relative z-[2] bg-[#fffdf5]">
-                    {/* Blob装飾: ラベンダー雲（イントロ〜特徴にかけて自然に流れる） */}
+                {/* 1+2+3 統合ラッパー: ヒーローからクリーム背景で一体感を持たせる */}
+                <div className="relative z-[1] bg-[#fffdf5]">
+                    {/* Blob装飾: ラベンダー雲（ヒーロー〜特徴にかけて自然に流れる） */}
                     <BlobDecoration
                         shape="cloud"
                         drift="diagonal"
                         background="rgba(178, 186, 230, 0.25)"
-                        className="top-[60vw] md:top-[5vw] left-[-15vw] w-[55vw] h-[55vw] md:w-[40vw] md:h-[40vw]"
+                        className="top-[60vw] md:top-[-5vw] left-[-15vw] w-[55vw] h-[55vw] md:w-[40vw] md:h-[40vw]"
                     />
+                    <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" activeIndex={3} />
                     <RecruitIntroSection heroImage={IMG.hero} />
                     <RecruitFeaturesSection features={FEATURES} />
                 </div>

@@ -44,7 +44,7 @@ export default function CompanyPage() {
     return (
         <>
             {/* ヒーロー：ページタイトル「Company」と説明「会社情報」 */}
-            <HeroSection title="Company" description="会社情報" />
+            <HeroSection title="Company" description="会社情報" activeIndex={2} />
 
             {/* メインコンテンツ（白背景）：ヘッダーとの境目を明確にする上部ボーダー */}
             <div className="bg-white border-t border-gray-200">
