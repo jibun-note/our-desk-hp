@@ -1,5 +1,6 @@
 'use client'
 
+import HeadingLine from '@/components/ui/HeadingLine'
 import StrengthCards, { type StrengthCardItem } from '@/components/sections/StrengthCards'
 
 type Props = {
@@ -11,11 +12,8 @@ export default function StrengthSection({ cards }: Props) {
         <section className="relative pb-6 md:pb-20 md:mb-20" aria-label="OurDeskの強み">
             {/* デスクトップ用見出し（768px以上で表示・CSSのみ） */}
             <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                <h2 className="text-2xl md:text-4xl font-bold mb-4 text-gray-800">OurDeskの強み</h2>
-                <div
-                    className="w-20 h-1 mx-auto mb-4"
-                    style={{ background: 'linear-gradient(to right, #FDD000, #F08300)' }}
-                />
+                <h2 className="text-2xl md:text-4xl font-bold mb-1 text-gray-800">OurDeskの強み</h2>
+                <HeadingLine variant={6} className="mx-auto mb-4" />
                 <p className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
                     OurDeskは、伴走型キャリア支援という仕組みを通して、
                     <br />
@@ -46,10 +44,9 @@ export default function StrengthSection({ cards }: Props) {
                         <br />
                         の強み
                     </h2>
-                    <div
-                        className="w-12 h-0.5 rounded-full mt-0.5"
-                        style={{ background: 'linear-gradient(to right, transparent, #FDD000, #F08300)' }}
-                    />
+                    <div className="flex justify-end -mt-1">
+                        <HeadingLine variant={6} className="mb-0" />
+                    </div>
                 </div>
             </div>
             <div className="w-full max-w-6xl xl:max-w-7xl 2xl:max-w-[2000px] mx-auto px-0 md:px-6">
