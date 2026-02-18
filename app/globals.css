@@ -97,3 +97,322 @@ body {
 		animation: none;
 	}
 }
+
+/* Recruit ページ用 */
+.serif {
+	font-family: 'Crimson Pro', serif;
+}
+.hero-photo {
+	border-radius: 0 0 0 12rem;
+	box-shadow: -40px 40px 80px rgba(0, 0, 0, 0.1);
+}
+@media (max-width: 767px) {
+	.hero-photo {
+		border-radius: 0 0 0 6rem;
+		box-shadow: -20px 20px 40px rgba(0, 0, 0, 0.08);
+	}
+}
+.card-organic {
+	background: white;
+	border-radius: 2rem;
+	transition: transform 0.2s ease-out, box-shadow 0.2s ease-out;
+}
+.card-organic:hover {
+	transform: translateY(-0.5rem);
+	box-shadow: 0 24px 48px rgba(240, 131, 0, 0.15);
+}
+@media (prefers-reduced-motion: reduce) {
+	.card-organic:hover {
+		transform: none;
+	}
+}
+.divider-line {
+	width: 60px;
+	height: 3px;
+	background: linear-gradient(to right, #FDD000, #F08300);
+}
+.feature-number {
+	font-size: 5rem;
+	font-weight: 500;
+	line-height: 1;
+	background: linear-gradient(135deg, #FDD000, #F08300);
+	-webkit-background-clip: text;
+	background-clip: text;
+	-webkit-text-fill-color: transparent;
+}
+.career-path-card {
+	background: white;
+	border-radius: 2rem;
+	padding: 2.5rem;
+	box-shadow: 0 4px 24px rgba(0, 0, 0, 0.06);
+	transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+}
+@media (max-width: 767px) {
+	.career-path-card {
+		padding: 1.75rem;
+		border-radius: 1.5rem;
+	}
+}
+.career-path-card:hover {
+	transform: translateY(-8px);
+	box-shadow: 0 16px 40px rgba(240, 131, 0, 0.12);
+}
+@media (prefers-reduced-motion: reduce) {
+	.career-path-card:hover {
+		transform: none;
+	}
+}
+
+/* ==========================================================================
+   Recruit: Blob 装飾 — cheecolo 風の大胆な有機シェイプ
+   各 blob は「形状」「変形アニメーション」「移動アニメーション」を
+   すべて別々に定義し、コピペ感をなくす
+   ========================================================================== */
+
+/*
+ * --- 形状 A: 横に広がる雲型 ---
+ * cheecolo 左上のラベンダー背景のような、横長で大らかなシルエット
+ */
+.blob-cloud {
+	border-radius: 40% 60% 65% 35% / 55% 40% 60% 45%;
+	animation: morph-cloud 28s ease-in-out infinite;
+}
+@keyframes morph-cloud {
+	0%, 100% { border-radius: 40% 60% 65% 35% / 55% 40% 60% 45%; }
+	20%      { border-radius: 55% 45% 40% 60% / 35% 65% 35% 65%; }
+	40%      { border-radius: 65% 35% 55% 45% / 50% 50% 50% 50%; }
+	60%      { border-radius: 35% 65% 50% 50% / 60% 35% 65% 40%; }
+	80%      { border-radius: 50% 50% 35% 65% / 45% 55% 40% 60%; }
+}
+
+/*
+ * --- 形状 B: 縦に伸びる滴型 ---
+ * 重力で垂れ下がるような非対称。cheecolo 右下の大きなblobに近い
+ */
+.blob-drop {
+	border-radius: 60% 40% 35% 65% / 70% 30% 70% 30%;
+	animation: morph-drop 24s ease-in-out infinite;
+}
+@keyframes morph-drop {
+	0%, 100% { border-radius: 60% 40% 35% 65% / 70% 30% 70% 30%; }
+	25%      { border-radius: 45% 55% 60% 40% / 40% 60% 40% 60%; }
+	50%      { border-radius: 55% 45% 45% 55% / 55% 45% 60% 40%; }
+	75%      { border-radius: 40% 60% 55% 45% / 65% 35% 50% 50%; }
+}
+
+/*
+ * --- 形状 C: 角張った不定形 ---
+ * 左右非対称が強く、鋭い角と丸い角が混在。cheecolo の中間ページの不定形blob
+ */
+.blob-angular {
+	border-radius: 73% 27% 42% 58% / 28% 72% 38% 62%;
+	animation: morph-angular 20s ease-in-out infinite;
+}
+@keyframes morph-angular {
+	0%, 100% { border-radius: 73% 27% 42% 58% / 28% 72% 38% 62%; }
+	33%      { border-radius: 30% 70% 65% 35% / 58% 42% 68% 32%; }
+	66%      { border-radius: 58% 42% 28% 72% / 42% 58% 30% 70%; }
+}
+
+/*
+ * --- 形状 D: なめらかな卵型 ---
+ * 他の不規則な形に対して、まろやかなコントラストを出す
+ */
+.blob-egg {
+	border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%;
+	animation: morph-egg 32s ease-in-out infinite;
+}
+@keyframes morph-egg {
+	0%, 100% { border-radius: 50% 50% 45% 55% / 60% 60% 40% 40%; }
+	50%      { border-radius: 45% 55% 55% 45% / 40% 40% 60% 60%; }
+}
+
+/*
+ * --- 形状 E: ワイドスプラッシュ ---
+ * 幅 >> 高さの超横長。ページ幅をまたぐようなダイナミックさ
+ * width と height を別々に指定して使う想定（例: width:80vw, height:40vw）
+ */
+.blob-splash {
+	border-radius: 45% 55% 60% 40% / 65% 35% 55% 45%;
+	animation: morph-splash 26s ease-in-out infinite;
+}
+@keyframes morph-splash {
+	0%, 100% { border-radius: 45% 55% 60% 40% / 65% 35% 55% 45%; }
+	25%      { border-radius: 55% 45% 40% 60% / 45% 55% 65% 35%; }
+	50%      { border-radius: 40% 60% 55% 45% / 55% 45% 40% 60%; }
+	75%      { border-radius: 60% 40% 45% 55% / 35% 65% 50% 50%; }
+}
+
+/* ---------- 移動アニメーション — すべて異なるパターン ---------- */
+
+/* ゆっくり斜め上下にドリフト */
+.drift-diagonal {
+	animation: drift-diagonal 14s ease-in-out infinite;
+}
+@keyframes drift-diagonal {
+	0%, 100% { transform: translate(0, 0); }
+	50%      { transform: translate(2vw, -2.8vw); }
+}
+
+/* 水平方向にゆらゆら */
+.drift-horizontal {
+	animation: drift-horizontal 18s ease-in-out infinite;
+}
+@keyframes drift-horizontal {
+	0%, 100% { transform: translateX(0); }
+	50%      { transform: translateX(-3.5vw); }
+}
+
+/* 大きくゆっくり円を描く */
+.drift-orbit {
+	animation: drift-orbit 30s ease-in-out infinite;
+}
+@keyframes drift-orbit {
+	0%   { transform: translate(0, 0); }
+	25%  { transform: translate(1.7vw, -2.4vw); }
+	50%  { transform: translate(-1vw, -3.5vw); }
+	75%  { transform: translate(-2vw, -1.4vw); }
+	100% { transform: translate(0, 0); }
+}
+
+/* 垂直にゆっくり浮遊（従来の blob-float に近いが大きめ） */
+.drift-vertical {
+	animation: drift-vertical 12s ease-in-out infinite;
+}
+@keyframes drift-vertical {
+	0%, 100% { transform: translateY(0); }
+	50%      { transform: translateY(-3.1vw); }
+}
+
+/* わずかに回転しながら浮遊 */
+.drift-rotate {
+	animation: drift-rotate 22s ease-in-out infinite;
+}
+@keyframes drift-rotate {
+	0%, 100% { transform: rotate(0deg) translateY(0); }
+	25%      { transform: rotate(4deg) translateY(-1.4vw); }
+	50%      { transform: rotate(-3deg) translateY(-2.4vw); }
+	75%      { transform: rotate(2deg) translateY(-1vw); }
+}
+
+/* 拡縮しながらゆらぐ */
+.drift-breathe {
+	animation: drift-breathe 16s ease-in-out infinite;
+}
+@keyframes drift-breathe {
+	0%, 100% { transform: scale(1) translateY(0); }
+	50%      { transform: scale(1.06) translateY(-1.7vw); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.blob-cloud, .blob-drop, .blob-angular, .blob-egg, .blob-splash {
+		animation: none;
+	}
+	.drift-diagonal, .drift-horizontal, .drift-orbit,
+	.drift-vertical, .drift-rotate, .drift-breathe {
+		animation: none;
+	}
+}
+
+/* StaffVoices: タブコンテンツ切り替えアニメーション */
+.tab-content {
+	animation: staffFadeIn 0.4s ease-out;
+}
+@keyframes staffFadeIn {
+	from {
+		opacity: 0;
+		transform: translateY(10px);
+	}
+	to {
+		opacity: 1;
+		transform: translateY(0);
+	}
+}
+@media (prefers-reduced-motion: reduce) {
+	.tab-content {
+		animation: none;
+	}
+}
+
+/* StaffVoices: モバイル用スワイプアイコン */
+.avatar-scroll {
+	display: flex;
+	gap: 1rem;
+	overflow-x: auto;
+	overflow-y: hidden;
+	scroll-snap-type: x mandatory;
+	scrollbar-width: none;
+	-ms-overflow-style: none;
+	height: 140px;
+	align-items: flex-start;
+}
+.avatar-scroll::-webkit-scrollbar {
+	display: none;
+}
+.avatar-item {
+	scroll-snap-align: center;
+	flex-shrink: 0;
+	transition: all 0.3s ease;
+	cursor: pointer;
+	background: none;
+	border: none;
+	padding: 0;
+}
+.avatar-item.small {
+	width: 60px;
+	height: 60px;
+	opacity: 0.5;
+}
+.avatar-item.large {
+	width: 100px;
+	height: 100px;
+	opacity: 1;
+}
+.avatar-item.small:hover {
+	opacity: 0.8;
+}
+@media (prefers-reduced-motion: reduce) {
+	.avatar-item {
+		transition: none;
+	}
+}
+
+/* Recruit: Wave Divider（クリーム→白の境界の波型区切り） */
+.wave-divider {
+	position: relative;
+	background: white;
+}
+.wave-divider::before {
+	content: '';
+	position: absolute;
+	top: -50px;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+	background-size: cover;
+	pointer-events: none;
+	transform: scaleY(-1);
+}
+.wave-divider::after {
+	content: '';
+	position: absolute;
+	bottom: -50px;
+	left: 0;
+	width: 100%;
+	height: 50px;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+	background-size: cover;
+	pointer-events: none;
+	z-index: 1;
+}
+@media (max-width: 767px) {
+	.wave-divider::before {
+		top: -30px;
+		height: 30px;
+	}
+	.wave-divider::after {
+		bottom: -30px;
+		height: 30px;
+	}
+}
