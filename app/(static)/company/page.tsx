@@ -45,25 +45,16 @@ const ACCESS_LOCATIONS = [
 export default function CompanyPage() {
     return (
         <>
-            {/* ヒーロー：ページタイトル「Company」と説明「会社情報」 */}
-            <HeroSection title="Company" description="会社情報" activeIndex={2} />
-
-            {/* 役員紹介〜グループ体制：Blob 背景（会社概要の手前まで） */}
-            <div className="relative z-[2] overflow-hidden border-t border-gray-200 bg-[#fffdf5]">
-                {/* ラベンダー：左上 */}
+            {/* ヒーロー〜役員紹介〜グループ体制：クリーム背景で一体に（Recruit同様） */}
+            <div className="relative z-[2] overflow-hidden bg-[#fffdf5]">
+                {/* 緑：右側（ヒーロー〜コンテンツにかけて流れる） */}
                 <BlobDecoration
                     shape="cloud"
                     drift="diagonal"
-                    background="rgba(178, 186, 230, 0.25)"
-                    className="top-[-5vw] left-[-15vw] w-[55vw] h-[55vw] md:w-[38vw] md:h-[38vw] md:top-[2vw]"
+                    background="rgba(160, 200, 170, 0.28)"
+                    className="top-[40vw] md:top-[-5vw] right-[-15vw] w-[55vw] h-[55vw] md:w-[40vw] md:h-[40vw]"
                 />
-                {/* ピンク：右下（ブロック内に収め、下端で切れないように上に配置） */}
-                <BlobDecoration
-                    shape="cloud"
-                    drift="vertical"
-                    background="rgba(235, 180, 178, 0.18)"
-                    className="right-[-18vw] bottom-[12vw] w-[45vw] h-[45vw] md:right-[-12vw] md:bottom-[8vw] md:w-[32vw] md:h-[32vw]"
-                />
+                <HeroSection title="Company" description="会社情報" activeIndex={2} />
                 <div className="relative z-10">
                     <div className="container mx-auto max-w-4xl px-4 pt-12 md:pt-16 pb-20 md:pb-28 space-y-20 md:space-y-24">
                         {/* 役員紹介：2x2グリッド・番号・役職（日英）のレイアウト */}
