@@ -1,9 +1,9 @@
-import { type WorkStyleItem } from '@/components/sections/RecruitWorkStylesSection'
-import { type CareerPathItem } from '@/components/sections/RecruitCareerPathsSection'
-import { type FaqItem } from '@/components/sections/RecruitFaqSection'
-import { type FeatureItem } from '@/components/sections/RecruitFeaturesSection'
-import { type FlowStepItem } from '@/components/sections/RecruitFlowSection'
-import { type StaffCase } from '@/components/sections/StaffVoices'
+import { type WorkStyleItem } from '@/components/sections/recruit/RecruitWorkStylesSection'
+import { type CareerPathItem } from '@/components/sections/recruit/RecruitCareerPathsSection'
+import { type FaqItem } from '@/components/sections/recruit/RecruitFaqSection'
+import { type FeatureItem } from '@/components/sections/recruit/RecruitFeaturesSection'
+import { type FlowStepItem } from '@/components/sections/recruit/RecruitFlowSection'
+import { type StaffCase } from '@/components/sections/recruit/StaffVoicesSection'
 
 export const WORK_STYLES: WorkStyleItem[] = [
     {
