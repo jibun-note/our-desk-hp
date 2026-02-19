@@ -171,8 +171,8 @@ function SproutIcon({
     const cssBaseDelay = fadeInDelay + SVG_FADE_DURATION
 
     return (
-        <motion.span
-            className="inline-block"
+        <motion.div
+            className="block leading-[0]"
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: SVG_FADE_DURATION, delay: fadeInDelay, ease: 'easeOut' }}
@@ -237,7 +237,7 @@ function SproutIcon({
                     strokeWidth={2.8}
                 />
             </svg>
-        </motion.span>
+        </motion.div>
     )
 }
 
@@ -311,10 +311,10 @@ export default function HeroSection({
                 </p>
 
                 {/* ページインジケーター
-                    - items-end で全ドットの下端を揃える（SVG の下端 = 種の底辺）
+                    - items-end で全要素の下端（= 種の底辺）を揃える
                     - min-h はステージ⑤（h=78px）に合わせて 84px を確保
-                    - 非アクティブは motion.div の灰色ドット
-                    - アクティブは SproutIcon（ステージ番号 = activeIndex） */}
+                    - スロット幅を非アクティブドット（8px）と同じに固定し、SVG は absolute で左右中央・下端揃え。
+                      gap-[11px] が種の中心間で均一になる。 */}
                 {activeIndex != null && (
                     <div className="mt-6 flex items-end gap-[11px] min-h-[84px]">
                         {[0, 1, 2, 3, 4].map((i) => {
@@ -323,12 +323,19 @@ export default function HeroSection({
 
                             if (isActive) {
                                 return (
-                                    <SproutIcon
+                                    <div
                                         key={`sprout-${i}-${cycleKey}`}
-                                        stageIndex={i}
-                                        fadeInDelay={fadeInDelay}
-                                        reduceMotion={reduceMotion}
-                                    />
+                                        className="relative flex-shrink-0"
+                                        style={{ width: 8, height: 8 }}
+                                    >
+                                        <div className="absolute bottom-0 left-1/2 -translate-x-1/2">
+                                            <SproutIcon
+                                                stageIndex={i}
+                                                fadeInDelay={fadeInDelay}
+                                                reduceMotion={reduceMotion}
+                                            />
+                                        </div>
+                                    </div>
                                 )
                             }
 
