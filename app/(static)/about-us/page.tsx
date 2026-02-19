@@ -16,7 +16,7 @@ export default function AboutUsPage() {
             <BreadcrumbJsonLdServer path="/about-us/" name="About Us" />
             <main className="min-h-screen bg-white">
             {/* 1. ヒーローセクション（Companyページと同じスタイル） */}
-            <HeroSection title="About Us" description="OurDeskについて" />
+            <HeroSection title="About Us" description="OurDeskについて" activeIndex={1} />
 
             {/* 2. MVV導入セクション */}
             <section className="relative py-16 md:py-20 px-4 md:px-6 overflow-hidden">

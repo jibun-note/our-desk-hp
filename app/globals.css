@@ -98,6 +98,43 @@ body {
 	}
 }
 
+/* HeroSection: 成長インジケーター（5段階）
+   ①短い茎+1枚葉 → ②双葉 → ③葉を大きく → ④双葉×2段 → ⑤双葉×2段+蕾
+   animation-delay / transform-origin は SproutIcon コンポーネントから inline style で渡す */
+
+/* 茎: 根元固定で上方向に伸びる */
+@keyframes heroSproutStem {
+	from { transform: scaleY(0); }
+	to   { transform: scaleY(1); }
+}
+
+/* 葉・蕾: 付け根を起点にバネ感あり（1.56 でオーバーシュート） */
+@keyframes heroSproutPart {
+	from { transform: scale(0); opacity: 0; }
+	to   { transform: scale(1); opacity: 1; }
+}
+
+.hero-sprout-stem {
+	transform: scaleY(0);
+	animation: heroSproutStem 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
+}
+
+/* transform-origin は SproutIcon の inline style で各パーツの付け根座標に設定 */
+.hero-sprout-part {
+	transform: scale(0);
+	opacity: 0;
+	animation: heroSproutPart 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@media (prefers-reduced-motion: reduce) {
+	.hero-sprout-stem,
+	.hero-sprout-part {
+		animation: none;
+		transform: none;
+		opacity: 1;
+	}
+}
+
 /* Recruit ページ用 */
 .serif {
 	font-family: 'Crimson Pro', serif;
@@ -332,6 +369,14 @@ body {
 	.tab-content {
 		animation: none;
 	}
+}
+
+/* StaffVoices: セクションヘッダー下線（紫〜ベージュ） */
+.staff-voices-header-line {
+	width: 60px;
+	height: 3px;
+	border-radius: 2px;
+	background: linear-gradient(to right, #c8b8d8, #d8c4a8);
 }
 
 /* StaffVoices: モバイル用スワイプアイコン */
