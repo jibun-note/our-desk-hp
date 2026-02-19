@@ -13,7 +13,7 @@ export default function ContactPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/contact/" name="Contact" />
-            <HeroSection title="Contact" description="お問い合わせはこちら" />
+            <HeroSection title="Contact" description="お問い合わせはこちら" activeIndex={4} />
             <ComingSoonBlock />
         </>
     )

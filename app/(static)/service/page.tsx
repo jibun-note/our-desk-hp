@@ -13,7 +13,7 @@ export default function ServicePage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/service/" name="Service" />
-            <HeroSection title="Service" description="OurDeskが提供するサービス" />
+            <HeroSection title="Service" description="OurDeskが提供するサービス" activeIndex={0} />
             <ComingSoonBlock />
         </>
     )
