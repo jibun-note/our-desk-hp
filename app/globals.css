@@ -98,51 +98,40 @@ body {
 	}
 }
 
-/* HeroSection: 双葉芽吹きインジケーター（② Sprouting Seed）
-   出るだけ: 茎が伸びる(0–18%) → 葉が開く(12–44%、オーバーシュート1.08) → そのまま表示 */
+/* HeroSection: 成長インジケーター（5段階）
+   ①短い茎+1枚葉 → ②双葉 → ③葉を大きく → ④双葉×2段 → ⑤双葉×2段+蕾
+   animation-delay / transform-origin は SproutIcon コンポーネントから inline style で渡す */
+
+/* 茎: 根元固定で上方向に伸びる */
 @keyframes heroSproutStem {
-	0%   { transform: scaleY(0); }
-	18%  { transform: scaleY(1); }
-	100% { transform: scaleY(1); }
+	from { transform: scaleY(0); }
+	to   { transform: scaleY(1); }
 }
-@keyframes heroSproutLeafLeft {
-	0%   { opacity: 0; transform: scale(0); }
-	12%  { opacity: 0; transform: scale(0); }
-	28%  { opacity: 1; transform: scale(1.08); }
-	44%  { opacity: 1; transform: scale(1); }
-	100% { opacity: 1; transform: scale(1); }
+
+/* 葉・蕾: 付け根を起点にバネ感あり（1.56 でオーバーシュート） */
+@keyframes heroSproutPart {
+	from { transform: scale(0); opacity: 0; }
+	to   { transform: scale(1); opacity: 1; }
 }
-@keyframes heroSproutLeafRight {
-	0%   { opacity: 0; transform: scale(0); }
-	12%  { opacity: 0; transform: scale(0); }
-	30%  { opacity: 1; transform: scale(1.08); }
-	46%  { opacity: 1; transform: scale(1); }
-	100% { opacity: 1; transform: scale(1); }
-}
-/* animation-delay はコンポーネント側から inline style で渡す */
+
 .hero-sprout-stem {
-	transform-origin: 28px 52px; /* SVG内の根元座標(根元固定でscaleY) */
 	transform: scaleY(0);
-	animation: heroSproutStem 2.8s ease-in-out forwards;
+	animation: heroSproutStem 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards;
 }
-/* <g> 要素のアニメーション — transform-origin は style でコンポーネント側から指定 */
-.hero-sprout-leaf-left {
+
+/* transform-origin は SproutIcon の inline style で各パーツの付け根座標に設定 */
+.hero-sprout-part {
+	transform: scale(0);
 	opacity: 0;
-	animation: heroSproutLeafLeft 2.8s ease-in-out forwards;
+	animation: heroSproutPart 0.45s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
 }
-.hero-sprout-leaf-right {
-	opacity: 0;
-	animation: heroSproutLeafRight 2.8s ease-in-out forwards;
-}
+
 @media (prefers-reduced-motion: reduce) {
 	.hero-sprout-stem,
-	.hero-sprout-leaf-left,
-	.hero-sprout-leaf-right {
+	.hero-sprout-part {
 		animation: none;
-	}
-	.hero-sprout-leaf-left,
-	.hero-sprout-leaf-right {
-		opacity: 0;
+		transform: none;
+		opacity: 1;
 	}
 }
 
