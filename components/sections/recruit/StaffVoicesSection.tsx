@@ -78,7 +78,7 @@ type Props = {
     staffCases: StaffCase[]
 }
 
-export default function StaffVoices({ staffCases }: Props) {
+export default function StaffVoicesSection({ staffCases }: Props) {
     const [activeTab, setActiveTab] = useState(0)
     const avatarContainerRef = useRef<HTMLDivElement>(null)
 

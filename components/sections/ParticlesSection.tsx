@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useLayoutEffect } from 'react'
+import { useState, useLayoutEffect } from 'react'
 import Particles from '@/components/ui/Particles'
 
 const STICKY_BREAKPOINT = 768

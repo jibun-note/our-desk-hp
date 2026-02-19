@@ -7,7 +7,7 @@ type Props = {
     cards: StrengthCardItem[]
 }
 
-export default function StrengthSection({ cards }: Props) {
+export default function HomeStrengthSection({ cards }: Props) {
     return (
         <section className="relative pb-6 md:pb-20 md:mb-20" aria-label="OurDeskの強み">
             {/* デスクトップ用見出し（768px以上で表示・CSSのみ） */}

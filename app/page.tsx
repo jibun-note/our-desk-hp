@@ -1,7 +1,7 @@
-import HomeHeroSection from '@/components/sections/HomeHeroSection'
-import HomeIntroSection from '@/components/sections/HomeIntroSection'
-import StackCardsSectionBlock from '@/components/sections/StackCardsSectionBlock'
-import StrengthSection from '@/components/sections/StrengthSection'
+import HomeHeroSection from '@/components/sections/home/HomeHeroSection'
+import HomeIntroSection from '@/components/sections/home/HomeIntroSection'
+import StackCardsSectionBlock from '@/components/sections/home/HomeInitiativeSection'
+import StrengthSection from '@/components/sections/home/HomeStrengthSection'
 import { stackCards, strengthCards } from '@/lib/data/home'
 import { createPageMetadata } from '@/lib/seo'
 
