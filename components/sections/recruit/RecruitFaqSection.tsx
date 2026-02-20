@@ -13,13 +13,13 @@ type Props = {
 export default function RecruitFaqSection({ faqItems }: Props) {
     return (
         <section className="relative z-[11] bg-[#fefcf7] py-20 md:py-32 px-4 md:px-6" aria-label="よくある質問">
-            {/* Blob装飾: クリームスプラッシュ（右にはみ出す → 下のセクションが上に被さり隠す） */}
+            {/* Blob装飾: クリームスプラッシュ（左にはみ出す → 下のセクションが上に被さり隠す） */}
             <BlobDecoration
                 shape="P"
                 drift="float-b"
                 fill="rgba(253, 232, 166, 0.22)"
-                className="w-[90vw] h-[42vw] md:w-[47vw] md:h-[20vw] max-md:!top-[2vw] max-md:!right-[-35vw]"
-                style={{ top: '8vw', right: '-18vw' }}
+                className="w-[90vw] h-[42vw] md:w-[47vw] md:h-[20vw] max-md:!top-[2vw] max-md:!left-[-35vw]"
+                style={{ top: '8vw', left: '-18vw' }}
             />
             <div className="container mx-auto max-w-4xl relative z-10">
                 <div className="text-center mb-12 md:mb-20">

@@ -1,8 +1,11 @@
+'use client'
+
 /**
  * HandwrittenLine
  *
  * 手書き風のラインSVGコンポーネント。
  * 従来の .divider-line（グラデーション直線）の代替として使用する。
+ * 視界に入ると左→右へ「すっと描く」アニメーション（globals.css .handwrite-line）を再生する。
  *
  * ソースSVGファイルは /public/lines/line1.svg 〜 line6.svg に配置すること。
  * 色制御のために path データはインライン埋め込みとしている。
@@ -16,9 +19,9 @@
  *   - 同一ページで同じ variant を連続して使わない
  *   - 隣接セクションで同じ color を繰り返さない
  */
-
-import type { CSSProperties } from 'react'
-import { cn } from '@/lib/utils'
+import type { CSSProperties } from 'react';
+import { useEffect, useRef } from 'react';
+import { cn } from '@/lib/utils';
 
 /**
  * 各 variant の特徴:
@@ -85,6 +88,8 @@ type Props = {
     align?: 'left' | 'center' | 'right'
     className?: string
     style?: CSSProperties
+    /** 視界に入ってから発火まで待つミリ秒（例: HeroSection のアニメ終了後に発火させたいとき 2000 など） */
+    delayWhenInViewMs?: number
 }
 
 export default function HandwrittenLine({
@@ -94,33 +99,117 @@ export default function HandwrittenLine({
     align = 'center',
     className,
     style,
+    delayWhenInViewMs,
 }: Props) {
-    const data = LINE_DATA[variant]
-    const [vw, vh] = data.viewBox.split(' ').slice(2).map(Number)
-    const height = Math.round((width / vw) * vh)
+    const ref = useRef<HTMLDivElement>(null);
+    const data = LINE_DATA[variant];
+    const [vw, vh] = data.viewBox.split(' ').slice(2).map(Number);
+    const height = Math.round((width / vw) * vh);
 
     const marginX =
-        align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0'
+        align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0';
+
+    useEffect(() => {
+        const el = ref.current;
+        if (!el) return;
+
+        /** 要素の中心が画面の縦の中央付近（30%〜70%）に入っているか */
+        const isNearViewportCenter = () => {
+            const rect = el.getBoundingClientRect();
+            const centerY = rect.top + rect.height / 2;
+            const vh = window.innerHeight;
+            return centerY >= vh * 0.3 && centerY <= vh * 0.7;
+        };
+
+        let shown = false;
+        const show = () => {
+            if (shown) return;
+            shown = true;
+            el.classList.add('is-visible');
+            if (pollId != null) {
+                clearInterval(pollId);
+                pollId = null;
+            }
+        };
+
+        let delayTimer: ReturnType<typeof setTimeout> | null = null;
+        let pollId: ReturnType<typeof setInterval> | null = null;
+
+        const observer = new IntersectionObserver(
+            ([entry]) => {
+                if (!entry.isIntersecting) return;
+                if (!isNearViewportCenter()) return; // 中央付近に入るまで待つ
+                observer.disconnect();
+                if (pollId != null) {
+                    clearInterval(pollId);
+                    pollId = null;
+                }
+
+                if (delayWhenInViewMs != null && delayWhenInViewMs > 0) {
+                    delayTimer = setTimeout(show, delayWhenInViewMs);
+                } else {
+                    show();
+                }
+            },
+            {
+                threshold: 0.05,
+                rootMargin: '40px 0px',
+            }
+        );
+
+        observer.observe(el);
+
+        if (delayWhenInViewMs != null && delayWhenInViewMs > 0) {
+            // Intro 用: 遅延後に表示（ヒーローアニメ終了後）。中央付近チェックは不要
+            const fallback = setTimeout(show, delayWhenInViewMs + 500);
+            return () => {
+                observer.disconnect();
+                if (delayTimer != null) clearTimeout(delayTimer);
+                clearTimeout(fallback);
+            };
+        }
+
+        // それ以外: 画面中央付近に入ったら表示。ポーリングで中央付近をチェック
+        const checkInView = () => {
+            if (shown) return;
+            const rect = el.getBoundingClientRect();
+            const inView = rect.top < window.innerHeight && rect.bottom > 0;
+            if (inView && isNearViewportCenter()) show();
+        };
+        pollId = setInterval(checkInView, 250);
+        checkInView();
+
+        return () => {
+            observer.disconnect();
+            if (delayTimer != null) clearTimeout(delayTimer);
+            if (pollId != null) clearInterval(pollId);
+        };
+    }, [delayWhenInViewMs]);
 
     return (
-        <svg
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox={data.viewBox}
-            width={width}
-            height={height}
-            aria-hidden="true"
-            className={cn(className)}
-            style={{ display: 'block', margin: marginX, ...style }}
+        <div
+            ref={ref}
+            className={cn('handwrite-line inline-block', className)}
+            style={{ margin: marginX, width, height }}
         >
-            <g transform={data.outerTransform}>
-                <g transform={data.groupTransform}>
-                    <g transform={data.transform}>
-                        <path d={data.path} fill={color} fillRule="nonzero" />
+            <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox={data.viewBox}
+                width={width}
+                height={height}
+                aria-hidden="true"
+                style={{ display: 'block', ...style }}
+            >
+                <g transform={data.outerTransform}>
+                    <g transform={data.groupTransform}>
+                        <g transform={data.transform}>
+                            <path d={data.path} fill={color} fillRule="nonzero" />
+                        </g>
                     </g>
                 </g>
-            </g>
-        </svg>
-    )
+            </svg>
+        </div>
+    );
 }
 
 /** Recruit ページ各セクションの手書きライン割り当て（デザイン思想に準拠） */
