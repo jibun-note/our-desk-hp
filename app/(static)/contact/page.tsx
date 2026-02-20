@@ -1,4 +1,4 @@
-import ComingSoonBlock from '@/components/sections/ComingSoonBlock'
+import ContactForm from '../../../components/sections/ContactForm'
 import HeroSection from '@/components/sections/HeroSection'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
@@ -13,8 +13,13 @@ export default function ContactPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/contact/" name="Contact" />
-            <HeroSection title="Contact" description="お問い合わせはこちら" activeIndex={4} />
-            <ComingSoonBlock />
+            <HeroSection
+                title="Contact"
+                description="お問い合わせはこちら"
+                activeIndex={4}
+                className="bg-[#f9ead4]"
+            />
+            <ContactForm />
         </>
     )
 }
