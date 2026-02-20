@@ -1,4 +1,5 @@
 import BlobDecoration from '@/components/ui/BlobDecoration'
+import HandwrittenLine from '@/components/ui/HandwrittenLine'
 import WaveClipLayer from '@/components/sections/WaveClipLayer'
 import Link from 'next/link'
 
@@ -35,7 +36,9 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                             効率じゃない。<br />
                             <span className="text-gradient-hero">想いだ。</span>
                         </h2>
-                        <div className="divider-line mx-auto lg:mx-0" />
+                        <div className="mb-4 flex justify-center lg:justify-start">
+                            <HandwrittenLine variant={3} color="#FDD000" width={100} align="left" />
+                        </div>
 
                         <div className="text-white text-base md:text-lg lg:text-xl leading-relaxed space-y-4 md:space-y-5">
                             <p className="font-medium text-pretty">スキルは後から</p>
@@ -52,10 +55,10 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                 <div className="relative flex items-center justify-center px-6 py-16 md:px-8 md:py-20 overflow-hidden">
                     {/* 装飾 Blob */}
                     <BlobDecoration
-                        shape="egg"
-                        drift="breathe"
-                        background="rgba(249, 115, 22, 0.25)"
-                        className="w-[35vw] h-[35vw] md:w-[20vw] md:h-[20vw]"
+                        shape="K"
+                        drift="float-f"
+                        fill="rgba(249, 115, 22, 0.25)"
+                        className="w-[50vw] h-[50vw] md:w-[20vw] md:h-[20vw] max-md:!right-[-8vw]"
                         style={{ top: '4.5vw', right: '2.8vw' }}
                     />
 
@@ -63,13 +66,15 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                         <h3 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white leading-tight text-balance">
                             一緒に、<br />育てよう
                         </h3>
-                        <div className="divider-line mx-auto" />
+                        <div className="mb-4">
+                        <HandwrittenLine variant={2} color="#FDD000" width={100} align="center" />
+                    </div>
                         <p className="text-xl md:text-2xl text-white/95 font-light text-pretty">
                             「働きたい」という気持ちを。
                         </p>
                         <Link
                             href="/contact/"
-                            className="inline-block bg-white text-orange-600 px-10 py-4 md:px-12 text-base md:text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform min-h-[48px] flex items-center justify-center mx-auto"
+                            className="inline-block bg-white text-orange-600 px-10 py-4 md:px-12 text-base md:text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform duration-200 ease-out min-h-[48px] flex items-center justify-center mx-auto"
                         >
                             応募フォームへ進む
                         </Link>

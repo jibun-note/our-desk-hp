@@ -36,10 +36,10 @@ export default function RecruitPage() {
                 <div className="relative z-[1] bg-[#fffdf5]">
                     {/* Blob装飾: ラベンダー雲（ヒーロー〜特徴にかけて自然に流れる） */}
                     <BlobDecoration
-                        shape="cloud"
-                        drift="diagonal"
-                        background="rgba(178, 186, 230, 0.25)"
-                        className="top-[60vw] md:top-[-5vw] left-[-15vw] w-[55vw] h-[55vw] md:w-[40vw] md:h-[40vw]"
+                        shape="H"
+                        drift="float-a"
+                        fill="rgba(178, 186, 230, 0.2)"
+                        className="top-[-12vw] md:top-[-5vw] left-[-28vw] md:left-[-15vw] w-[75vw] h-[75vw] md:w-[40vw] md:h-[40vw]"
                     />
                     <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" activeIndex={3} />
                     <RecruitIntroSection heroImage={IMG.hero} />
@@ -70,16 +70,8 @@ export default function RecruitPage() {
                 {/* Wave: Section 8 → 9 */}
                 <WaveDivider bgColor="#fefcf7" fillColor="#ffffff" className="z-[12]" />
 
-                {/* 9. スタッフの声（タイムライン形式） */}
+                {/* 9. スタッフの声（タイムライン形式）— 白セクション・Blobなし */}
                 <div className="relative z-[13] bg-white">
-                    {/* Blob装飾: ソフトピンク雲（左上にはみ出す → カードの背面に表示） */}
-                    <BlobDecoration
-                        shape="cloud"
-                        drift="vertical"
-                        background="rgba(235, 180, 178, 0.18)"
-                        className="w-[62vw] h-[62vw] md:w-[37vw] md:h-[37vw]"
-                        style={{ top: '-5vw', left: '-12vw' }}
-                    />
                     <div className="relative z-10 [&>section]:bg-transparent">
                         <StaffVoices staffCases={STAFF_CASES} />
                     </div>
