@@ -25,7 +25,7 @@ export default function HeadingLine({ variant = 1, className }: Props) {
     const src = LINE_SOURCES[variant] ?? LINE_SOURCES[1]
     return (
         <span
-            className={cn('-mt-1 -ml-1 block w-32 overflow-visible', className)}
+            className={cn('-mt-1 -ml-1 block w-24 sm:w-24 md:w-32 overflow-visible', className)}
             aria-hidden
         >
             <Image
