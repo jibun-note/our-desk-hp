@@ -68,7 +68,7 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                             「働きたい」という気持ちを。
                         </p>
                         <Link
-                            href="/contact/"
+                            href="/recruit/apply/"
                             className="inline-block bg-white text-orange-600 px-10 py-4 md:px-12 text-base md:text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform min-h-[48px] flex items-center justify-center mx-auto"
                         >
                             応募フォームへ進む
