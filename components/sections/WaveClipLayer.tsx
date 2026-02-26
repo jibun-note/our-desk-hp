@@ -21,13 +21,13 @@ export default function WaveClipLayer({
         <>
             <svg width={0} height={0} aria-hidden>
                 <defs>
-                    {/* スマホ用：波の位置を上に */}
+                    {/* スマホ用：波の位置を上に（2つのカーブで波型） */}
                     <clipPath id={idMobile} clipPathUnits="objectBoundingBox">
-                        <path d="M0 0.005 Q 0.5 0.02 1 0.005 L 1 1 L 0 1 Z" />
+                        <path d="M0 0.04 Q 0.25 0.01 0.5 0.04 Q 0.75 0.07 1 0.04 L 1 1 L 0 1 Z" />
                     </clipPath>
-                    {/* PC用：従来の波の位置 */}
+                    {/* PC用：波の位置 */}
                     <clipPath id={idDesktop} clipPathUnits="objectBoundingBox">
-                        <path d="M0 0.02 Q 0.5 0.06 1 0.02 L 1 1 L 0 1 Z" />
+                        <path d="M0 0.03 Q 0.25 0 0.5 0.03 Q 0.75 0.06 1 0.03 L 1 1 L 0 1 Z" />
                     </clipPath>
                 </defs>
             </svg>

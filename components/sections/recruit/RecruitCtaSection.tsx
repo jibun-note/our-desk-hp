@@ -10,7 +10,7 @@ type Props = {
 export default function RecruitCtaSection({ ctaBgImage }: Props) {
     return (
         <section className="relative z-[14] min-h-[40rem] lg:min-h-[45rem] bg-white" aria-label="応募・お問い合わせ">
-            {/* Wave クリップされた背景レイヤー */}
+            {/* 波型クリップされた背景レイヤー */}
             <WaveClipLayer idPrefix="recruit-cta">
                 <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2">
                     {/* 左側背景: 写真 + オーバーレイ */}
