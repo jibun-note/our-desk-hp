@@ -67,14 +67,14 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                             一緒に、<br />育てよう
                         </h3>
                         <div className="mb-4">
-                        <HandwrittenLine variant={2} color="#FDD000" width={100} align="center" />
-                    </div>
+                            <HandwrittenLine variant={2} color="#FDD000" width={100} align="center" />
+                        </div>
                         <p className="text-xl md:text-2xl text-white/95 font-light text-pretty">
                             「働きたい」という気持ちを。
                         </p>
                         <Link
-                            href="/contact/"
-                            className="inline-block bg-white text-orange-600 px-10 py-4 md:px-12 text-base md:text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform duration-200 ease-out min-h-[48px] flex items-center justify-center mx-auto"
+                            href="/recruit/apply/"
+                            className="inline-block bg-white text-orange-600 px-10 py-4 md:px-12 text-base md:text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform min-h-[48px] flex items-center justify-center mx-auto"
                         >
                             応募フォームへ進む
                         </Link>

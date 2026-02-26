@@ -36,7 +36,7 @@ export default function CompanyPage() {
                         <section id="executives" className="scroll-mt-24">
                             <div className="mb-12">
                                 <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-balance mb-1">役員紹介</h2>
-                                <HeadingLine className="mb-0.5" />
+                                <HeadingLine variant={6} className="mb-0.5" />
                             </div>
                             <ul className="grid grid-cols-1 sm:grid-cols-2 gap-px bg-gray-300 border border-gray-300 rounded-xl overflow-hidden mx-auto list-none p-0 m-0">
                                 {executives.map((exec, index) => (
@@ -66,7 +66,7 @@ export default function CompanyPage() {
                         {/* グループ体制：体制図画像を中央配置で表示 */}
                         <section id="group" className="scroll-mt-24">
                             <h2 className="text-2xl md:text-3xl font-bold text-gray-800 text-balance mb-2">グループ体制</h2>
-                            <HeadingLine className="mb-8" />
+                            <HeadingLine variant={6} className="mb-8" />
                             <div className="flex justify-center">
                                 <Image
                                     src="/images/company/グループ体制図.png"
@@ -86,16 +86,16 @@ export default function CompanyPage() {
                 <WaveClipLayer idPrefix="company">
                     <div
                         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                        style={{ backgroundImage: 'url(/images/company/office-bg.png)' }}
+                        style={{ backgroundImage: 'url(/images/company/office-bg.jpeg)' }}
                     />
-                    <div className="absolute inset-0 bg-black/50" />
+                    <div className="absolute inset-0 bg-black/80" />
                 </WaveClipLayer>
                 {/* 写真の上に重なるコンテンツ（z-10）：会社概要テーブルとアクセス */}
                 <div className="container relative z-10 mx-auto max-w-4xl px-4 py-12 md:py-16 md:pb-20 space-y-20 md:space-y-24">
                     {/* 会社概要：社名・オフィス・役員・業務内容を表形式で表示（横スクロール対応） */}
                     <section id="overview" className="scroll-mt-24">
                         <h2 className="text-2xl md:text-3xl font-bold text-white text-balance mb-2">会社概要</h2>
-                        <HeadingLine className="mb-8" />
+                        <HeadingLine variant={6} className="mb-8" />
                         <div className="overflow-x-auto">
                             <table className="w-full border-collapse text-left text-pretty">
                                 <tbody className="[&>tr]:border-b [&>tr]:border-white">
@@ -147,11 +147,11 @@ export default function CompanyPage() {
                     {/* アクセス：青山本社・ISAI AKASAKA の2拠点を2カラムで表示（住所付近の地図画像） */}
                     <section id="access" className="scroll-mt-24">
                         <h2 className="text-2xl md:text-3xl font-bold text-white text-balance mb-2">アクセス</h2>
-                        <HeadingLine className="mb-8" />
+                        <HeadingLine variant={6} className="mb-8" />
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 lg:gap-10">
                             {ACCESS_LOCATIONS.map((loc) => (
                                 <div key={loc.title}>
-                                    <h3 className={`text-lg font-bold mb-2 ${loc.titleClassName}`}>{loc.title}</h3>
+                                    <h3 className={`text-lg font-bold mb-2 ${loc.titleVariant === 'blue' ? 'text-blue-400' : 'text-primary-400'}`}>{loc.title}</h3>
                                     <p className="text-white text-pretty mb-4">{loc.address}</p>
                                     <div className="aspect-video w-full overflow-hidden rounded-lg relative">
                                         <Image
