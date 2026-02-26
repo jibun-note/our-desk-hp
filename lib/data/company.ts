@@ -10,14 +10,14 @@ export const executives: { name: string; role: string; roleEn: string }[] = [
 export const ACCESS_LOCATIONS = [
 	{
 		title: "青山（本社）",
-		titleClassName: "text-blue-400",
+		titleVariant: "blue" as const,
 		address: "東京都港区南青山1-15-27 YMビル1階",
 		imageSrc: "/images/company/map-aoyama.png",
 		imageAlt: "青山本社付近の地図",
 	},
 	{
 		title: "ISAI AKASAKA（オフィス）",
-		titleClassName: "text-primary-400",
+		titleVariant: "primary" as const,
 		address: "東京都港区赤坂5-2-33 ISAI AKASAKA 1612",
 		imageSrc: "/images/company/map-isai.png",
 		imageAlt: "ISAI AKASAKAオフィス付近の地図",
