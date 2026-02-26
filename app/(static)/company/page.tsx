@@ -86,9 +86,9 @@ export default function CompanyPage() {
                 <WaveClipLayer idPrefix="company">
                     <div
                         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
-                        style={{ backgroundImage: 'url(/images/company/office-bg.png)' }}
+                        style={{ backgroundImage: 'url(/images/company/office-bg.jpeg)' }}
                     />
-                    <div className="absolute inset-0 bg-black/50" />
+                    <div className="absolute inset-0 bg-black/80" />
                 </WaveClipLayer>
                 {/* 写真の上に重なるコンテンツ（z-10）：会社概要テーブルとアクセス */}
                 <div className="container relative z-10 mx-auto max-w-4xl px-4 py-12 md:py-16 md:pb-20 space-y-20 md:space-y-24">
