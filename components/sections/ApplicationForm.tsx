@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import WaveDecoration from '@/components/ui/WaveDecoration'
 import { ApplicationBlobDecoration } from '@/components/ui/BlobDecoration'
+import FormSuccessScreen from '@/components/ui/FormSuccessScreen'
 import { WORK_STYLES } from '@/lib/data/recruit'
 
 type FormData = {
@@ -18,6 +19,9 @@ type FormData = {
 }
 
 type FormErrors = Partial<Record<keyof FormData, string>>
+
+/** ContactForm と同じ Formspree エンドポイント（受信は同一） */
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 
 const workStyleOptions = [
     { value: '', label: '選択してください' },
@@ -50,6 +54,7 @@ function validate(form: FormData): FormErrors {
 }
 
 export default function ApplicationForm() {
+    const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
     const [form, setForm] = useState<FormData>(initialForm)
     const [errors, setErrors] = useState<FormErrors>({})
     const [submitted, setSubmitted] = useState(false)
@@ -71,20 +76,43 @@ export default function ApplicationForm() {
         }
     }
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
         const newErrors = validate(form)
         setErrors(newErrors)
-        if (Object.keys(newErrors).length === 0) {
+        if (Object.keys(newErrors).length > 0) return
+
+        setStatus('sending')
+        try {
+            const res = await fetch(FORMSPREE_ENDPOINT, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    name: form.name,
+                    nameKana: form.nameKana,
+                    email: form.email,
+                    phone: form.phone,
+                    workStyle: form.workStyle,
+                    desiredRole: form.desiredRole,
+                    careerPr: form.careerPr,
+                    privacy: form.privacy,
+                }),
+            })
+            if (!res.ok) {
+                const data = await res.json().catch(() => ({}))
+                throw new Error(data.error || `送信に失敗しました (${res.status})`)
+            }
+            setStatus('success')
             setSubmitted(true)
+        } catch (err) {
+            setStatus('error')
+            console.error('Formspree error:', err)
         }
     }
 
     const sectionCls = 'relative z-10 overflow-hidden bg-[#FDF6ED]'
     const cardCls =
         'mx-auto max-w-[48rem] rounded-3xl p-10 md:p-14 bg-[#F0E8DE] shadow-[0_2px_16px_rgba(0,0,0,0.08)]'
-    /** 送信後カードの高さ: min-h-[...] で調整（例: min-h-[280px] / min-h-[360px]） */
-    const successCardCls = `${cardCls} min-h-[280px] flex flex-col justify-center text-center`
     const labelCls = 'block mb-1.5 text-[0.9375rem] font-medium text-[#B8860D]'
     const badgeRequiredCls =
         'ml-1.5 inline-block rounded px-2 py-0.5 text-[0.6875rem] font-semibold text-white bg-[#E64D4D]'
@@ -98,36 +126,23 @@ export default function ApplicationForm() {
 
     if (submitted) {
         return (
-            <section className={`${sectionCls} min-h-[100vh]`}>
-                <ApplicationBlobDecoration compact />
-                <WaveDecoration />
-                <div className="container relative z-[100] isolate mx-auto flex min-h-[100vh] max-w-4xl flex-col items-center justify-center px-4">
-                    <div className={`${successCardCls} relative z-10`}>
-                        <div className="text-5xl mb-4">✨</div>
-                        <h2 className="text-xl md:text-2xl font-bold mb-4 text-[#403a36]">
-                            応募を受け付けました
-                        </h2>
-                        <p className="text-[#403a36] leading-relaxed mb-8">
-                            ご応募いただきありがとうございます。
-                            <br />
-                            内容を確認の上、担当者よりご連絡差し上げます。
-                        </p>
-                        <div className="flex justify-center">
-                            <button
-                                type="button"
-                                onClick={() => {
-                                    setSubmitted(false)
-                                    setForm(initialForm)
-                                    setErrors({})
-                                }}
-                                className={`${submitBtnCls} max-w-xs`}
-                            >
-                                フォームに戻る
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </section>
+            <FormSuccessScreen
+                decoration={<ApplicationBlobDecoration compact />}
+                title="応募を受け付けました"
+                message={
+                    <>
+                        ご応募いただきありがとうございます。
+                        <br />
+                        内容を確認の上、担当者よりご連絡差し上げます。
+                    </>
+                }
+                icon="✨"
+                onBack={() => {
+                    setSubmitted(false)
+                    setForm(initialForm)
+                    setErrors({})
+                }}
+            />
         )
     }
 
@@ -316,9 +331,18 @@ export default function ApplicationForm() {
                                 )}
                             </div>
 
+                            {status === 'error' && (
+                                <p className="text-center text-sm text-[#E64D4D]">
+                                    送信に失敗しました。しばらく経ってから再度お試しください。
+                                </p>
+                            )}
                             <div className="pt-2 flex justify-center">
-                                <button type="submit" className={submitBtnCls}>
-                                    送信する
+                                <button
+                                    type="submit"
+                                    className={submitBtnCls}
+                                    disabled={status === 'sending'}
+                                >
+                                    {status === 'sending' ? '送信中...' : '送信する'}
                                 </button>
                             </div>
                         </div>
