@@ -7,6 +7,7 @@
  */
 import React from 'react'
 import Image from 'next/image'
+import WaveClipLayer from '@/components/sections/WaveClipLayer'
 /** 1枚のスタックカードの表示内容・レイアウト指定 */
 export type StackCardItem = {
     title: string
@@ -36,6 +37,12 @@ const STICKY_TOP_CLASSES = [
 function getStickyTopClass(index: number): string {
     return index < STICKY_TOP_CLASSES.length ? STICKY_TOP_CLASSES[index] : STICKY_TOP_CLASSES[STICKY_TOP_CLASSES.length - 1]
 }
+
+/** カード下の波クリップ用パス（このセクション内だけの設定。objectBoundingBox 0〜1。Q の第2引数が大きいほどカーブがきつい） */
+const STACK_CARD_WAVE_PATHS = {
+    mobile: { d: 'M0 0 Q 0.5 0.6 1 0 L 1 1 L 0 1 Z' },
+    desktop: { d: 'M0 0 Q 0.5 0.65 1 0 L 1 1 L 0 1 Z' },
+} as const
 
 /** 2枚目以降のカード: 重なる前に「空振り」させるスクロール量（vh）。この分だけ margin-top を入れてスタックの間を稼ぐ */
 const STACK_DELAY_MARGIN_VH = 40
@@ -91,70 +98,75 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                         className="sticky top-[50vh] -translate-y-1/2 w-full h-0 pointer-events-none z-0 overflow-visible"
                         aria-hidden="true"
                     >
-                        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 min-h-[25vh] overflow-visible inset-x-0">
+                        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 min-h-[40vh] overflow-visible inset-x-0">
                             {background}
                         </div>
                     </div>
                 )}
                 <div
-                    className="relative z-20 container mx-auto max-w-6xl px-8 md:px-16 flex flex-col gap-8 md:gap-12"
+                    className="relative z-20 container mx-auto max-w-7xl px-6 md:px-12 flex flex-col gap-8 md:gap-12"
                 >
                     {cards.map((card, i) => (
-                            <article
-                                key={i}
-                                ref={(el) => {
-                                    if (firstCardRef != null && i === 0) firstCardRef.current = el
-                                    if (lastCardRef != null && i === cards.length - 1) lastCardRef.current = el
-                                }}
-                                className={`sticky z-10 min-h-0 md:min-h-[58vh] lg:min-h-[52vh] flex flex-col justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-4 md:py-7 ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? 'md:px-0 md:pl-0 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-6 lg:pl-8 md:pr-0'}`}
-                                style={{
-                                    background: 'rgb(255,255,255)',
-                                    ...(i >= 1 && { marginTop: `${STACK_DELAY_MARGIN_VH}vh` }),
-                                }}
-                            >
-                                {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
-                                <div className={`grid grid-cols-1 gap-1 md:gap-3 lg:gap-4 w-full max-w-full items-center ${card.imageSrc ? 'min-h-0 md:min-h-[58vh] lg:min-h-[52vh]' : ''} ${card.imageOrder === 'left' ? 'md:grid-cols-[1.1fr_1.3fr]' : 'md:grid-cols-[1.3fr_1.1fr]'}`}>
-                                    {card.imageOrder === 'left' && (
-                                        <div
-                                            className={`relative ${i === 0 ? 'z-10 md:-mr-8 ' : ''}order-2 md:order-1 overflow-hidden ${card.imageSrc ? 'h-[240px] md:h-[58vh] lg:h-[52vh] w-full min-w-0 aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
-                                            aria-hidden="true"
-                                        >
-                                            {card.imageSrc ? (
-                                                <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
-                                            ) : (
-                                                <span className="text-sm text-gray-400">写真・画像用</span>
-                                            )}
-                                        </div>
-                                    )}
-                                    <div className={`${i === 0 ? 'relative z-20 ' : ''}min-w-0 flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 md:pl-0 order-1 md:order-2' : ''}`}>
-                                        <div className="w-full">
-                                            <h2 className={`${card.titleClass ?? 'text-2xl md:text-3xl'} font-extrabold mb-0.5 md:mb-1 block drop-shadow-sm whitespace-normal md:whitespace-nowrap text-[#4A4A4A] mt-3 md:mt-0`}>{card.title}</h2>
-                                            {card.numberLabel != null && card.numberLabel !== '' && (
-                                                <p className="text-sm md:text-base font-medium mb-6 md:mb-7 -mt-0.5" style={{ color: '#FFB38E' }} aria-hidden="true">
-                                                    {card.numberLabel}
-                                                </p>
-                                            )}
-                                            <div className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1">
-                                                <div className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700 flex flex-col gap-y-1 md:gap-y-3">
-                                                    {card.content}
-                                                </div>
+                        <article
+                            key={i}
+                            ref={(el) => {
+                                if (firstCardRef != null && i === 0) firstCardRef.current = el
+                                if (lastCardRef != null && i === cards.length - 1) lastCardRef.current = el
+                            }}
+                            className={`sticky z-10 min-h-0 md:min-h-[72vh] lg:min-h-[68vh] flex flex-col justify-start md:justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-0 md:py-7 md:pb-0 ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? 'md:px-0 md:pl-6 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-10 lg:pl-14 md:pr-6'}`}
+                            style={{
+                                background: 'rgb(255,255,255)',
+                                ...(i >= 1 && { marginTop: `${STACK_DELAY_MARGIN_VH}vh` }),
+                            }}
+                        >
+                            {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
+                            <div className={`grid grid-cols-1 gap-0 md:gap-3 lg:gap-4 w-full max-w-full items-start md:items-center pb-0 ${card.imageOrder === 'right' ? 'md:pb-24 lg:pb-28' : 'md:pb-16 lg:pb-20'} ${card.imageSrc ? 'min-h-0 md:min-h-[72vh] lg:min-h-[68vh]' : ''} ${card.imageOrder === 'left' ? 'md:grid-cols-[1.5fr_1.5fr]' : 'md:grid-cols-[1.4fr_1.6fr]'}`}>
+                                {card.imageOrder === 'left' && (
+                                    <div
+                                        className={`relative order-2 md:order-1 overflow-hidden p-4 md:p-6 -mt-6 md:mt-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] md:h-[72vh] lg:h-[68vh]' : i === 2 ? 'h-[300px] md:h-[65vh] lg:h-[62vh]' : 'h-[320px] md:h-[72vh] lg:h-[68vh]') + ' aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
+                                        aria-hidden="true"
+                                    >
+                                        {card.imageSrc ? (
+                                            <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 78vw" />
+                                        ) : (
+                                            <span className="text-sm text-gray-400">写真・画像用</span>
+                                        )}
+                                    </div>
+                                )}
+                                <div className={`min-w-0 flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 md:pl-6 lg:pl-8 order-1 md:order-2' : ''}`}>
+                                    <div className="w-full">
+                                        <h2 className={`${card.titleClass ?? 'text-xl md:text-4xl'} font-extrabold mb-0.5 md:mb-1 block drop-shadow-sm whitespace-pre-line text-[#4A4A4A] mt-5 md:mt-0`}>{card.title}</h2>
+                                        {card.numberLabel != null && card.numberLabel !== '' && (
+                                            <p className="text-sm md:text-lg font-medium mb-8 md:mb-16 -mt-0.5" style={{ color: '#FFB38E' }} aria-hidden="true">
+                                                {card.numberLabel}
+                                            </p>
+                                        )}
+                                        <div className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1">
+                                            <div className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700 flex flex-col gap-y-1 md:gap-y-3">
+                                                {card.content}
                                             </div>
                                         </div>
                                     </div>
-                                    {card.imageOrder === 'right' && (
-                                        <div
-                                            className={`relative ${i === 0 ? 'z-10 md:-ml-8 ' : ''}overflow-hidden ${card.imageSrc ? 'h-[240px] md:h-[58vh] lg:h-[52vh] w-full min-w-0 aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
-                                            aria-hidden="true"
-                                        >
-                                            {card.imageSrc ? (
-                                                <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 58vw" />
-                                            ) : (
-                                                <span className="text-sm text-gray-400">写真・画像用</span>
-                                            )}
-                                        </div>
-                                    )}
                                 </div>
-                            </article>
+                                {card.imageOrder === 'right' && (
+                                    <div
+                                        className={`relative overflow-hidden p-4 md:p-6 -mt-10 md:mt-0 md:mb-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] md:h-[72vh] lg:h-[68vh]' : i === 2 ? 'h-[300px] md:h-[65vh] lg:h-[62vh]' : 'h-[320px] md:h-[72vh] lg:h-[68vh]') + ' aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
+                                        aria-hidden="true"
+                                    >
+                                        {card.imageSrc ? (
+                                            <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 78vw" />
+                                        ) : (
+                                            <span className="text-sm text-gray-400">写真・画像用</span>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            <div className={`absolute bottom-0 left-0 right-0 h-16 lg:h-20 overflow-hidden rounded-b-2xl -left-7 -right-7 w-[calc(100%+3.5rem)] hidden md:block ${card.imageOrder === 'left' ? 'md:-left-6 md:-right-6 md:w-[calc(100%+3rem)]' : 'md:-left-10 md:-right-6 md:w-[calc(100%+4rem)]'}`}>
+                                <WaveClipLayer idPrefix={`stack-card-${i}`} clipPaths={STACK_CARD_WAVE_PATHS}>
+                                    <div className="absolute inset-0 bg-[#FFE566]" />
+                                </WaveClipLayer>
+                            </div>
+                        </article>
                     ))}
                     {/* 最後のカードが sticky で重なって止まるまで必要な下方向の余白（STACK_END_SPACER_VH） */}
                     <div aria-hidden="true" style={{ minHeight: `${STACK_END_SPACER_VH}vh` }} />
