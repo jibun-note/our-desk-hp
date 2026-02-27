@@ -1,4 +1,4 @@
-import ContactForm from '../../../components/sections/ContactForm'
+import ContactForm from '@/components/sections/ContactForm'
 import HeroSection from '@/components/sections/HeroSection'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'

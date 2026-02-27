@@ -49,31 +49,31 @@ function validate(form: FormData): FormErrors {
     return errors
 }
 
-/* ─── ラベル共通 ─── */
-const LabelRow = ({
-    label,
-    badge,
-    htmlFor,
-}: {
+/* ─── ラベル共通（内部専用） ─── */
+type LabelRowProps = {
     label: string
     badge: 'required' | 'optional'
     htmlFor?: string
-}) => (
-    <label
-        htmlFor={htmlFor}
-        className="flex justify-between items-center text-xs font-medium tracking-[0.05em] text-gray-700 mb-1"
-    >
-        {label}
-        {badge === 'required' ? (
-            <span className="inline-flex items-center gap-0.5 text-[8.5px] text-[#F08300]">
-                <span className="w-1 h-1 rounded-full bg-[#F08300]" aria-hidden />
-                必須
-            </span>
-        ) : (
-            <span className="text-[8.5px] text-gray-400">任意</span>
-        )}
-    </label>
-)
+}
+
+function LabelRow({ label, badge, htmlFor }: LabelRowProps) {
+    return (
+        <label
+            htmlFor={htmlFor}
+            className="flex justify-between items-center text-xs font-medium tracking-[0.05em] text-gray-700 mb-1"
+        >
+            {label}
+            {badge === 'required' ? (
+                <span className="inline-flex items-center gap-0.5 text-[8.5px] text-[#F08300]">
+                    <span className="w-1 h-1 rounded-full bg-[#F08300]" aria-hidden />
+                    必須
+                </span>
+            ) : (
+                <span className="text-[8.5px] text-gray-400">任意</span>
+            )}
+        </label>
+    )
+}
 
 const inputCls =
     'w-full bg-transparent border-0 border-b-[1.5px] border-gray-300 py-1.5 text-[14.5px] text-gray-900 outline-none transition-[border-color] duration-200 placeholder:text-gray-400 placeholder:text-[13px] focus:border-[#F08300]'
