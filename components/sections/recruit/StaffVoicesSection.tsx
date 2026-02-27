@@ -127,7 +127,8 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                     </p>
                 </div>
 
-                {/* モバイル用: スワイプ可能なアイコン（md未満で表示） */}
+                {/* モバイル用: スワイプ可能なアイコン（2人以上の場合のみ表示） */}
+                {staffCases.length > 1 && (
                 <div className="md:hidden mb-6 overflow-y-hidden">
                     <p className="text-center text-[13px] text-[#999] mb-3">スタッフを選択</p>
                     <div ref={avatarContainerRef} className="avatar-scroll px-4 py-2">
@@ -168,8 +169,10 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                         ))}
                     </div>
                 </div>
+                )}
 
-                {/* デスクトップ用: 横並びスタッフ選択（md以上で表示） */}
+                {/* デスクトップ用: 横並びスタッフ選択（2人以上の場合のみ表示） */}
+                {staffCases.length > 1 && (
                 <div className="hidden md:flex flex-wrap justify-center gap-3 mb-9">
                     {staffCases.map((staff, index) => {
                         const isActive = index === activeTab
@@ -215,6 +218,7 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                         )
                     })}
                 </div>
+                )}
 
                 {/* 1枚の白カード */}
                 <div
@@ -315,7 +319,7 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                                             <h4 className="text-[11px] md:text-xs font-bold text-[#8a7a6a] mb-1.5 tracking-wide">
                                                 {step.label}
                                             </h4>
-                                            <p className="text-[13px] md:text-[15px] text-[#4a4a5a] leading-[1.8] text-pretty">
+                                            <p className="text-[13px] md:text-[15px] text-[#4a4a5a] leading-[1.8] text-pretty whitespace-pre-line">
                                                 {activeStaff.story[step.key]}
                                             </p>
                                         </div>
