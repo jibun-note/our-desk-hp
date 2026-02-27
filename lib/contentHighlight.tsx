@@ -11,7 +11,8 @@ const HIGHLIGHT_LINES = [
     'グループ従業員 約100名、定着率は常に90%以上',
     '人事支援・キャリア支援の実績多数',
     '家庭やライフステージに左右されず、',
-    '自分らしい働き方を選びながら、誰かの役に立てる',
+    '自分らしい働き方を選びながら、',
+    '誰かの役に立てる',
     '働きたい気持ちはあるのに、選択肢が限られてしまう',
     '女性が自分らしく働き続けられる',
 ]
@@ -48,8 +49,9 @@ function isHighlightLine(trimmed: string): boolean {
     return HIGHLIGHT_LINES.some((m) => m === normalized)
 }
 
-/** ハイライト用の共通クラス（アクセント色・太字） */
-const HIGHLIGHT_CLASS = 'text-primary-700 font-semibold'
+/** ハイライト用の共通スタイル（#F08300 オレンジ・インラインで確実に適用） */
+const HIGHLIGHT_STYLE = { color: '#F08300' } as const
+const HIGHLIGHT_CLASS = 'font-semibold'
 
 /**
  * 行内の INLINE_PHRASES に一致する部分を span でラップして文字色を付与する。
@@ -82,7 +84,7 @@ function highlightInlinePhrases(line: string): React.ReactNode {
     for (const m of merged) {
         if (m.start > pos) segments.push(line.slice(pos, m.start))
         segments.push(
-            <span key={`${m.start}-${m.phrase}`} className={HIGHLIGHT_CLASS}>
+            <span key={`${m.start}-${m.phrase}`} className={HIGHLIGHT_CLASS} style={HIGHLIGHT_STYLE}>
                 {m.phrase}
             </span>
         )
@@ -112,12 +114,12 @@ export function contentWithLineBreaks(content: string): React.ReactNode {
                 body = (
                     <>
                         {line.slice(0, startQuote + 1)}
-                        <span className={HIGHLIGHT_CLASS}>{line.slice(startQuote + 1, endQuote)}</span>
+                        <span className={HIGHLIGHT_CLASS} style={HIGHLIGHT_STYLE}>{line.slice(startQuote + 1, endQuote)}</span>
                         {line.slice(endQuote)}
                     </>
                 )
             } else {
-                body = <span className={HIGHLIGHT_CLASS}>{line}</span>
+                body = <span className={HIGHLIGHT_CLASS} style={HIGHLIGHT_STYLE}>{line}</span>
             }
         } else if (hasInline) {
             body = highlightInlinePhrases(line)
