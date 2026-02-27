@@ -7,7 +7,7 @@ import RecruitWorkStylesSection from '@/components/sections/recruit/RecruitWorkS
 import RecruitCareerPathsSection from '@/components/sections/recruit/RecruitCareerPathsSection'
 import RecruitFlowSection from '@/components/sections/recruit/RecruitFlowSection'
 import RecruitFaqSection from '@/components/sections/recruit/RecruitFaqSection'
-import StaffVoices from '@/components/sections/recruit/StaffVoicesSection'
+import StaffVoicesSection from '@/components/sections/recruit/StaffVoicesSection'
 import RecruitCtaSection from '@/components/sections/recruit/RecruitCtaSection'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
@@ -73,7 +73,7 @@ export default function RecruitPage() {
                 {/* 9. スタッフの声（タイムライン形式）— 白セクション・Blobなし */}
                 <div className="relative z-[13] bg-white">
                     <div className="relative z-10 [&>section]:bg-transparent">
-                        <StaffVoices staffCases={STAFF_CASES} />
+                        <StaffVoicesSection staffCases={STAFF_CASES} />
                     </div>
                 </div>
 

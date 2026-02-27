@@ -1,6 +1,11 @@
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { AboutUsValueItem } from '@/lib/data/aboutUs'
 import { cn } from '@/lib/utils'
+
+export type AboutUsValueItem = {
+    num: string
+    title: string
+    body: string
+}
 
 type Props = {
     items: AboutUsValueItem[]

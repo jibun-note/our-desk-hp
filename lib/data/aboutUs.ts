@@ -1,13 +1,9 @@
 /**
  * About Us ページ用データ。
- * Value カードの型と配列を export。
+ * Value カードの配列を export。型は AboutUsValueSection で定義。
  */
 
-export type AboutUsValueItem = {
-    num: string
-    title: string
-    body: string
-}
+import type { AboutUsValueItem } from '@/components/sections/about-us/AboutUsValueSection'
 
 export const ABOUT_US_VALUE_ITEMS: AboutUsValueItem[] = [
     {

@@ -103,9 +103,12 @@ export const FLOW_STEPS: FlowStepItem[] = [
     { num: 5, title: '半年ごとに時給UP交渉が可能', subtitle: '成長に応じて、定期的に待遇を見直します' },
 ]
 
+// CTA背景の候補（切り替え時は ctaBg のパスだけ変更）:
+// - cta-option1-gerbera.png   … ガーベラ（温かみ・歓迎）
+// - cta-option2-portrait.png … 女性ポートレート逆光（爽やか・親しみ）
 export const IMG = {
-    hero: '/images/recruit/intro.png',
-    ctaBg: '/images/recruit/cta-bg.png',
+    hero: '/images/recruit/intro.jpeg',
+    ctaBg: '/images/recruit/cta-option1-gerbera.png',
 } as const
 
 export const STAFF_CASES: StaffCase[] = [
