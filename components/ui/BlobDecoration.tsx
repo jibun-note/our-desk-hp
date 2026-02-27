@@ -13,6 +13,8 @@ const BLOB_PATHS = {
     S: 'M 95 15 C 118 8, 145 25, 155 55 C 162 78, 158 105, 165 130 C 172 158, 162 182, 135 190 C 108 198, 75 192, 52 175 C 29 158, 22 128, 28 100 C 34 72, 48 52, 58 35 C 68 18, 72 22, 95 15 Z',
     M: 'M 22 85 C 18 62, 35 40, 62 35 C 82 30, 105 20, 132 30 C 159 40, 178 58, 180 82 C 182 106, 168 130, 145 142 C 122 154, 88 158, 60 148 C 32 138, 18 115, 22 85 Z',
     N: 'M 15 95 C 12 68, 32 45, 62 38 C 85 32, 115 22, 145 35 C 172 48, 185 72, 182 98 C 179 124, 162 148, 135 158 C 108 168, 72 165, 48 150 C 24 135, 18 122, 15 95 Z',
+    // フォーム用のやわらかい形（P と同様の不定形）
+    cloud: 'M 18 88 C 15 62, 38 38, 68 32 C 92 26, 108 38, 132 30 C 156 22, 175 40, 182 68 C 189 96, 175 130, 148 148 C 121 166, 82 165, 55 150 C 28 135, 21 114, 18 88 Z',
 } as const
 
 type Props = {
@@ -44,6 +46,12 @@ export default function BlobDecoration({ shape, drift, fill, className, style }:
 }
 
 const FORM_BLOB_DRIFTS = ['diagonal', 'vertical', 'rotate', 'breathe'] as const
+const FORM_DRIFT_TO_FLOAT: Record<(typeof FORM_BLOB_DRIFTS)[number], Props['drift']> = {
+    diagonal: 'float-a',
+    vertical: 'float-b',
+    rotate: 'float-c',
+    breathe: 'float-d',
+}
 
 /** フォーム用 4 個 Blob の共通レンダー（色だけ差し替え） */
 function FormBlobs({
@@ -65,8 +73,8 @@ function FormBlobs({
                 <BlobDecoration
                     key={drift}
                     shape="cloud"
-                    drift={drift}
-                    background={backgrounds[i]}
+                    drift={FORM_DRIFT_TO_FLOAT[drift]}
+                    fill={backgrounds[i]}
                     className={size[`c${(i + 1) as 1 | 2 | 3 | 4}`]}
                     style={layout[`pos${(i + 1) as 1 | 2 | 3 | 4}`]}
                 />
