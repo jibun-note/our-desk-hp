@@ -1,10 +1,13 @@
 'use client'
 
 import { useState } from 'react'
+import Script from 'next/script'
 import Link from 'next/link'
 import WaveDecoration from '@/components/ui/WaveDecoration'
 import { ContactBlobDecoration } from '@/components/ui/BlobDecoration'
 import FormSuccessScreen from '@/components/ui/FormSuccessScreen'
+
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
 
 type FormData = {
     name: string
@@ -18,7 +21,7 @@ type FormData = {
 
 type FormErrors = Partial<Record<keyof FormData, string>>
 
-const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
+const CONTACT_API = '/api/contact'
 
 const subjectOptions = [
     { value: '', label: '選択してください' },
@@ -51,11 +54,21 @@ function validate(form: FormData): FormErrors {
     return newErrors
 }
 
+declare global {
+    interface Window {
+        grecaptcha?: {
+            ready: (callback: () => void) => void
+            execute: (siteKey: string, options: { action: string }) => Promise<string>
+        }
+    }
+}
+
 export default function ContactForm() {
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
     const [form, setForm] = useState<FormData>(initialForm)
     const [errors, setErrors] = useState<FormErrors>({})
     const [submitted, setSubmitted] = useState(false)
+    const [recaptchaError, setRecaptchaError] = useState<string | null>(null)
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -76,13 +89,36 @@ export default function ContactForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setRecaptchaError(null)
         const newErrors = validate(form)
         setErrors(newErrors)
         if (Object.keys(newErrors).length > 0) return
 
+        if (!RECAPTCHA_SITE_KEY) {
+            setStatus('error')
+            setRecaptchaError('reCAPTCHAが設定されていません。')
+            return
+        }
+        let token: string
+        try {
+            await new Promise<void>((resolve) => {
+                window.grecaptcha?.ready(resolve) ?? resolve()
+            })
+            token = (await window.grecaptcha?.execute(RECAPTCHA_SITE_KEY, { action: 'contact' })) ?? ''
+        } catch (err) {
+            setStatus('error')
+            setRecaptchaError('reCAPTCHAの認証に失敗しました。再度お試しください。')
+            console.error('reCAPTCHA execute error:', err)
+            return
+        }
+        if (!token?.trim()) {
+            setRecaptchaError('reCAPTCHAの認証に失敗しました。再度お試しください。')
+            return
+        }
+
         setStatus('sending')
         try {
-            const res = await fetch(FORMSPREE_ENDPOINT, {
+            const res = await fetch(CONTACT_API, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
@@ -93,17 +129,19 @@ export default function ContactForm() {
                     subject: form.subject,
                     message: form.message,
                     privacy: form.privacy,
+                    recaptchaToken: token,
                 }),
             })
+            const data = (await res.json().catch(() => ({}))) as { error?: string }
             if (!res.ok) {
-                const data = await res.json().catch(() => ({}))
                 throw new Error(data.error || `送信に失敗しました (${res.status})`)
             }
             setStatus('success')
             setSubmitted(true)
         } catch (err) {
             setStatus('error')
-            console.error('Formspree error:', err)
+            setRecaptchaError(err instanceof Error ? err.message : '送信に失敗しました。')
+            console.error('Contact form error:', err)
         }
     }
 
@@ -319,9 +357,16 @@ export default function ContactForm() {
                                 )}
                             </div>
 
-                            {status === 'error' && (
+                            {RECAPTCHA_SITE_KEY && (
+                                <Script
+                                    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+                                    strategy="lazyOnload"
+                                />
+                            )}
+
+                            {(recaptchaError || status === 'error') && (
                                 <p className="text-center text-sm text-[#E64D4D]">
-                                    送信に失敗しました。しばらく経ってから再度お試しください。
+                                    {recaptchaError ?? '送信に失敗しました。しばらく経ってから再度お試しください。'}
                                 </p>
                             )}
                             <div className="pt-2 flex justify-center">
