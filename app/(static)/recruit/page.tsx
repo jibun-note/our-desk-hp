@@ -9,6 +9,7 @@ import RecruitFlowSection from '@/components/sections/recruit/RecruitFlowSection
 import RecruitFaqSection from '@/components/sections/recruit/RecruitFaqSection'
 import StaffVoicesSection from '@/components/sections/recruit/StaffVoicesSection'
 import RecruitCtaSection from '@/components/sections/recruit/RecruitCtaSection'
+import ApplicationForm from '@/components/sections/ApplicationForm'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
 import {
@@ -79,6 +80,7 @@ export default function RecruitPage() {
 
                 {/* 10. 統合メッセージ＆CTAセクション */}
                 <RecruitCtaSection ctaBgImage={IMG.ctaBg} />
+                <ApplicationForm />
             </main>
         </>
     )

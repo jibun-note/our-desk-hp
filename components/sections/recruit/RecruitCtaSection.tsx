@@ -1,7 +1,7 @@
 import BlobDecoration from '@/components/ui/BlobDecoration'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
 import WaveClipLayer from '@/components/sections/WaveClipLayer'
-import Link from 'next/link'
+import ScrollToApplicationForm from '@/components/ui/ScrollToApplicationForm'
 
 type Props = {
     ctaBgImage: string
@@ -72,12 +72,11 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                         <p className="text-xl md:text-2xl text-white/95 font-light text-pretty">
                             「働きたい」という気持ちを。
                         </p>
-                        <Link
-                            href="/recruit/apply/"
+                        <ScrollToApplicationForm
                             className="inline-block bg-white text-orange-600 px-10 py-4 md:px-12 text-base md:text-lg font-medium rounded-full shadow-2xl hover:scale-105 transition-transform min-h-[48px] flex items-center justify-center mx-auto"
                         >
                             応募フォームへ進む
-                        </Link>
+                        </ScrollToApplicationForm>
                     </div>
                 </div>
             </div>

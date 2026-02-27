@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { useSearchParams, useRouter } from 'next/navigation'
+import { useState } from 'react'
 import Script from 'next/script'
 import Link from 'next/link'
 import { Shippori_Mincho_B1, Noto_Sans_JP, DM_Sans } from 'next/font/google'
@@ -29,12 +28,6 @@ const dmSans = DM_Sans({
     subsets: ['latin'],
     preload: false,
 })
-
-/** 左パネル表示用の会社連絡先（privacy 等と揃える想定） */
-const CONTACT_DISPLAY = {
-    phone: '03-5545-5204',
-    email: 'info@ourdesk.co.jp',
-}
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
 
@@ -96,21 +89,11 @@ const inputBaseCls =
     'w-full bg-transparent border-0 border-b-[1.5px] border-gray-300 py-1.5 text-[14.5px] text-gray-900 outline-none transition-[border-color] duration-200 placeholder:text-gray-400 placeholder:text-[13px] focus:border-[#F08300]'
 
 export default function ContactForm() {
-    const searchParams = useSearchParams()
-    const router = useRouter()
     const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
     const [form, setForm] = useState<FormData>(initialForm)
     const [errors, setErrors] = useState<FormErrors>({})
     const [isSubmitted, setIsSubmitted] = useState(false)
     const [recaptchaError, setRecaptchaError] = useState<string | null>(null)
-
-    // 送信せずに送信済み画面を確認する: /contact/?preview=success で表示
-    useEffect(() => {
-        if (typeof window === 'undefined') return
-        if (searchParams.get('preview') === 'success') {
-            setIsSubmitted(true)
-        }
-    }, [searchParams])
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -191,9 +174,6 @@ export default function ContactForm() {
         setIsSubmitted(false)
         setForm(initialForm)
         setErrors({})
-        if (searchParams.get('preview') === 'success') {
-            router.replace('/contact/')
-        }
     }
 
     return (
@@ -254,40 +234,11 @@ export default function ContactForm() {
                                     大丈夫です。
                                 </span>
                             </p>
-                            <p className={`text-[12.5px] text-white/45 leading-[1.85] mb-10 font-light ${notoSansJP.className} text-pretty`}>
+                            <p className={`text-[12.5px] text-white/45 leading-[1.85] mb-0 font-light ${notoSansJP.className} text-pretty`}>
                                 「相談していいのかな」と思う段階が、
                                 一番お話しやすいタイミングです。
                                 返信は2営業日以内にお送りします。
                             </p>
-                            <div>
-                                <div className="flex items-center gap-3 border-t border-white/[.08] py-3">
-                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[.08] text-white/60" aria-hidden>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72 12.84 12.84 0 0 0 .7 2.81 2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45 12.84 12.84 0 0 0 2.81.7A2 2 0 0 1 22 16.92z" />
-                                        </svg>
-                                    </span>
-                                    <div>
-                                        <span className="text-[9px] text-white/30 tracking-[.1em] uppercase block">Phone</span>
-                                        <a href={`tel:${CONTACT_DISPLAY.phone.replace(/-/g, '')}`} className="text-[12px] text-white/75 hover:underline">
-                                            {CONTACT_DISPLAY.phone}
-                                        </a>
-                                    </div>
-                                </div>
-                                <div className="flex items-center gap-3 border-t border-white/[.08] py-3">
-                                    <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-white/[.08] text-white/60" aria-hidden>
-                                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
-                                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
-                                            <polyline points="22,6 12,13 2,6" />
-                                        </svg>
-                                    </span>
-                                    <div>
-                                        <span className="text-[9px] text-white/30 tracking-[.1em] uppercase block">Email</span>
-                                        <a href={`mailto:${CONTACT_DISPLAY.email}`} className="text-[12px] text-white/75 hover:underline">
-                                            {CONTACT_DISPLAY.email}
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
                         </div>
                     </div>
 
