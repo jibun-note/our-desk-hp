@@ -127,8 +127,8 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                     </p>
                 </div>
 
-                {/* モバイル用: スワイプ可能なアイコン（2人以上の場合のみ表示） */}
-                {staffCases.length > 1 && (
+                {/* モバイル用: スタッフアイコン（1人でも表示してMIさん等のアイコンが見えるようにする） */}
+                {staffCases.length >= 1 && (
                 <div className="md:hidden mb-6 overflow-y-hidden">
                     <p className="text-center text-[13px] text-[#999] mb-3">スタッフを選択</p>
                     <div ref={avatarContainerRef} className="avatar-scroll px-4 py-2">
@@ -171,8 +171,8 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                 </div>
                 )}
 
-                {/* デスクトップ用: 横並びスタッフ選択（2人以上の場合のみ表示） */}
-                {staffCases.length > 1 && (
+                {/* デスクトップ用: 横並びスタッフ選択（1人でも表示） */}
+                {staffCases.length >= 1 && (
                 <div className="hidden md:flex flex-wrap justify-center gap-3 mb-9">
                     {staffCases.map((staff, index) => {
                         const isActive = index === activeTab

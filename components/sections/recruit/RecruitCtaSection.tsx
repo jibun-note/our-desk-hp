@@ -9,7 +9,7 @@ type Props = {
 
 export default function RecruitCtaSection({ ctaBgImage }: Props) {
     return (
-        <section className="relative z-[14] min-h-[40rem] lg:min-h-[45rem] bg-white" aria-label="応募・お問い合わせ">
+        <section className="relative z-[14] mt-20 md:mt-28 min-h-[40rem] lg:min-h-[45rem] bg-white" aria-label="応募・お問い合わせ">
             {/* 波型クリップされた背景レイヤー */}
             <WaveClipLayer idPrefix="recruit-cta">
                 <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2">
@@ -51,15 +51,15 @@ export default function RecruitCtaSection({ ctaBgImage }: Props) {
                     </div>
                 </div>
 
-                {/* 右側: CTA */}
-                <div className="relative flex items-center justify-center px-6 py-16 md:px-8 md:py-20 overflow-hidden">
+                {/* 右側: CTA（上余白を多めにして黒いスペースを広げ、見出しを下に配置） */}
+                <div className="relative flex items-center justify-center px-6 pt-56 pb-16 md:px-8 md:py-20 overflow-hidden">
                     {/* 装飾 Blob */}
                     <BlobDecoration
                         shape="K"
                         drift="float-f"
                         fill="rgba(249, 115, 22, 0.25)"
-                        className="w-[50vw] h-[50vw] md:w-[20vw] md:h-[20vw] max-md:!right-[-8vw]"
-                        style={{ top: '4.5vw', right: '2.8vw' }}
+                        className="top-[22vw] md:top-[4.5vw] w-[50vw] h-[50vw] md:w-[20vw] md:h-[20vw] max-md:!right-[-8vw]"
+                        style={{ right: '2.8vw' }}
                     />
 
                     <div className="relative z-10 max-w-lg text-center space-y-6 md:space-y-10">
