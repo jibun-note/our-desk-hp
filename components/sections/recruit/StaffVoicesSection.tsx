@@ -2,6 +2,8 @@
 
 import { useState, useRef, useEffect, useCallback } from 'react'
 import { cn } from '@/lib/utils'
+import HandwrittenLine from '@/components/ui/HandwrittenLine'
+import BlobDecoration from '@/components/ui/BlobDecoration'
 
 export type StaffCase = {
     id: string
@@ -109,15 +111,17 @@ export default function StaffVoicesSection({ staffCases }: Props) {
     const activeStaff = staffCases[activeTab]
 
     return (
-        <section className="py-12 md:py-24 px-4 md:px-6 bg-white" aria-label="様々な働き方の事例">
+        <section className="py-20 md:py-32 px-4 md:px-6 bg-white" aria-label="様々な働き方の事例">
             <div className="container mx-auto max-w-4xl">
                 {/* セクションヘッダー */}
-                <div className="text-center mb-8 md:mb-12">
-                    <h2 className="text-[22px] md:text-[32px] font-bold text-[#3a3a4a] mb-3 text-balance">
+                <div className="text-center mb-12 md:mb-20">
+                    <h2 className="text-2xl md:text-4xl font-bold text-gray-800 mb-4 text-balance">
                         様々な働き方の事例
                     </h2>
-                    <div className="staff-voices-header-line mx-auto mb-5" />
-                    <p className="text-[#7a7a8a] text-[13px] md:text-[15px] leading-[1.8] max-w-[480px] mx-auto text-pretty">
+                    <div className="mb-4">
+                        <HandwrittenLine variant={1} color="#FDD000" width={80} align="center" />
+                    </div>
+                    <p className="text-gray-600 text-base md:text-lg leading-relaxed max-w-[480px] mx-auto text-pretty">
                         子育て中、未経験、キャリアチェンジ。<br />
                         それぞれの状況から、自分らしい働き方を見つけた仲間たちのストーリー。
                     </p>
@@ -218,12 +222,11 @@ export default function StaffVoicesSection({ staffCases }: Props) {
                     style={{ boxShadow: '0 8px 40px rgba(160,150,140,0.08)' }}
                 >
                     {/* 右上 blob 装飾（デスクトップのみ） */}
-                    <div
-                        className="blob-cloud hidden md:block absolute -top-12 -right-12 w-[220px] h-[220px] pointer-events-none"
-                        style={{
-                            background:
-                                'radial-gradient(ellipse, rgba(220,200,170,0.15), rgba(200,190,220,0.08))',
-                        }}
+                    <BlobDecoration
+                        shape="N"
+                        drift="float-a"
+                        fill="rgba(210, 195, 205, 0.15)"
+                        className="hidden md:block -top-12 -right-12 w-[220px] h-[220px]"
                     />
 
                     <div key={activeStaff.id} className="tab-content relative">

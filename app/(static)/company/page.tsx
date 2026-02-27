@@ -24,9 +24,9 @@ export default function CompanyPage() {
             <div className="relative z-[2] overflow-hidden bg-[#fffdf5]">
                 {/* 緑：右側（ヒーロー〜コンテンツにかけて流れる） */}
                 <BlobDecoration
-                    shape="cloud"
-                    drift="diagonal"
-                    background="rgba(160, 200, 170, 0.28)"
+                    shape="M"
+                    drift="float-c"
+                    fill="rgba(160, 200, 170, 0.28)"
                     className="top-[40vw] md:top-[-5vw] right-[-15vw] w-[55vw] h-[55vw] md:w-[40vw] md:h-[40vw]"
                 />
                 <HeroSection title="Company" description="会社情報" activeIndex={2} />
