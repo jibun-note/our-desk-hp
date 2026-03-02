@@ -423,6 +423,8 @@ export default function ContactForm() {
                                 <label htmlFor="contact-privacy" className="text-sm text-gray-600 leading-[1.7] cursor-pointer text-pretty">
                                     <Link
                                         href="/privacy/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="text-gray-800 font-medium border-b border-gray-800 hover:no-underline"
                                     >
                                         個人情報の取り扱い

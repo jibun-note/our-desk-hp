@@ -24,7 +24,19 @@ Next.js 16、TypeScript、Tailwind CSSを使用したSSG（Static Site Generatio
 npm install
 ```
 
-### 2. 開発サーバーの起動
+### 2. 環境変数（reCAPTCHA）
+
+お問い合わせフォーム・応募フォームの送信には reCAPTCHA v3 のキーが必要です。
+
+1. プロジェクトルートに `.env.local` を作成する
+2. `.env.example` をコピーし、以下を実際のキーに置き換える
+   - `NEXT_PUBLIC_RECAPTCHA_SITE_KEY` … [Google reCAPTCHA 管理コンソール](https://www.google.com/recaptcha/admin)で取得したサイトキー
+   - `RECAPTCHA_SECRET_KEY` … 同じく取得したシークレットキー
+3. reCAPTCHA 登録時にタイプは **v3** を選択し、ドメインに `localhost`（開発用）や本番ドメインを追加する
+
+`.env.local` は Git にコミットされません（`.gitignore` で除外済み）。
+
+### 3. 開発サーバーの起動
 
 ```bash
 npm run dev
