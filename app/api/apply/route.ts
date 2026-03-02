@@ -3,13 +3,14 @@ import { NextResponse } from 'next/server'
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 const RECAPTCHA_VERIFY_URL = 'https://www.google.com/recaptcha/api/siteverify'
 
-type ContactBody = {
+type ApplyBody = {
     name: string
-    company: string
+    nameKana: string
     email: string
     phone: string
-    subject: string
-    message: string
+    workStyle: string
+    desiredRole: string
+    careerPr: string
     privacy: boolean
     recaptchaToken: string
 }
@@ -24,9 +25,9 @@ export async function POST(request: Request) {
         )
     }
 
-    let body: ContactBody
+    let body: ApplyBody
     try {
-        body = (await request.json()) as ContactBody
+        body = (await request.json()) as ApplyBody
     } catch {
         return NextResponse.json(
             { error: 'リクエスト形式が不正です。' },
@@ -68,7 +69,7 @@ export async function POST(request: Request) {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-            _subject: 'お問い合わせ',
+            _subject: '採用応募',
             ...formData,
         }),
     })
