@@ -506,10 +506,7 @@ export default function ApplicationForm() {
                                             )}
                                         </div>
                                         <div>
-                                            <span className="text-[10px] text-gray-400">
-                                                reCAPTCHA で保護されています
-                                            </span>
-                                            <div className="flex items-start gap-2 py-2.5 px-3.5 rounded-lg bg-gray-50 border border-gray-200 mt-1">
+                                            <div className="flex items-start gap-2 py-2.5 px-3.5 rounded-lg bg-gray-50 border border-gray-200">
                                                 <input
                                                     type="checkbox"
                                                     name="privacy"
