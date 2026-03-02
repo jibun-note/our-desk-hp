@@ -21,6 +21,7 @@ import {
     FLOW_STEPS,
     STAFF_CASES,
     IMG,
+    SOCIAL_PROOF_MESSAGE,
 } from '@/lib/data/recruit'
 
 export const metadata = createPageMetadata(
@@ -46,7 +47,7 @@ export default function RecruitPage() {
                     />
                     <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" activeIndex={3} />
                     <RecruitIntroSection heroImage={IMG.hero} />
-                    <RecruitFeaturesSection features={FEATURES} />
+                    <RecruitFeaturesSection features={FEATURES} socialProofMessage={SOCIAL_PROOF_MESSAGE} />
                 </div>
 
                 {/* 4. 募集形態・待遇（3つの働き方） */}

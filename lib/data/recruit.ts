@@ -77,6 +77,10 @@ export const FAQ_ITEMS: FaqItem[] = [
     },
 ]
 
+/** 社会的証明用。人数が少ない段階では定性的表現（実数でなくても可） */
+export const SOCIAL_PROOF_MESSAGE =
+    '多くの仲間が、それぞれのペースで活躍しています。'
+
 export const FEATURES: FeatureItem[] = [
     {
         num: 'リモート',
