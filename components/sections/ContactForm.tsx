@@ -43,7 +43,7 @@ type FormData = {
 
 type FormErrors = Partial<Record<keyof FormData, string>>
 
-const CONTACT_API = '/api/contact'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 
 const subjectOptions = [
     { value: '', label: '選択してください' },
@@ -121,7 +121,11 @@ export default function ContactForm() {
 
         if (!RECAPTCHA_SITE_KEY) {
             setStatus('error')
-            setRecaptchaError('reCAPTCHAが設定されていません。')
+            setRecaptchaError(
+                process.env.NODE_ENV === 'development'
+                    ? 'reCAPTCHAが設定されていません。'
+                    : '送信できません。しばらく経ってからお試しください。'
+            )
             return
         }
         let token: string
@@ -143,10 +147,11 @@ export default function ContactForm() {
 
         setStatus('sending')
         try {
-            const res = await fetch(CONTACT_API, {
+            const res = await fetch(FORMSPREE_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    _subject: 'お問い合わせ',
                     name: form.name,
                     company: form.company,
                     email: form.email,
@@ -154,7 +159,7 @@ export default function ContactForm() {
                     subject: form.subject,
                     message: form.message,
                     privacy: form.privacy,
-                    recaptchaToken: token,
+                    'g-recaptcha-response': token,
                 }),
             })
             const data = (await res.json().catch(() => ({}))) as { error?: string }
@@ -181,6 +186,12 @@ export default function ContactForm() {
             className={`relative z-[3] bg-white py-20 md:py-32 px-4 md:px-8 ${notoSansJP.className}`}
             aria-labelledby="contact-form-heading"
         >
+            {RECAPTCHA_SITE_KEY && (
+                <Script
+                    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+                    strategy="lazyOnload"
+                />
+            )}
             {/* 背景レイヤー: HeroSection と同じ色がフォーム上部 1/3 程度まで続く（絶対配置でフォームは上に重なる） */}
             <div
                 className="absolute top-0 left-0 right-0 bg-[#f5ede0]"
@@ -413,6 +424,8 @@ export default function ContactForm() {
                                 <label htmlFor="contact-privacy" className="text-sm text-gray-600 leading-[1.7] cursor-pointer text-pretty">
                                     <Link
                                         href="/privacy/"
+                                        target="_blank"
+                                        rel="noopener noreferrer"
                                         className="text-gray-800 font-medium border-b border-gray-800 hover:no-underline"
                                     >
                                         個人情報の取り扱い
@@ -424,13 +437,6 @@ export default function ContactForm() {
                                 <p id="error-privacy" className="mt-1 text-sm text-red-600 -mt-2">
                                     {errors.privacy}
                                 </p>
-                            )}
-
-                            {RECAPTCHA_SITE_KEY && (
-                                <Script
-                                    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-                                    strategy="lazyOnload"
-                                />
                             )}
 
                             {(recaptchaError || status === 'error') && (

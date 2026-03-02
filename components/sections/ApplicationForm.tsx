@@ -1,6 +1,7 @@
 'use client'
 
 import { useState, useEffect, useCallback } from 'react'
+import Script from 'next/script'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { WORK_STYLES } from '@/lib/data/recruit'
@@ -18,6 +19,7 @@ type FormData = {
 
 type FormErrors = Partial<Record<keyof FormData, string>>
 
+const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 
 const TOTAL_STEPS = 3
@@ -50,6 +52,7 @@ function validate(form: FormData): FormErrors {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
         errors.email = '正しいメールアドレス形式で入力してください'
     }
+    if (!form.phone.trim()) errors.phone = '電話番号を入力してください'
     if (!form.workStyle) errors.workStyle = '希望雇用形態を選択してください'
     if (!form.careerPr.trim()) errors.careerPr = '経歴・アピールポイントを入力してください'
     if (!form.privacy) errors.privacy = 'プライバシーポリシーに同意してください'
@@ -64,6 +67,7 @@ function validateStep1(form: FormData): FormErrors {
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(form.email)) {
         errors.email = '正しいメールアドレス形式で入力してください'
     }
+    if (!form.phone.trim()) errors.phone = '電話番号を入力してください'
     return errors
 }
 
@@ -102,6 +106,15 @@ function LabelRow({ label, badge, htmlFor }: LabelRowProps) {
 const inputCls =
     'w-full bg-transparent border-0 border-b-[1.5px] border-gray-300 py-1.5 text-[14.5px] text-gray-900 outline-none transition-[border-color] duration-200 placeholder:text-gray-400 placeholder:text-[13px] focus:border-[#F08300]'
 
+declare global {
+    interface Window {
+        grecaptcha?: {
+            ready: (callback: () => void) => void
+            execute: (siteKey: string, options: { action: string }) => Promise<string>
+        }
+    }
+}
+
 function getStepFromHash(): number {
     if (typeof window === 'undefined') return 1
     const hash = window.location.hash.slice(1)
@@ -116,6 +129,7 @@ export default function ApplicationForm() {
     const [form, setForm] = useState<FormData>(initialForm)
     const [errors, setErrors] = useState<FormErrors>({})
     const [isSubmitted, setIsSubmitted] = useState(false)
+    const [recaptchaError, setRecaptchaError] = useState<string | null>(null)
     const [step, setStepState] = useState(1)
 
     const setStep = useCallback(
@@ -178,9 +192,36 @@ export default function ApplicationForm() {
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault()
+        setRecaptchaError(null)
         const newErrors = validate(form)
         setErrors(newErrors)
         if (Object.keys(newErrors).length > 0) return
+
+        if (!RECAPTCHA_SITE_KEY) {
+            setStatus('error')
+            setRecaptchaError(
+                process.env.NODE_ENV === 'development'
+                    ? 'reCAPTCHAが設定されていません。'
+                    : '送信できません。しばらく経ってからお試しください。'
+            )
+            return
+        }
+        let token: string
+        try {
+            await new Promise<void>((resolve) => {
+                window.grecaptcha?.ready(resolve) ?? resolve()
+            })
+            token = (await window.grecaptcha?.execute(RECAPTCHA_SITE_KEY, { action: 'apply' })) ?? ''
+        } catch (err) {
+            setStatus('error')
+            setRecaptchaError('reCAPTCHAの認証に失敗しました。再度お試しください。')
+            console.error('reCAPTCHA execute error:', err)
+            return
+        }
+        if (!token?.trim()) {
+            setRecaptchaError('reCAPTCHAの認証に失敗しました。再度お試しください。')
+            return
+        }
 
         setStatus('sending')
         try {
@@ -188,6 +229,7 @@ export default function ApplicationForm() {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    _subject: '採用応募',
                     name: form.name,
                     nameKana: form.nameKana,
                     email: form.email,
@@ -195,17 +237,20 @@ export default function ApplicationForm() {
                     workStyle: form.workStyle,
                     desiredRole: form.desiredRole,
                     careerPr: form.careerPr,
+                    privacy: form.privacy,
+                    'g-recaptcha-response': token,
                 }),
             })
+            const data = (await res.json().catch(() => ({}))) as { error?: string }
             if (!res.ok) {
-                const data = await res.json().catch(() => ({}))
-                throw new Error((data as { error?: string }).error || `送信エラー (${res.status})`)
+                throw new Error(data.error || `送信に失敗しました (${res.status})`)
             }
             setStatus('success')
             setIsSubmitted(true)
         } catch (err) {
             setStatus('error')
-            console.error('Formspree error:', err)
+            setRecaptchaError(err instanceof Error ? err.message : '送信に失敗しました。')
+            console.error('Application form error:', err)
         }
     }
 
@@ -213,6 +258,7 @@ export default function ApplicationForm() {
         setIsSubmitted(false)
         setForm(initialForm)
         setErrors({})
+        setRecaptchaError(null)
         setStatus('idle')
         setStep(1)
     }
@@ -223,6 +269,12 @@ export default function ApplicationForm() {
             className="relative bg-white py-20 md:py-28 px-4 scroll-mt-20"
             aria-labelledby="application-form-heading"
         >
+            {RECAPTCHA_SITE_KEY && (
+                <Script
+                    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+                    strategy="lazyOnload"
+                />
+            )}
             <div className="text-center mb-12">
                 <p className="text-[10px] tracking-[0.2em] text-[#F08300] uppercase mb-3 font-medium">
                     Recruit Application
@@ -339,7 +391,7 @@ export default function ApplicationForm() {
                                                 )}
                                             </div>
                                             <div>
-                                                <LabelRow label="電話番号" badge="optional" htmlFor="app-phone" />
+                                                <LabelRow label="電話番号" badge="required" htmlFor="app-phone" />
                                                 <input
                                                     id="app-phone"
                                                     type="tel"
@@ -348,8 +400,12 @@ export default function ApplicationForm() {
                                                     onChange={handleChange}
                                                     className={inputCls}
                                                     placeholder="03-1234-5678"
+                                                    aria-invalid={!!errors.phone}
+                                                    aria-describedby={errors.phone ? 'err-phone' : undefined}
                                                 />
-                                                <p className="mt-0.5 text-[11px] text-gray-400">任意です</p>
+                                                {errors.phone && (
+                                                    <p id="err-phone" className="mt-1 text-xs text-red-600">{errors.phone}</p>
+                                                )}
                                             </div>
                                         </div>
                                         <div className="flex justify-end pt-2">
@@ -450,7 +506,10 @@ export default function ApplicationForm() {
                                             )}
                                         </div>
                                         <div>
-                                            <div className="flex items-start gap-2 py-2.5 px-3.5 rounded-lg bg-gray-50 border border-gray-200">
+                                            <span className="text-[10px] text-gray-400">
+                                                reCAPTCHA で保護されています
+                                            </span>
+                                            <div className="flex items-start gap-2 py-2.5 px-3.5 rounded-lg bg-gray-50 border border-gray-200 mt-1">
                                                 <input
                                                     type="checkbox"
                                                     name="privacy"
@@ -462,7 +521,7 @@ export default function ApplicationForm() {
                                                     aria-describedby={errors.privacy ? 'err-privacy' : undefined}
                                                 />
                                                 <label htmlFor="app-privacy" className="text-sm text-gray-600 leading-[1.7] cursor-pointer text-pretty">
-                                                    <Link href="/privacy/" className="text-gray-800 font-medium border-b border-gray-800 hover:no-underline">
+                                                    <Link href="/privacy/" target="_blank" rel="noopener noreferrer" className="text-gray-800 font-medium border-b border-gray-800 hover:no-underline">
                                                         個人情報の取り扱い
                                                     </Link>
                                                     に同意の上、送信してください。
@@ -472,9 +531,9 @@ export default function ApplicationForm() {
                                                 <p id="err-privacy" className="mt-1 text-xs text-red-600">{errors.privacy}</p>
                                             )}
                                         </div>
-                                        {status === 'error' && (
+                                        {(recaptchaError || status === 'error') && (
                                             <p className="text-sm text-red-600 text-center">
-                                                送信に失敗しました。しばらく経ってから再度お試しください。
+                                                {recaptchaError ?? '送信に失敗しました。しばらく経ってから再度お試しください。'}
                                             </p>
                                         )}
                                         <div className="flex justify-between pt-2">
