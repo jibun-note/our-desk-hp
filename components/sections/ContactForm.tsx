@@ -43,7 +43,7 @@ type FormData = {
 
 type FormErrors = Partial<Record<keyof FormData, string>>
 
-const CONTACT_API = '/api/contact'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 
 const subjectOptions = [
     { value: '', label: '選択してください' },
@@ -147,10 +147,11 @@ export default function ContactForm() {
 
         setStatus('sending')
         try {
-            const res = await fetch(CONTACT_API, {
+            const res = await fetch(FORMSPREE_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    _subject: 'お問い合わせ',
                     name: form.name,
                     company: form.company,
                     email: form.email,
@@ -158,7 +159,7 @@ export default function ContactForm() {
                     subject: form.subject,
                     message: form.message,
                     privacy: form.privacy,
-                    recaptchaToken: token,
+                    'g-recaptcha-response': token,
                 }),
             })
             const data = (await res.json().catch(() => ({}))) as { error?: string }
