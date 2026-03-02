@@ -20,7 +20,7 @@ type FormData = {
 type FormErrors = Partial<Record<keyof FormData, string>>
 
 const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
-const APPLY_API = '/api/apply'
+const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 
 const TOTAL_STEPS = 3
 const STEP_HASH_PREFIX = 'step-'
@@ -225,10 +225,11 @@ export default function ApplicationForm() {
 
         setStatus('sending')
         try {
-            const res = await fetch(APPLY_API, {
+            const res = await fetch(FORMSPREE_ENDPOINT, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
+                    _subject: '採用応募',
                     name: form.name,
                     nameKana: form.nameKana,
                     email: form.email,
@@ -237,7 +238,7 @@ export default function ApplicationForm() {
                     desiredRole: form.desiredRole,
                     careerPr: form.careerPr,
                     privacy: form.privacy,
-                    recaptchaToken: token,
+                    'g-recaptcha-response': token,
                 }),
             })
             const data = (await res.json().catch(() => ({}))) as { error?: string }
