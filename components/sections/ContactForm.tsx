@@ -121,7 +121,11 @@ export default function ContactForm() {
 
         if (!RECAPTCHA_SITE_KEY) {
             setStatus('error')
-            setRecaptchaError('reCAPTCHAが設定されていません。')
+            setRecaptchaError(
+                process.env.NODE_ENV === 'development'
+                    ? 'reCAPTCHAが設定されていません。'
+                    : '送信できません。しばらく経ってからお試しください。'
+            )
             return
         }
         let token: string
@@ -181,6 +185,12 @@ export default function ContactForm() {
             className={`relative z-[3] bg-white py-20 md:py-32 px-4 md:px-8 ${notoSansJP.className}`}
             aria-labelledby="contact-form-heading"
         >
+            {RECAPTCHA_SITE_KEY && (
+                <Script
+                    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
+                    strategy="lazyOnload"
+                />
+            )}
             {/* 背景レイヤー: HeroSection と同じ色がフォーム上部 1/3 程度まで続く（絶対配置でフォームは上に重なる） */}
             <div
                 className="absolute top-0 left-0 right-0 bg-[#f5ede0]"
@@ -424,13 +434,6 @@ export default function ContactForm() {
                                 <p id="error-privacy" className="mt-1 text-sm text-red-600 -mt-2">
                                     {errors.privacy}
                                 </p>
-                            )}
-
-                            {RECAPTCHA_SITE_KEY && (
-                                <Script
-                                    src={`https://www.google.com/recaptcha/api.js?render=${RECAPTCHA_SITE_KEY}`}
-                                    strategy="lazyOnload"
-                                />
                             )}
 
                             {(recaptchaError || status === 'error') && (
