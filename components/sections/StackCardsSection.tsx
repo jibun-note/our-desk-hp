@@ -25,13 +25,13 @@ export type StackCardItem = {
 
 /**
  * カードの sticky top をレスポンシブクラスで指定。
- * モバイル: 5 + index×0.9 rem / デスクトップ: 5 + index×1.25 rem
+ * モバイル: 6 + index×0.9 rem / デスクトップ: 6 + index×1.25 rem（上側余白多め）
  */
 const STICKY_TOP_CLASSES = [
-    'top-[5rem]',
-    'top-[5.9rem] md:top-[6.25rem]',
-    'top-[6.8rem] md:top-[7.5rem]',
-    'top-[7.7rem] md:top-[8.75rem]',
+    'top-[6rem]',
+    'top-[6.9rem] md:top-[7.25rem]',
+    'top-[7.8rem] md:top-[8.5rem]',
+    'top-[8.7rem] md:top-[9.75rem]',
 ] as const
 
 function getStickyTopClass(index: number): string {
@@ -64,7 +64,7 @@ type Props = {
 
 export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', background, marqueeSticky = false, firstCardRef, lastCardRef }: Props) {
     return (
-        <section className="relative z-20 py-16 md:py-24 md:bg-gradient-to-b from-[#FFF8E7] to-[#FFE8CC] " aria-label={sectionLabel}>
+        <section className="relative z-20 py-12 md:py-20 md:bg-gradient-to-b from-[#FFF8E7] to-[#FFE8CC] " aria-label={sectionLabel}>
             {/* 背景画像（Next.js Image で最適化・プリロード） */}
             <div className="absolute inset-0 z-0 rounded-3xl overflow-hidden bg-[#FFF8E7] md:hidden">
                 <Image
@@ -113,36 +113,36 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                 if (firstCardRef != null && i === 0) firstCardRef.current = el
                                 if (lastCardRef != null && i === cards.length - 1) lastCardRef.current = el
                             }}
-                            className={`sticky z-10 min-h-0 md:min-h-[72vh] lg:min-h-[68vh] flex flex-col justify-start md:justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-0 md:py-7 md:pb-0 ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? 'md:px-0 md:pl-6 md:pr-6 lg:pr-8' : 'md:px-0 md:pl-10 lg:pl-14 md:pr-6'}`}
+                            className={`sticky z-10 min-h-0 2xl:h-[calc(72vh+4rem)] 2xl:min-h-[72vh] flex flex-col justify-start 2xl:justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-0 2xl:py-4 2xl:pb-0 ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? '2xl:px-0 2xl:pl-6 2xl:pr-6 2xl:pr-8' : '2xl:px-0 2xl:pl-10 2xl:pl-14 2xl:pr-6'}`}
                             style={{
                                 background: 'rgb(255,255,255)',
                                 ...(i >= 1 && { marginTop: `${STACK_DELAY_MARGIN_VH}vh` }),
                             }}
                         >
                             {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
-                            <div className={`grid grid-cols-1 gap-0 md:gap-3 lg:gap-4 w-full max-w-full items-start md:items-center pb-0 ${card.imageOrder === 'right' ? 'md:pb-24 lg:pb-28' : 'md:pb-16 lg:pb-20'} ${card.imageSrc ? 'min-h-0 md:min-h-[72vh] lg:min-h-[68vh]' : ''} ${card.imageOrder === 'left' ? 'md:grid-cols-[1.5fr_1.5fr]' : 'md:grid-cols-[1.4fr_1.6fr]'}`}>
+                            <div className={`grid grid-cols-1 gap-6 2xl:gap-8 w-full max-w-full items-start 2xl:items-center pb-0 ${card.imageOrder === 'right' ? '2xl:pb-24 2xl:pb-28' : '2xl:pb-16 2xl:pb-20'} ${card.imageSrc ? 'min-h-0 2xl:min-h-[72vh]' : ''} ${card.imageOrder === 'left' ? '2xl:grid-cols-[minmax(0,1.5fr)_minmax(280px,1.5fr)]' : '2xl:grid-cols-[minmax(280px,1.4fr)_minmax(0,1.6fr)]'}`}>
                                 {card.imageOrder === 'left' && (
                                     <div
-                                        className={`relative order-2 md:order-1 overflow-hidden p-4 md:p-6 -mt-6 md:mt-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] md:h-[72vh] lg:h-[68vh]' : i === 2 ? 'h-[300px] md:h-[65vh] lg:h-[62vh]' : 'h-[320px] md:h-[72vh] lg:h-[68vh]') + ' aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
+                                        className={`relative order-2 2xl:order-1 overflow-hidden p-4 2xl:p-6 mt-0 mb-6 2xl:mb-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] 2xl:h-[72vh]' : i === 2 ? 'h-[300px] 2xl:h-[62vh]' : 'h-[320px] 2xl:h-[72vh]') + ' aspect-[4/3] 2xl:aspect-auto' : 'min-h-[140px] 2xl:min-h-[180px] flex items-center justify-center'}`}
                                         aria-hidden="true"
                                     >
                                         {card.imageSrc ? (
-                                            <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 78vw" />
+                                            <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain object-center" sizes="(max-width: 768px) 100vw, 78vw" />
                                         ) : (
                                             <span className="text-sm text-gray-400">写真・画像用</span>
                                         )}
                                     </div>
                                 )}
-                                <div className={`min-w-0 flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 md:pl-6 lg:pl-8 order-1 md:order-2' : ''}`}>
+                                <div className={`min-w-0 2xl:min-w-[280px] flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 order-1 2xl:pl-6 2xl:order-2 2xl:pl-8' : ''}`}>
                                     <div className="w-full">
-                                        <h2 className={`${card.titleClass ?? 'text-xl md:text-4xl'} font-extrabold mb-0.5 md:mb-1 block drop-shadow-sm whitespace-pre-line text-[#4A4A4A] mt-5 md:mt-0`}>{card.title}</h2>
+                                        <h2 className={`${card.titleClass ?? 'text-xl xl:text-4xl'} font-extrabold mb-0.5 xl:mb-1 block drop-shadow-sm whitespace-pre-line text-[#4A4A4A] mt-5 xl:mt-0`}>{card.title}</h2>
                                         {card.numberLabel != null && card.numberLabel !== '' && (
-                                            <p className="text-sm md:text-lg font-medium mb-8 md:mb-16 -mt-0.5" style={{ color: '#FFB38E' }} aria-hidden="true">
+                                            <p className="text-sm xl:text-lg font-medium mb-8 xl:mb-16 -mt-0.5" style={{ color: '#FFB38E' }} aria-hidden="true">
                                                 {card.numberLabel}
                                             </p>
                                         )}
-                                        <div className="border-l-4 border-amber-400/70 pl-3 md:pl-5 py-1">
-                                            <div className="text-sm md:text-lg leading-relaxed text-pretty text-gray-700 flex flex-col gap-y-1 md:gap-y-3">
+                                        <div className="border-l-4 border-amber-400/70 pl-3 xl:pl-5 py-1">
+                                            <div className="text-sm xl:text-lg leading-relaxed text-pretty text-gray-700 flex flex-col gap-y-1 xl:gap-y-3">
                                                 {card.content}
                                             </div>
                                         </div>
@@ -150,18 +150,18 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                 </div>
                                 {card.imageOrder === 'right' && (
                                     <div
-                                        className={`relative overflow-hidden p-4 md:p-6 -mt-10 md:mt-0 md:mb-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] md:h-[72vh] lg:h-[68vh]' : i === 2 ? 'h-[300px] md:h-[65vh] lg:h-[62vh]' : 'h-[320px] md:h-[72vh] lg:h-[68vh]') + ' aspect-[4/3] md:aspect-auto' : 'min-h-[140px] md:min-h-[220px] flex items-center justify-center'}`}
+                                        className={`relative overflow-hidden p-4 2xl:p-6 mt-0 mb-6 2xl:mb-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] 2xl:h-[72vh]' : i === 2 ? 'h-[300px] 2xl:h-[62vh]' : 'h-[320px] 2xl:h-[72vh]') + ' aspect-[4/3] 2xl:aspect-auto' : 'min-h-[140px] 2xl:min-h-[180px] flex items-center justify-center'}`}
                                         aria-hidden="true"
                                     >
                                         {card.imageSrc ? (
-                                            <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain" sizes="(max-width: 768px) 100vw, 78vw" />
+                                            <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain object-center" sizes="(max-width: 768px) 100vw, 78vw" />
                                         ) : (
                                             <span className="text-sm text-gray-400">写真・画像用</span>
                                         )}
                                     </div>
                                 )}
                             </div>
-                            <div className={`absolute bottom-0 left-0 right-0 h-16 lg:h-20 overflow-hidden rounded-b-2xl -left-7 -right-7 w-[calc(100%+3.5rem)] hidden md:block ${card.imageOrder === 'left' ? 'md:-left-6 md:-right-6 md:w-[calc(100%+3rem)]' : 'md:-left-10 md:-right-6 md:w-[calc(100%+4rem)]'}`}>
+                            <div className={`absolute bottom-0 left-0 right-0 h-14 xl:h-20 2xl:h-24 overflow-hidden rounded-b-2xl -left-7 -right-7 w-[calc(100%+3.5rem)] hidden xl:block ${card.imageOrder === 'left' ? 'xl:-left-6 xl:-right-6 xl:w-[calc(100%+3rem)]' : 'xl:-left-10 xl:-right-6 xl:w-[calc(100%+4rem)]'}`}>
                                 <WaveClipLayer idPrefix={`stack-card-${i}`} clipPaths={STACK_CARD_WAVE_PATHS}>
                                     <div className="absolute inset-0 bg-[#FFE566]" />
                                 </WaveClipLayer>
