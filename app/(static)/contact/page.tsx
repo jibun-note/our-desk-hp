@@ -1,4 +1,4 @@
-import ContactForm from '../../../components/sections/ContactForm'
+import ContactForm from '@/components/sections/ContactForm'
 import HeroSection from '@/components/sections/HeroSection'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
@@ -13,12 +13,14 @@ export default function ContactPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/contact/" name="Contact" />
-            <HeroSection
-                title="Contact"
-                description="お問い合わせはこちら"
-                activeIndex={4}
-                className="bg-[#f9ead4]"
-            />
+            <div className="relative z-[1] bg-[#f5ede0]">
+                <HeroSection
+                    title="Contact"
+                    description="事業に関するご質問・採用・その他のご用件、どうぞお気軽にお声がけください。"
+                    activeIndex={4}
+                    className="bg-transparent"
+                />
+            </div>
             <ContactForm />
         </>
     )

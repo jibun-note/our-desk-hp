@@ -9,6 +9,8 @@ import RecruitFlowSection from '@/components/sections/recruit/RecruitFlowSection
 import RecruitFaqSection from '@/components/sections/recruit/RecruitFaqSection'
 import StaffVoicesSection from '@/components/sections/recruit/StaffVoicesSection'
 import RecruitCtaSection from '@/components/sections/recruit/RecruitCtaSection'
+import ApplicationForm from '@/components/sections/ApplicationForm'
+import RecruitPageScrollToTop from '@/components/ui/RecruitPageScrollToTop'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import { createPageMetadata } from '@/lib/seo'
 import {
@@ -19,6 +21,7 @@ import {
     FLOW_STEPS,
     STAFF_CASES,
     IMG,
+    SOCIAL_PROOF_MESSAGE,
 } from '@/lib/data/recruit'
 
 export const metadata = createPageMetadata(
@@ -31,6 +34,7 @@ export default function RecruitPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/recruit/" name="採用情報" />
+            <RecruitPageScrollToTop />
             <main className="min-h-screen bg-white relative">
                 {/* 1+2+3 統合ラッパー: ヒーローからクリーム背景で一体感を持たせる */}
                 <div className="relative z-[1] bg-[#fffdf5]">
@@ -43,7 +47,7 @@ export default function RecruitPage() {
                     />
                     <HeroSection title="Recruit" description="私たちは、「人と人の関係性」を大切にしています" activeIndex={3} />
                     <RecruitIntroSection heroImage={IMG.hero} />
-                    <RecruitFeaturesSection features={FEATURES} />
+                    <RecruitFeaturesSection features={FEATURES} socialProofMessage={SOCIAL_PROOF_MESSAGE} />
                 </div>
 
                 {/* 4. 募集形態・待遇（3つの働き方） */}
@@ -79,6 +83,7 @@ export default function RecruitPage() {
 
                 {/* 10. 統合メッセージ＆CTAセクション */}
                 <RecruitCtaSection ctaBgImage={IMG.ctaBg} />
+                <ApplicationForm />
             </main>
         </>
     )

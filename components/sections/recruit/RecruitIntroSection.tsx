@@ -1,6 +1,6 @@
 import { cn } from '@/lib/utils'
-import Link from 'next/link'
 import { Shippori_Mincho_B1 } from 'next/font/google'
+import ScrollToApplicationForm from '@/components/ui/ScrollToApplicationForm'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
 import BlobDecoration from '@/components/ui/BlobDecoration'
 
@@ -49,12 +49,11 @@ export default function RecruitIntroSection({ heroImage }: Props) {
                             <br />
                             その気持ちを、私たちは大切に育てます。
                         </p>
-                        <Link
-                            href="/contact/"
+                        <ScrollToApplicationForm
                             className="inline-block px-8 py-4 md:px-10 md:py-4 bg-gradient-to-r from-[#FDD000] to-[#F08300] text-gray-900 font-medium text-base md:text-lg rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-[transform,box-shadow] duration-200 ease-out min-h-[48px]"
                         >
                             あなたらしい働き方を見つける
-                        </Link>
+                        </ScrollToApplicationForm>
                     </div>
                 </div>
                 <div className="order-1 md:order-2 -mr-4 md:mr-0 ml-auto md:ml-0 w-[90%] md:w-full -mt-6 md:mt-0">

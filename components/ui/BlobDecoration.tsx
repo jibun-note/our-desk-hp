@@ -53,43 +53,54 @@ const FORM_DRIFT_TO_FLOAT: Record<(typeof FORM_BLOB_DRIFTS)[number], Props['drif
     breathe: 'float-d',
 }
 
-/** フォーム用 4 個 Blob の共通レンダー（色だけ差し替え） */
+/** フォーム用 Blob の共通レンダー（色だけ差し替え）。count で個数指定可能（省略時は 4 個） */
 function FormBlobs({
     compact,
     primary,
     secondary,
+    count = 4,
 }: {
     compact: boolean
     primary: string
     secondary: string
+    count?: 1 | 2 | 3 | 4
 }) {
     const layout = compact ? BLOB_LAYOUTS.afterSubmit : BLOB_LAYOUTS.beforeSubmit
     const size = compact ? BLOB_SIZE_CLASSES.compact : BLOB_SIZE_CLASSES.default
     const backgrounds = [primary, primary, secondary, secondary]
+    const indices = [1, 2, 3, 4].slice(0, count) as (1 | 2 | 3 | 4)[]
+    const drifts = FORM_BLOB_DRIFTS.slice(0, count)
 
     return (
         <div className="absolute inset-0 pointer-events-none max-md:hidden" aria-hidden="true">
-            {FORM_BLOB_DRIFTS.map((drift, i) => (
+            {drifts.map((drift, i) => (
                 <BlobDecoration
                     key={drift}
                     shape="cloud"
                     drift={FORM_DRIFT_TO_FLOAT[drift]}
                     fill={backgrounds[i]}
-                    className={size[`c${(i + 1) as 1 | 2 | 3 | 4}`]}
-                    style={layout[`pos${(i + 1) as 1 | 2 | 3 | 4}`]}
+                    className={size[`c${indices[i]}`]}
+                    style={layout[`pos${indices[i]}`]}
                 />
             ))}
         </div>
     )
 }
 
-/** お問い合わせフォーム用の Blob 装飾（青・水色系）。compact で送信後用（配置・サイズとも送信後共通） */
-export function ContactBlobDecoration({ compact = false }: { compact?: boolean }) {
+/** お問い合わせフォーム用の Blob 装飾（青・水色系）。compact で送信後用。count で表示個数（省略時 4 個） */
+export function ContactBlobDecoration({
+    compact = false,
+    count = 4,
+}: {
+    compact?: boolean
+    count?: 1 | 2 | 3 | 4
+}) {
     return (
         <FormBlobs
             compact={compact}
             primary="rgba(135, 206, 235, 0.38)"
             secondary="rgba(173, 216, 230, 0.34)"
+            count={count}
         />
     )
 }
