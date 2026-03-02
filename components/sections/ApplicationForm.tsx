@@ -5,6 +5,7 @@ import Script from 'next/script'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { WORK_STYLES } from '@/lib/data/recruit'
+import { RECAPTCHA_SITE_KEY } from '@/lib/recaptcha'
 
 type FormData = {
     name: string
@@ -19,7 +20,6 @@ type FormData = {
 
 type FormErrors = Partial<Record<keyof FormData, string>>
 
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
 const FORMSPREE_ENDPOINT = 'https://formspree.io/f/mjgepnwl'
 
 const TOTAL_STEPS = 3
