@@ -10,7 +10,6 @@ import ServiceBackDeskReasonsSection from '@/components/sections/service/Service
 import ServiceProcessSection from '@/components/sections/service/ServiceProcessSection'
 import ServiceCaseStudiesSection from '@/components/sections/service/ServiceCaseStudiesSection'
 import ServiceStatsSection from '@/components/sections/service/ServiceStatsSection'
-import ServiceStaffSection from '@/components/sections/service/ServiceStaffSection'
 import ServiceFaqSection from '@/components/sections/service/ServiceFaqSection'
 import ServiceCtaSection from '@/components/sections/service/ServiceCtaSection'
 import { createPageMetadata } from '@/lib/seo'
@@ -20,15 +19,14 @@ import {
   PAIN,
   PAIN_ITEMS,
   SERVICES_HEAD,
-  SERVICE_CARDS,
+  SERVICES_GROUPS,
   BACKDESK_REASONS,
   PROCESS_HEAD,
   PROCESS_STEPS,
   CASE_STUDIES_HEAD,
   CASE_STUDIES,
   STATS,
-  STAFF_HEAD,
-  STAFF_ITEMS,
+  STATS_HEAD,
   FAQ_HEAD,
   FAQ_ITEMS,
   CTA,
@@ -90,7 +88,7 @@ export default function ServicePage() {
 
         <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" flip />
 
-        <ServiceServicesSection head={SERVICES_HEAD} cards={SERVICE_CARDS} />
+        <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />
 
         <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
@@ -108,13 +106,9 @@ export default function ServicePage() {
 
         <ServiceCaseStudiesSection head={CASE_STUDIES_HEAD} cases={CASE_STUDIES} />
 
-        <ServiceStatsSection stats={STATS} />
+        <ServiceStatsSection stats={STATS} head={STATS_HEAD} />
 
         <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
-
-        <ServiceStaffSection head={STAFF_HEAD} staff={STAFF_ITEMS} />
-
-        <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" flip />
 
         <ServiceFaqSection
           imageSrc={IMG.faq}

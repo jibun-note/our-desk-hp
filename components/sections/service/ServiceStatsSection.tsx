@@ -18,17 +18,35 @@ function StatIcon() {
   )
 }
 
-type Props = {
-  stats: readonly StatItem[]
+type StatsHead = {
+  eyebrow?: string
+  headline: string
 }
 
-export default function ServiceStatsSection({ stats }: Props) {
+type Props = {
+  stats: readonly StatItem[]
+  head?: StatsHead
+}
+
+export default function ServiceStatsSection({ stats, head }: Props) {
   return (
     <section
       className="bg-white py-8 md:py-12 border-t border-b border-[#ece8de]"
-      aria-label="BackDeskの実績"
+      aria-label={head?.headline ?? '参考指標'}
     >
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
+        {head && (
+          <div className="text-center mb-8 md:mb-10">
+            {head.eyebrow ? (
+              <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium mb-1">
+                {head.eyebrow}
+              </p>
+            ) : null}
+            <h2 className="text-xl md:text-2xl font-bold text-gray-900">
+              {head.headline}
+            </h2>
+          </div>
+        )}
         <div className="grid grid-cols-2 md:grid-cols-3 gap-0">
           {stats.map((stat, i) => (
             <div
