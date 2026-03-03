@@ -49,6 +49,42 @@ const STACK_DELAY_MARGIN_VH = 40
 /** 最後のカードが前のカードに重なって止まるまで必要な下方向の余白（vh）。この分の minHeight をスペーサーで確保 */
 const STACK_END_SPACER_VH = 80
 
+/** カード・グリッド・画像・ウェーブのレイアウト調整（xl=1280px, 2xl=1536px） */
+const LAYOUT = {
+    /** カード高さ: xl で短め、2xl で標準 */
+    cardHeight: 'xl:h-[calc(66vh+4rem)] xl:min-h-[66vh] 2xl:h-[calc(72vh+4rem)] 2xl:min-h-[72vh]',
+    cardPadding: 'xl:py-4 xl:pb-0',
+    /** 画像左のときの article 横パディング */
+    cardPaddingLeft: 'xl:px-0 xl:pl-6 xl:pr-6 2xl:pr-8',
+    /** 画像右のときの article 横パディング */
+    cardPaddingRight: 'xl:px-0 xl:pl-10 2xl:pl-14 xl:pr-6',
+    /** グリッド: 縦積み時の gap / 2カラム時の gap */
+    gridGap: 'gap-6 xl:gap-8',
+    /** ウェーブ上の余白: 画像右は多め */
+    gridPbRight: 'xl:pb-24 2xl:pb-28',
+    gridPbLeft: 'xl:pb-16 2xl:pb-20',
+    gridMinH: 'min-h-0 xl:min-h-[66vh] 2xl:min-h-[72vh]',
+    gridColsLeft: 'xl:grid-cols-[minmax(0,1.5fr)_minmax(280px,1.5fr)]',
+    gridColsRight: 'xl:grid-cols-[minmax(280px,1.4fr)_minmax(0,1.6fr)]',
+    /** 画像エリア: 縦積み時の下余白 / 2カラム時は 0 */
+    imageMb: 'mb-6 xl:mb-0',
+    /** 画像エリア: 2カラム時の上余白（画像を少し下に） */
+    imageMt: 'xl:mt-6',
+    imagePadding: 'p-4 xl:p-6',
+    /** 画像高さ（全カード共通: モバイル px / xl / 2xl vh） */
+    imageHeight: 'h-[280px] xl:h-[60vh] 2xl:h-[66vh]',
+    imagePlaceholderMinH: 'min-h-[140px] xl:min-h-[180px]',
+    /** テキスト列の最小幅（2カラム時） */
+    textMinW: 'xl:min-w-[280px]',
+    textColPadding: 'pl-0 order-1 xl:pl-6 xl:order-2 2xl:pl-8',
+    /** numberLabel 下余白 */
+    numberLabelMb: 'mb-4 xl:mb-10',
+    /** ウェーブ高さ: ベース / xl / 2xl */
+    waveH: 'h-10 xl:h-14 2xl:h-24',
+    waveOffsetLeft: 'xl:-left-6 xl:-right-6 xl:w-[calc(100%+3rem)]',
+    waveOffsetRight: 'xl:-left-10 xl:-right-6 xl:w-[calc(100%+4rem)]',
+} as const
+
 type Props = {
     cards: StackCardItem[]
     sectionLabel?: string
@@ -113,31 +149,29 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                 if (firstCardRef != null && i === 0) firstCardRef.current = el
                                 if (lastCardRef != null && i === cards.length - 1) lastCardRef.current = el
                             }}
-                            className={`sticky z-10 min-h-0 2xl:h-[calc(72vh+4rem)] 2xl:min-h-[72vh] flex flex-col justify-start 2xl:justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-0 2xl:py-4 2xl:pb-0 ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? '2xl:px-0 2xl:pl-6 2xl:pr-6 2xl:pr-8' : '2xl:px-0 2xl:pl-10 2xl:pl-14 2xl:pr-6'}`}
+                            className={`sticky z-10 min-h-0 ${LAYOUT.cardHeight} flex flex-col justify-start xl:justify-center rounded-2xl overflow-hidden shadow-lg ring-1 ring-gray-200/60 px-7 py-0 ${LAYOUT.cardPadding} ${getStickyTopClass(i)} ${card.imageOrder === 'left' ? LAYOUT.cardPaddingLeft : LAYOUT.cardPaddingRight}`}
                             style={{
                                 background: 'rgb(255,255,255)',
                                 ...(i >= 1 && { marginTop: `${STACK_DELAY_MARGIN_VH}vh` }),
                             }}
                         >
                             {/* imageOrder に応じてテキストと画像エリアの並びを左右反転。画像あり時は画像列を広めに */}
-                            <div className={`grid grid-cols-1 gap-6 2xl:gap-8 w-full max-w-full items-start 2xl:items-center pb-0 ${card.imageOrder === 'right' ? '2xl:pb-24 2xl:pb-28' : '2xl:pb-16 2xl:pb-20'} ${card.imageSrc ? 'min-h-0 2xl:min-h-[72vh]' : ''} ${card.imageOrder === 'left' ? '2xl:grid-cols-[minmax(0,1.5fr)_minmax(280px,1.5fr)]' : '2xl:grid-cols-[minmax(280px,1.4fr)_minmax(0,1.6fr)]'}`}>
+                            <div className={`grid grid-cols-1 ${LAYOUT.gridGap} w-full max-w-full items-start xl:items-center pb-0 ${card.imageOrder === 'right' ? LAYOUT.gridPbRight : LAYOUT.gridPbLeft} ${card.imageSrc ? LAYOUT.gridMinH : ''} ${card.imageOrder === 'left' ? LAYOUT.gridColsLeft : LAYOUT.gridColsRight}`}>
                                 {card.imageOrder === 'left' && (
                                     <div
-                                        className={`relative order-2 2xl:order-1 overflow-hidden p-4 2xl:p-6 mt-0 mb-6 2xl:mb-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] 2xl:h-[72vh]' : i === 2 ? 'h-[300px] 2xl:h-[62vh]' : 'h-[320px] 2xl:h-[72vh]') + ' aspect-[4/3] 2xl:aspect-auto' : 'min-h-[140px] 2xl:min-h-[180px] flex items-center justify-center'}`}
+                                        className={`relative order-2 xl:order-1 overflow-hidden ${LAYOUT.imagePadding} mt-0 ${LAYOUT.imageMt} ${LAYOUT.imageMb} w-full min-w-0 ${card.imageSrc ? `${LAYOUT.imageHeight} aspect-[4/3] xl:aspect-auto` : `${LAYOUT.imagePlaceholderMinH} flex items-center justify-center`}`}
                                         aria-hidden="true"
                                     >
                                         {card.imageSrc ? (
                                             <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain object-center" sizes="(max-width: 768px) 100vw, 78vw" />
-                                        ) : (
-                                            <span className="text-sm text-gray-400">写真・画像用</span>
-                                        )}
+                                        ) : null}
                                     </div>
                                 )}
-                                <div className={`min-w-0 2xl:min-w-[280px] flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? 'pl-0 order-1 2xl:pl-6 2xl:order-2 2xl:pl-8' : ''}`}>
+                                <div className={`min-w-0 ${LAYOUT.textMinW} flex flex-col justify-center text-left overflow-hidden ${card.imageOrder === 'left' ? LAYOUT.textColPadding : ''}`}>
                                     <div className="w-full">
                                         <h2 className={`${card.titleClass ?? 'text-xl xl:text-4xl'} font-extrabold mb-0.5 xl:mb-1 block drop-shadow-sm whitespace-pre-line text-[#4A4A4A] mt-5 xl:mt-0`}>{card.title}</h2>
                                         {card.numberLabel != null && card.numberLabel !== '' && (
-                                            <p className="text-sm xl:text-lg font-medium mb-8 xl:mb-16 -mt-0.5" style={{ color: '#FFB38E' }} aria-hidden="true">
+                                            <p className={`text-sm xl:text-lg font-medium ${LAYOUT.numberLabelMb} -mt-0.5`} style={{ color: '#FFB38E' }} aria-hidden="true">
                                                 {card.numberLabel}
                                             </p>
                                         )}
@@ -150,18 +184,16 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                                 </div>
                                 {card.imageOrder === 'right' && (
                                     <div
-                                        className={`relative overflow-hidden p-4 2xl:p-6 mt-0 mb-6 2xl:mb-0 w-full min-w-0 ${card.imageSrc ? (i === 0 ? 'h-[360px] 2xl:h-[72vh]' : i === 2 ? 'h-[300px] 2xl:h-[62vh]' : 'h-[320px] 2xl:h-[72vh]') + ' aspect-[4/3] 2xl:aspect-auto' : 'min-h-[140px] 2xl:min-h-[180px] flex items-center justify-center'}`}
+                                        className={`relative overflow-hidden ${LAYOUT.imagePadding} mt-0 ${LAYOUT.imageMt} ${LAYOUT.imageMb} w-full min-w-0 ${card.imageSrc ? `${LAYOUT.imageHeight} aspect-[4/3] xl:aspect-auto` : `${LAYOUT.imagePlaceholderMinH} flex items-center justify-center`}`}
                                         aria-hidden="true"
                                     >
                                         {card.imageSrc ? (
                                             <Image src={card.imageSrc} alt={card.imageAlt ?? card.title} fill className="object-contain object-center" sizes="(max-width: 768px) 100vw, 78vw" />
-                                        ) : (
-                                            <span className="text-sm text-gray-400">写真・画像用</span>
-                                        )}
+                                        ) : null}
                                     </div>
                                 )}
                             </div>
-                            <div className={`absolute bottom-0 left-0 right-0 h-14 xl:h-20 2xl:h-24 overflow-hidden rounded-b-2xl -left-7 -right-7 w-[calc(100%+3.5rem)] hidden xl:block ${card.imageOrder === 'left' ? 'xl:-left-6 xl:-right-6 xl:w-[calc(100%+3rem)]' : 'xl:-left-10 xl:-right-6 xl:w-[calc(100%+4rem)]'}`}>
+                            <div className={`absolute bottom-0 left-0 right-0 ${LAYOUT.waveH} overflow-hidden rounded-b-2xl -left-7 -right-7 w-[calc(100%+3.5rem)] hidden xl:block ${card.imageOrder === 'left' ? LAYOUT.waveOffsetLeft : LAYOUT.waveOffsetRight}`}>
                                 <WaveClipLayer idPrefix={`stack-card-${i}`} clipPaths={STACK_CARD_WAVE_PATHS}>
                                     <div className="absolute inset-0 bg-[#FFE566]" />
                                 </WaveClipLayer>
