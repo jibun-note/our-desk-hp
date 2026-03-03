@@ -89,10 +89,12 @@ export default function ServicePainSection({
           </div>
 
           <div className="pt-4">
-            <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
-              <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
-              {eyebrow}
-            </p>
+            {eyebrow && (
+              <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+                <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+                {eyebrow}
+              </p>
+            )}
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line mb-2">
               {headline}
             </h2>

@@ -47,7 +47,7 @@ export const ANCHOR_ITEMS: AnchorItem[] = [
 // ── BackDeskが選ばれる理由 ─────────────────────────────────────────────
 export const BACKDESK_REASONS = {
   eyebrow: 'BackDeskが選ばれる理由',
-  headline: '管理された外部基盤で安心して任せられる',
+  headline: 'すべて見える\nだから任せられる',
   items: [
     '業務はすべてシステムで登録・可視化され、内容が明確に残ります。',
     'PMによる確認・承認フローで品質を担保しています。',
@@ -64,8 +64,8 @@ export type PainItem = {
 }
 
 export const PAIN = {
-  eyebrow: 'バックオフィス業務',
-  headline: 'よくある課題\nこんなお悩みはありませんか？',
+  eyebrow: 'よくある課題',
+  headline: 'こんなお悩みは\nありませんか？',
   cta: 'まずは相談してみる',
 } as const
 
@@ -166,7 +166,7 @@ export type ProcessStepItem = {
 
 export const PROCESS_HEAD = {
   eyebrow: 'ご利用の流れ',
-  headline: '5ステップですぐに始められます',
+  headline: 'カンタン3ステップで開始',
 } as const
 
 export const PROCESS_STEPS: ProcessStepItem[] = [
@@ -214,7 +214,7 @@ export type CaseStudyItem = {
 
 export const CASE_STUDIES_HEAD = {
   eyebrow: '実際の活用シーン',
-  headline: 'こんな方が使っています',
+  headline: '任せてよかった、の声',
 } as const
 
 export const CASE_STUDIES: CaseStudyItem[] = [
@@ -262,8 +262,8 @@ export type StaffItem = {
 
 export const STAFF_HEAD = {
   eyebrow: 'スタッフ紹介',
-  headline: 'あなたの業務を担う\nスタッフたち',
-  body: '数より質。長期的に伴走できる人材を揃えています。',
+  headline: '業務を担う\nスタッフたち',
+  body: '長期的に伴走できる人材を揃えています。',
 } as const
 
 export const STAFF_ITEMS: StaffItem[] = [
