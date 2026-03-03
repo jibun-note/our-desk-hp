@@ -172,6 +172,37 @@ export const SERVICES_GROUPS: ServiceGroup[] = [
   },
 ]
 
+// ── Staff（スタッフ紹介・バッジ・稼働・説明） ─────────────────────────
+export type StaffItem = {
+  badge: string
+  hours: string
+  description: string
+}
+
+export const STAFF_HEAD = {
+  eyebrow: 'BackDeskのスタッフ',
+  headline: '経験豊富な\nスタッフがサポート',
+  body: 'バックオフィス業務に精通したスタッフが、依頼内容に合わせて対応します。',
+} as const
+
+export const STAFF_ITEMS: StaffItem[] = [
+  {
+    badge: '事務・調整',
+    hours: '月〜金 9:00〜18:00',
+    description: 'メール対応、日程調整、請求処理など日常のバックオフィス業務を担当。',
+  },
+  {
+    badge: '調査・資料',
+    hours: '依頼に応じて',
+    description: 'リサーチ、提案書・資料作成、データ集計など、プロジェクト単位で対応。',
+  },
+  {
+    badge: '広報・採用',
+    hours: '依頼に応じて',
+    description: 'SNS運用、採用プロセス支援、オンボーディング資料整備など。',
+  },
+]
+
 // ── Process (4〜5ステップ・1行でまとめる) ─────────────────────────────
 export type ProcessStepItem = {
   num: string
