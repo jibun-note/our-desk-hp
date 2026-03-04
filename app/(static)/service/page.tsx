@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import BlobDecoration from '@/components/ui/BlobDecoration'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import WaveDivider from '@/components/ui/WaveDivider'
@@ -52,20 +53,41 @@ export default function ServicePage() {
             fill="rgba(253,208,0,0.12)"
             className="absolute top-[-12vw] md:top-[-5vw] left-[-28vw] md:left-[-15vw] w-[75vw] h-[110vw] md:w-[45vw] md:h-[70vw] pointer-events-none z-10"
           />
-          {/* ヒーロー＋イントロをクリーム背景で一体に */}
-          <div className="relative z-[1] bg-[#fffdf5]">
+          {/* ヒーロー＋イントロ：80vh をヒーロー50%・イントロ50%で固定、写真は wrapper の背景レイヤー */}
+          <div className="relative z-[1] h-[80vh] flex flex-col overflow-hidden">
+            {/* 斜めクリップ写真（HeroSection + ServiceIntroSection 全体に表示） */}
+            <div
+              className="absolute top-0 right-[-5%] bottom-0 w-[58%] z-0 pointer-events-none"
+              style={{ clipPath: 'polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
+            >
+              <Image
+                src={IMG.hero}
+                alt=""
+                width={1400}
+                height={900}
+                className="w-full h-full object-cover object-[60%_20%] block"
+                priority
+                sizes="58vw"
+                aria-hidden
+              />
+              <div
+                className="absolute inset-0 pointer-events-none"
+                style={{
+                  background:
+                    'linear-gradient(to bottom, #fffdf5 0%, transparent 25%), linear-gradient(to right, #fffdf5 0%, rgba(255,253,245,0.3) 40%, transparent 70%)',
+                }}
+              />
+            </div>
             <HeroSection
               title="Service"
               description="OurDeskのバックオフィス支援"
               activeIndex={0}
+              className="relative z-10 flex-1 min-h-0 overflow-hidden flex flex-col justify-center"
             />
             <ServiceIntroSection
-              imageSrc={IMG.hero}
-              imageAlt="チームで働く様子"
               eyebrow={HERO.eyebrow}
               headline={HERO.headline}
               sub={HERO.sub}
-              backDeskIntro={HERO.backDeskIntro}
               ctaPrimary={HERO.ctaPrimary}
             />
           </div>

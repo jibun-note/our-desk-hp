@@ -377,9 +377,7 @@ export default function ServiceBackDeskReasonsSection({
                         </div>
                         <div className="bd-heading-sub-wrap">
                             <p className="bd-heading-sub text-sm md:text-base text-gray-600 leading-relaxed text-pretty">
-                                稼働・報告・請求を&quot;見える化&quot;して運用。
-                                <br />
-                                任せっぱなしにしない、管理できる外部サポートです。
+                                OurDeskは、独自の業務管理システム 「BackDesk」 を活用し、稼働・報告・請求を&quot;見える化&quot;して運用しています。任せっぱなしにしない、管理できる外部サポートです。
                             </p>
                         </div>
                     </div>

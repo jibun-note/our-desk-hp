@@ -68,7 +68,7 @@ export default function HeroSection({
     return (
         <section className={cn('relative bg-transparent', className)}>
             <motion.div
-                className="container mx-auto max-w-5xl px-5 md:px-8 py-14 md:py-20 lg:py-24"
+                className="container mx-auto max-w-5xl px-5 md:px-8 py-8 md:py-12"
                 initial={{ opacity: 0, y: 10 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration, ease: [0.25, 0.1, 0.25, 1] }}
