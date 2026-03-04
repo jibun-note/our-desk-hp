@@ -95,6 +95,7 @@ export default function ServicePage() {
         <ServiceBackDeskReasonsSection
           eyebrow={BACKDESK_REASONS.eyebrow}
           headline={BACKDESK_REASONS.headline}
+          sub={BACKDESK_REASONS.sub}
           items={BACKDESK_REASONS.items}
         />
 
