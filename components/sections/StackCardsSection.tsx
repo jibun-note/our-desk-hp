@@ -130,7 +130,7 @@ export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取
                     sizes="100vw"
                     priority
                 />
-            </div>StackCardsSection
+            </div>
             {/* 白のグラデーションオーバーレイ（元の見た目を維持） */}
             <div
                 className="absolute inset-0 z-[1] rounded-3xl pointer-events-none md:hidden"
