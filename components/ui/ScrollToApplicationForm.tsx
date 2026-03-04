@@ -2,7 +2,7 @@
 
 const APPLICATION_FORM_ID = 'application-form'
 
-function scrollToApplicationForm() {
+export function scrollToApplicationForm() {
     const el = document.getElementById(APPLICATION_FORM_ID)
     if (!el) return
     const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
