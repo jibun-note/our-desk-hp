@@ -38,7 +38,7 @@ export default function ServiceStatsSection({ stats, head }: Props) {
         {head && (
           <div className="text-center mb-8 md:mb-10">
             {head.eyebrow ? (
-              <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium mb-1">
+              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-1">
                 {head.eyebrow}
               </p>
             ) : null}
@@ -64,12 +64,12 @@ export default function ServiceStatsSection({ stats, head }: Props) {
                 {stat.num}
               </div>
               {stat.label ? (
-                <div className="text-[0.65rem] tracking-[0.1em] text-[#999]">
+                <div className="text-xs tracking-[0.1em] text-[#999]">
                   {stat.label}
                 </div>
               ) : null}
               {stat.note && (
-                <div className="text-[0.6rem] tracking-[0.08em] text-[#999] mt-1">
+                <div className="text-xs tracking-[0.08em] text-[#999] mt-1">
                   {stat.note}
                 </div>
               )}

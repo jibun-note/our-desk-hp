@@ -21,7 +21,7 @@ export default function ServiceAnchorSection({ items }: Props) {
                 i < items.length - 1 && 'md:border-r border-[#ece8de]'
               )}
             >
-              <div className="text-[0.65rem] tracking-[0.15em] text-[#999] mb-2">
+              <div className="text-xs tracking-[0.15em] text-[#999] mb-2">
                 {item.label}
               </div>
               <div
@@ -41,7 +41,7 @@ export default function ServiceAnchorSection({ items }: Props) {
                   </span>
                 ))}
               </div>
-              <p className="text-sm md:text-[0.8rem] leading-relaxed text-[#666] text-pretty whitespace-pre-line">
+              <p className="text-sm md:text-base leading-relaxed text-[#666] text-pretty whitespace-pre-line">
                 {item.description}
               </p>
             </div>

@@ -79,7 +79,7 @@ export default function ServiceIntroSection({
 
       {/* 中央テキストゾーン */}
       <div className="relative z-10 w-full max-w-6xl px-6 md:px-12 py-12 flex flex-col items-center text-center">
-        <p className="text-[0.7rem] tracking-[0.18em] text-[#F08300] font-medium flex items-center gap-3 mb-8">
+        <p className="text-sm tracking-[0.18em] text-[#F08300] font-medium flex items-center gap-3 mb-8">
           <span className="w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
           {eyebrow}
           <span className="w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
@@ -124,7 +124,7 @@ export default function ServiceIntroSection({
         </p>
 
         {backDeskIntro && (
-          <p className="text-xs md:text-sm leading-relaxed text-[#888] max-w-[480px] mb-10 text-pretty">
+          <p className="text-sm leading-relaxed text-[#888] max-w-[480px] mb-10 text-pretty">
             {backDeskIntro}
           </p>
         )}

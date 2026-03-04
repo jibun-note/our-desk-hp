@@ -1,7 +1,6 @@
 'use client'
 
 import { useRef, useEffect, useState } from 'react'
-import Link from 'next/link'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
 
 type Props = {
@@ -325,8 +324,6 @@ export default function ServiceBackDeskReasonsSection({
             <style
                 dangerouslySetInnerHTML={{
                     __html: `
-@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@700;900&family=Noto+Sans+JP:wght@400;700;900&display=swap');
-
 .bd-section { padding: 96px 40px; }
 .bd-heading { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 0 40px; row-gap: 16px; margin-bottom: 56px; }
 .bd-heading-eyebrow { grid-column: 1; grid-row: 1; }
@@ -364,7 +361,7 @@ export default function ServiceBackDeskReasonsSection({
             >
                 <div style={{ maxWidth: 1080, margin: '0 auto' }} ref={ref}>
                     <div className="bd-heading">
-                        <p className="bd-heading-eyebrow text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+                        <p className="bd-heading-eyebrow text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
                             <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
                             {eyebrow}
                         </p>
@@ -397,36 +394,13 @@ export default function ServiceBackDeskReasonsSection({
                         >
                             <div className="bd-card-hero-inner">
                                 <div>
-                                    <span
-                                        style={{
-                                            fontSize: 11,
-                                            fontWeight: 700,
-                                            color: '#F08300',
-                                            letterSpacing: '0.15em',
-                                            display: 'block',
-                                            marginBottom: 16,
-                                        }}
-                                    >
+                                    <span className="text-xs font-bold text-[#F08300] tracking-[0.15em] block mb-4">
                                         {ITEMS[0].num}
                                     </span>
-                                    <h3
-                                        style={{
-                                            fontSize: 'clamp(18px, 2.5vw, 22px)',
-                                            fontWeight: 900,
-                                            color: '#1a1a1a',
-                                            marginBottom: 12,
-                                            lineHeight: 1.3,
-                                        }}
-                                    >
+                                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 leading-tight">
                                         {ITEMS[0].title}
                                     </h3>
-                                    <p
-                                        style={{
-                                            fontSize: 13,
-                                            color: '#888',
-                                            lineHeight: 1.8,
-                                        }}
-                                    >
+                                    <p className="text-sm text-gray-500 leading-relaxed">
                                         {ITEMS[0].body}
                                     </p>
                                 </div>
@@ -450,35 +424,13 @@ export default function ServiceBackDeskReasonsSection({
                                         <div style={{ marginBottom: 20 }}>
                                             <LedgerVisual />
                                         </div>
-                                        <span
-                                            style={{
-                                                fontSize: 11,
-                                                fontWeight: 700,
-                                                color: '#F08300',
-                                                display: 'block',
-                                                marginBottom: 10,
-                                            }}
-                                        >
+                                        <span className="text-xs font-bold text-[#F08300] block mb-2.5">
                                             {item.num}
                                         </span>
-                                        <h3
-                                            style={{
-                                                fontSize: 15,
-                                                fontWeight: 900,
-                                                marginBottom: 8,
-                                                lineHeight: 1.35,
-                                                color: '#1a1a1a',
-                                            }}
-                                        >
+                                        <h3 className="text-base font-bold mb-2 leading-snug text-gray-900">
                                             {item.title}
                                         </h3>
-                                        <p
-                                            style={{
-                                                fontSize: 12,
-                                                color: '#888',
-                                                lineHeight: 1.75,
-                                            }}
-                                        >
+                                        <p className="text-sm text-gray-500 leading-relaxed">
                                             {item.body}
                                         </p>
                                     </div>
@@ -487,24 +439,6 @@ export default function ServiceBackDeskReasonsSection({
                         </div>
                     </div>
 
-                    <div style={{ marginTop: 60, textAlign: 'center' }}>
-                        <Link
-                            href="/contact/"
-                            style={{
-                                display: 'inline-block',
-                                background: '#F08300',
-                                color: '#fff',
-                                borderRadius: 50,
-                                padding: '14px 36px',
-                                fontSize: 14,
-                                fontWeight: 700,
-                                boxShadow: '0 8px 28px rgba(240,131,0,0.3)',
-                                textDecoration: 'none',
-                            }}
-                        >
-                            まずは相談してみる →
-                        </Link>
-                    </div>
                 </div>
             </section>
         </>

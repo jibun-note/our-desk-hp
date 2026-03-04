@@ -24,14 +24,14 @@ function ServiceCardGrid({ cards }: { cards: readonly ServiceCategoryItem[] }) {
           key={card.title}
           className="bg-white border border-[#ece8de] p-6 md:p-8 relative overflow-hidden transition-transform duration-200 hover:-translate-y-1 hover:shadow-lg hover:shadow-black/7"
         >
-          <h3 className="font-serif text-base md:text-[0.98rem] font-semibold text-gray-900 mb-4">
+          <h3 className="text-base font-semibold text-gray-900 mb-4">
             {card.title}
           </h3>
           <ul className="space-y-2">
             {card.lines.map((line, j) => (
               <li
                 key={j}
-                className="text-[0.78rem] leading-relaxed text-[#666] text-pretty flex gap-2"
+                className="text-sm leading-relaxed text-[#666] text-pretty flex gap-2"
               >
                 <span className="text-[#F08300] flex-shrink-0">—</span>
                 <span>{line}</span>
@@ -50,7 +50,7 @@ export default function ServiceServicesSection({ head, cards, groups }: Props) {
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-8 mb-12 md:mb-16">
           <div>
-            <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+            <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
               <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
               {head.eyebrow}
             </p>

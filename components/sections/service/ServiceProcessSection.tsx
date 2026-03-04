@@ -21,7 +21,7 @@ export default function ServiceProcessSection({ head, steps }: Props) {
       />
       <div className="container mx-auto max-w-5xl px-4 md:px-8 relative z-10">
         <div className="text-center max-w-[560px] mx-auto mb-12 md:mb-20">
-          <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center justify-center gap-3 mb-2">
+          <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center justify-center gap-3 mb-2">
             <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
             {head.eyebrow}
           </p>
@@ -68,7 +68,7 @@ export default function ServiceProcessSection({ head, steps }: Props) {
               </div>
               <div className="w-full bg-white border border-[#ece8de] p-4 md:p-5 rounded">
                 <div className="text-sm font-medium text-gray-900 mb-1">{step.title}</div>
-                <p className="text-[0.71rem] leading-relaxed text-[#999] text-pretty">
+                <p className="text-sm leading-relaxed text-[#999] text-pretty">
                   {step.body}
                 </p>
               </div>

@@ -90,7 +90,7 @@ export default function ServicePainSection({
 
           <div className="pt-4">
             {eyebrow && (
-              <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
                 <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
                 {eyebrow}
               </p>
@@ -114,10 +114,10 @@ export default function ServicePainSection({
                       <Icon />
                     </div>
                     <div>
-                      <div className="text-sm md:text-[0.88rem] font-medium text-gray-900 mb-0.5">
+                      <div className="text-sm md:text-base font-medium text-gray-900 mb-0.5">
                         {item.title}
                       </div>
-                      <p className="text-[0.79rem] leading-relaxed text-[#666] text-pretty">
+                      <p className="text-sm leading-relaxed text-[#666] text-pretty">
                         {item.body}
                       </p>
                     </div>

@@ -27,11 +27,11 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
               />
             </div>
             <div className="mt-8 md:mt-10">
-              <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
                 <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
                 {head.eyebrow}
               </p>
-              <h2 className="text-xl md:text-3xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line">
+              <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line">
                 {head.headline}
               </h2>
               <p className="text-sm text-[#666] max-w-[280px] mt-4">{head.body}</p>
@@ -52,7 +52,7 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
                     {item.q}
                   </h3>
                 </div>
-                <p className="text-sm md:text-[0.82rem] leading-relaxed text-[#666] pl-7 md:pl-8 text-pretty">
+                <p className="text-sm md:text-base leading-relaxed text-[#666] pl-7 md:pl-8 text-pretty">
                   {item.a}
                 </p>
               </div>
