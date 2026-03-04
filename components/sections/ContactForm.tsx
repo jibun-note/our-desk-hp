@@ -5,6 +5,7 @@ import Script from 'next/script'
 import Link from 'next/link'
 import { Shippori_Mincho_B1, Noto_Sans_JP, DM_Sans } from 'next/font/google'
 import WaveDivider from '@/components/ui/WaveDivider'
+import { RECAPTCHA_SITE_KEY } from '@/lib/recaptcha'
 
 const shipporiMinchoB1 = Shippori_Mincho_B1({
     weight: '700',
@@ -28,8 +29,6 @@ const dmSans = DM_Sans({
     subsets: ['latin'],
     preload: false,
 })
-
-const RECAPTCHA_SITE_KEY = process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY ?? ''
 
 type FormData = {
     name: string
@@ -407,9 +406,6 @@ export default function ContactForm() {
                                 )}
                             </div>
 
-                            <span className="text-[10px] text-gray-400">
-                                reCAPTCHA で保護されています
-                            </span>
                             <div className="flex items-start gap-2 py-2.5 px-3.5 rounded-lg bg-gray-50 border border-gray-200">
                                 <input
                                     type="checkbox"
