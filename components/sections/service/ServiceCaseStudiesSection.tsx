@@ -11,10 +11,9 @@ type Props = {
 
 export default function ServiceCaseStudiesSection({ head, cases: caseList }: Props) {
   return (
-    <section className="bg-white py-20 md:py-28" aria-label="実際の活用シーン">
+    <section className="bg-white py-20 md:py-32" aria-label="実際の活用シーン">
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
-        <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
-          <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+        <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
           {head.eyebrow}
         </p>
         <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line mb-2">

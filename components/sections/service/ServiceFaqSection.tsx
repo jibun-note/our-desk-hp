@@ -13,7 +13,7 @@ type Props = {
 
 export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: Props) {
   return (
-    <section id="faq" className="bg-white py-20 md:py-28" aria-label="よくある質問">
+    <section id="faq" className="bg-[#fffdf5] py-20 md:py-32" aria-label="よくある質問">
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-[40%_1fr] gap-12 md:gap-16 items-start">
           <div className="md:sticky md:top-24">
@@ -27,14 +27,13 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
               />
             </div>
             <div className="mt-8 md:mt-10">
-              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
-                <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
                 {head.eyebrow}
               </p>
               <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line">
                 {head.headline}
               </h2>
-              <p className="text-sm text-[#666] max-w-[280px] mt-4">{head.body}</p>
+              <p className="text-sm text-[#666] max-w-[280px] mt-4 text-pretty">{head.body}</p>
             </div>
           </div>
 

@@ -1,7 +1,13 @@
 'use client'
 
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { StaffItem } from '@/lib/data/service'
+
+/** service.ts から削除されたため、当コンポーネント用にローカル定義（他ページで未使用） */
+type StaffItem = {
+  badge: string
+  hours: string
+  description: string
+}
 
 function AvatarPlaceholder() {
   return (

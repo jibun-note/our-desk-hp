@@ -1,7 +1,6 @@
 'use client'
 
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import BlobDecoration from '@/components/ui/BlobDecoration'
 import type { ProcessStepItem } from '@/lib/data/service'
 import { cn } from '@/lib/utils'
 
@@ -12,17 +11,10 @@ type Props = {
 
 export default function ServiceProcessSection({ head, steps }: Props) {
   return (
-    <section className="bg-[#fffdf5] py-20 md:py-28 relative overflow-visible" aria-label="ご利用の流れ">
-      <BlobDecoration
-        shape="P"
-        drift="float-c"
-        fill="rgba(178,186,230,0.18)"
-        className="top-16 right-[-60px] w-[280px] h-[280px] hidden md:block pointer-events-none"
-      />
+    <section className="bg-white py-20 md:py-32 relative overflow-visible" aria-label="ご利用の流れ">
       <div className="container mx-auto max-w-5xl px-4 md:px-8 relative z-10">
         <div className="text-center max-w-[560px] mx-auto mb-12 md:mb-20">
-          <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center justify-center gap-3 mb-2">
-            <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+          <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium text-center mb-2">
             {head.eyebrow}
           </p>
           <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line">

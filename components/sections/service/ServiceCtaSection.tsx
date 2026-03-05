@@ -41,7 +41,7 @@ export default function ServiceCtaSection({
         </div>
       </WaveClipLayer>
 
-      <div className="relative z-10 flex items-center justify-center min-h-[32rem] md:min-h-[36rem] px-6 py-16 md:px-8 md:py-20 overflow-hidden">
+      <div className="relative z-10 flex items-center justify-center min-h-[32rem] md:min-h-[36rem] px-6 py-16 md:px-8 md:py-20">
         <BlobDecoration
           shape="K"
           drift="float-f"

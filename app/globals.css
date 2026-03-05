@@ -530,12 +530,19 @@ input.checkbox-contact:checked {
 /* サービスイントロ: ビューポートが低いときコンテンツを縮小してスクロールなしで全表示 */
 @media (max-height: 700px) {
 	.service-intro-section .service-intro-content {
-		transform: scale(0.88);
-		transform-origin: center;
+		transform: scale(0.85);
+		transform-origin: center top;
 	}
 }
 @media (max-height: 560px) {
 	.service-intro-section .service-intro-content {
-		transform: scale(0.75);
+		transform: scale(0.70);
+		transform-origin: center top;
+	}
+}
+@media (max-height: 450px) {
+	.service-intro-section .service-intro-content {
+		transform: scale(0.58);
+		transform-origin: center top;
 	}
 }

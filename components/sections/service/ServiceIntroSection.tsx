@@ -43,7 +43,7 @@ export default function ServiceIntroSection({
 }: Props) {
   return (
     <section
-      className="service-intro-section relative flex-1 min-h-0 overflow-hidden grid place-items-center py-3 md:py-6 basis-0"
+      className="service-intro-section relative flex-1 overflow-hidden grid place-items-center py-3 md:py-6"
       style={{
         background: 'linear-gradient(to right, #fffdf5 42%, transparent 100%)',
       }}
@@ -51,7 +51,7 @@ export default function ServiceIntroSection({
     >
       {/* 中央テキストゾーン（スクロールなしで全表示・高さに合わせてコンパクトに） */}
       <div className="service-intro-content relative z-10 w-full max-w-6xl px-4 md:px-12 py-0 flex flex-col items-center text-center min-h-0">
-        <p className="text-xs md:text-sm tracking-[0.18em] text-[#F08300] font-medium flex items-center gap-2 md:gap-3 mb-2 md:mb-5 flex-shrink-0">
+        <p className="text-xs md:text-sm tracking-[0.18em] text-[#F08300] font-medium flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-5 flex-shrink-0">
           <span className="w-6 md:w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
           {eyebrow}
           <span className="w-6 md:w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
@@ -82,7 +82,7 @@ export default function ServiceIntroSection({
             color="#FDD000"
             width={240}
             align="center"
-            delayWhenInViewMs={1800}
+            delayWhenInViewMs={2000}
           />
         </div>
 

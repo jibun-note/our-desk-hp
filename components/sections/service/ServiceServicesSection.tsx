@@ -46,12 +46,11 @@ function ServiceCardGrid({ cards }: { cards: readonly ServiceCategoryItem[] }) {
 
 export default function ServiceServicesSection({ head, cards, groups }: Props) {
   return (
-    <section id="services" className="bg-white py-20 md:py-28 relative" aria-label="対応できる業務">
+    <section id="services" className="bg-[#fffdf5] py-20 md:py-32 relative" aria-label="対応できる業務">
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
         <div className="flex flex-col md:flex-row md:justify-between md:items-end gap-8 mb-12 md:mb-16">
           <div>
-            <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
-              <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+            <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
               {head.eyebrow}
             </p>
             <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight">

@@ -1,33 +1,33 @@
 import Image from 'next/image'
-import BlobDecoration from '@/components/ui/BlobDecoration'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import WaveDivider from '@/components/ui/WaveDivider'
 import HeroSection from '@/components/sections/HeroSection'
 import ServiceIntroSection from '@/components/sections/service/ServiceIntroSection'
-import ServiceAnchorSection from '@/components/sections/service/ServiceAnchorSection'
+import ServiceBridgeSection from '@/components/sections/service/ServiceBridgeSection'
 import ServicePainSection from '@/components/sections/service/ServicePainSection'
-import ServiceServicesSection from '@/components/sections/service/ServiceServicesSection'
-import ServiceBackDeskReasonsSection from '@/components/sections/service/ServiceBackDeskReasonsSection'
+import ServiceHowSection from '@/components/sections/service/ServiceHowSection'
+import ServicePricingSection from '@/components/sections/service/ServicePricingSection'
 import ServiceProcessSection from '@/components/sections/service/ServiceProcessSection'
+import ServiceServicesSection from '@/components/sections/service/ServiceServicesSection'
 import ServiceCaseStudiesSection from '@/components/sections/service/ServiceCaseStudiesSection'
-import ServiceStatsSection from '@/components/sections/service/ServiceStatsSection'
 import ServiceFaqSection from '@/components/sections/service/ServiceFaqSection'
 import ServiceCtaSection from '@/components/sections/service/ServiceCtaSection'
 import { createPageMetadata } from '@/lib/seo'
 import {
   HERO,
-  ANCHOR_ITEMS,
+  BRIDGE,
   PAIN,
   PAIN_ITEMS,
-  SERVICES_HEAD,
-  SERVICES_GROUPS,
-  BACKDESK_REASONS,
+  HOW,
+  HOW_ITEMS,
+  PRICING_HEAD,
+  PRICING_ITEMS,
   PROCESS_HEAD,
   PROCESS_STEPS,
+  SERVICES_HEAD,
+  SERVICES_GROUPS,
   CASE_STUDIES_HEAD,
   CASE_STUDIES,
-  STATS,
-  STATS_HEAD,
   FAQ_HEAD,
   FAQ_ITEMS,
   CTA,
@@ -37,7 +37,7 @@ import {
 export const metadata = createPageMetadata(
   '/service/',
   'BackDesk（サービス） | OurDesk株式会社',
-  'メール対応・スケジュール調整・請求書処理など、本業に集中したい方のバックオフィスをBackDeskが支えます。月数時間からご利用可能。'
+  '「働きたい」人材があなたのバックオフィスを支えます。分単位から依頼可能。将来の正式採用にもつながる、新しい人材確保の仕組みです。'
 )
 
 export default function ServicePage() {
@@ -45,17 +45,10 @@ export default function ServicePage() {
     <>
       <BreadcrumbJsonLdServer path="/service/" name="Service" />
       <main className="min-h-screen bg-white relative">
-        {/* Blob をヒーロー〜Anchor にかけてはみ出して表示（セクション超え） */}
-        <div className="relative">
-          <BlobDecoration
-            shape="H"
-            drift="float-b"
-            fill="rgba(253,208,0,0.12)"
-            className="absolute top-[-12vw] md:top-[-5vw] left-[-28vw] md:left-[-15vw] w-[75vw] h-[110vw] md:w-[45vw] md:h-[70vw] pointer-events-none z-10"
-          />
-          {/* ヒーロー＋イントロ：80vh をヒーロー50%・イントロ50%で固定、写真は wrapper の背景レイヤー */}
-          <div className="relative z-[1] h-[80vh] flex flex-col overflow-hidden">
-            {/* 斜めクリップ写真（HeroSection + ServiceIntroSection 全体に表示） */}
+
+        {/* 1. Hero + Intro ── クリーム背景で一体化 */}
+        <div className="relative z-[1] bg-[#fffdf5]">
+          <div className="relative min-h-[80vh] flex flex-col overflow-hidden">
             <div
               className="absolute top-0 right-[-5%] bottom-0 w-[58%] z-0 pointer-events-none"
               style={{ clipPath: 'polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
@@ -82,7 +75,7 @@ export default function ServicePage() {
               title="Service"
               description="OurDeskのバックオフィス支援"
               activeIndex={0}
-              className="relative z-10 flex-1 min-h-0 overflow-hidden flex flex-col justify-center"
+              className="relative z-10 flex-shrink-0 flex flex-col justify-center"
             />
             <ServiceIntroSection
               eyebrow={HERO.eyebrow}
@@ -91,14 +84,19 @@ export default function ServicePage() {
               ctaPrimary={HERO.ctaPrimary}
             />
           </div>
-
-          <div className="relative z-0">
-            <ServiceAnchorSection items={ANCHOR_ITEMS} />
-          </div>
         </div>
+
+        <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
+
+        {/* 2. Bridge ── 「外注ではない」宣言 */}
+        <ServiceBridgeSection
+          headline={BRIDGE.headline}
+          body={BRIDGE.body}
+        />
 
         <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
+        {/* 3. Pain ── 課題（業務負担 × 採用リスク） */}
         <ServicePainSection
           imageSrc={IMG.pain}
           imageAlt="バックオフィス業務"
@@ -108,31 +106,32 @@ export default function ServicePage() {
           ctaLabel={PAIN.cta}
         />
 
+        <WaveDivider bgColor="#fffdf5" fillColor="#1a1209" flip />
+
+        {/* 4. How ── 仕組みの説明 */}
+        <ServiceHowSection head={HOW} items={HOW_ITEMS} />
+
+        <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+
+        {/* 5. Pricing ── 料金 */}
+        <ServicePricingSection head={PRICING_HEAD} items={PRICING_ITEMS} />
+
         <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" flip />
 
-        <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />
-
-        <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
-
-        <ServiceBackDeskReasonsSection
-          eyebrow={BACKDESK_REASONS.eyebrow}
-          headline={BACKDESK_REASONS.headline}
-          sub={BACKDESK_REASONS.sub}
-          items={BACKDESK_REASONS.items}
-        />
-
-        <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
-
+        {/* 6. Process ── ご利用の流れ */}
         <ServiceProcessSection head={PROCESS_HEAD} steps={PROCESS_STEPS} />
 
-        <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" flip />
-
-        <ServiceCaseStudiesSection head={CASE_STUDIES_HEAD} cases={CASE_STUDIES} />
-
-        <ServiceStatsSection stats={STATS} head={STATS_HEAD} />
-
         <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
+        {/* 7. Services ── 対応業務一覧 */}
+        <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />
+
+        <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" flip />
+
+        {/* 8. Case Studies ── 活用シーン */}
+        <ServiceCaseStudiesSection head={CASE_STUDIES_HEAD} cases={CASE_STUDIES} />
+
+        {/* 9. FAQ */}
         <ServiceFaqSection
           imageSrc={IMG.faq}
           imageAlt=""
@@ -140,6 +139,7 @@ export default function ServicePage() {
           items={FAQ_ITEMS}
         />
 
+        {/* 10. CTA */}
         <ServiceCtaSection
           headline={CTA.headline}
           headlineGrad={CTA.headlineGrad}
@@ -147,6 +147,7 @@ export default function ServicePage() {
           buttonLabel={CTA.button}
           ctaBgImage={IMG.ctaBg}
         />
+
       </main>
     </>
   )

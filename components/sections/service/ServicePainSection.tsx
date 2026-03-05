@@ -67,7 +67,7 @@ export default function ServicePainSection({
   ctaLabel,
 }: Props) {
   return (
-    <section className="bg-[#fffdf5] py-20 md:py-28 relative overflow-visible" aria-label="こんな悩みありませんか">
+    <section className="bg-[#fffdf5] py-20 md:py-32 relative overflow-visible" aria-label="こんな悩みありませんか">
       <BlobDecoration
         shape="H"
         drift="float-b"
@@ -90,8 +90,7 @@ export default function ServicePainSection({
 
           <div className="pt-4">
             {eyebrow && (
-              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
-                <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
                 {eyebrow}
               </p>
             )}
