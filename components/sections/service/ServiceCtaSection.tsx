@@ -27,7 +27,8 @@ export default function ServiceCtaSection({
   return (
     <section
       id="contact"
-      className="relative z-[14] mt-20 md:mt-28 min-h-[32rem] md:min-h-[36rem] bg-white"
+      className="relative z-[14] pt-20 md:pt-28 min-h-[32rem] md:min-h-[36rem]"
+      style={{ background: '#ffffff' }}
       aria-label="お問い合わせ"
     >
       <WaveClipLayer idPrefix="service-cta">

@@ -66,7 +66,8 @@ export default function ServicePricingSection({ head, items }: Props) {
   return (
     <section
       ref={sectionRef}
-      className="bg-[#fffdf5] border-t-[3px] border-[#F08300] mt-8 md:mt-12 pt-20 pb-14 md:pt-28 md:pb-16"
+      className="mt-8 md:mt-12 pt-20 pb-14 md:pt-28 md:pb-16"
+      style={{ background: '#ffffff' }}
       aria-label={head.eyebrow}
     >
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
@@ -96,7 +97,6 @@ export default function ServicePricingSection({ head, items }: Props) {
         <div className="border-t-2 border-[#1a1209]">
           {items.map((item, i) => {
             const rankChar = getRankChar(item.rank)
-            const isRankA = rankChar === 'A'
             return (
               <div
                 key={i}
@@ -107,16 +107,14 @@ export default function ServicePricingSection({ head, items }: Props) {
                 <div className="grid grid-cols-[1fr_auto] md:grid-cols-[96px_1fr_auto] gap-4 items-start">
                   {/* RANK列 md以上 */}
                   <div className="hidden md:block">
-                    <span
-                      className={`font-serif text-xl md:text-2xl font-semibold ${isRankA ? 'text-[#F08300]' : 'text-[#1a1209]'}`}
-                    >
+                    <span className="font-serif text-xl md:text-2xl font-semibold text-[#1a1209]">
                       {rankChar}
                     </span>
                   </div>
 
                   {/* 中央列 */}
                   <div>
-                    <p className="md:hidden text-xs tracking-[.15em] text-[#F08300] mb-1">
+                    <p className="md:hidden text-xs tracking-[.15em] text-[#1a1209] mb-1">
                       {item.rank}
                     </p>
                     <p className="font-serif text-sm md:text-base font-medium text-[#1a1209] mb-3">
@@ -136,9 +134,7 @@ export default function ServicePricingSection({ head, items }: Props) {
 
                   {/* 価格列 */}
                   <div className="text-right min-w-[100px] md:min-w-[160px]">
-                    <p
-                      className={`font-serif font-semibold text-3xl md:text-5xl leading-none tracking-[-0.04em] ${isRankA ? 'text-[#F08300]' : 'text-[#1a1209]'}`}
-                    >
+                    <p className="font-serif font-semibold text-3xl md:text-5xl leading-none tracking-[-0.04em] text-[#1a1209]">
                       {item.price}
                     </p>
                     <p className="text-xs text-[#999] mt-1">円/h（税別）</p>

@@ -64,7 +64,8 @@ export default function ServiceProcessSection({
   return (
     <section
       ref={sectionRef}
-      className="bg-[#f5f0e6] overflow-hidden"
+      className="overflow-hidden"
+      style={{ background: '#fffdf5' }}
       aria-label={head.eyebrow}
     >
       <div className="container mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-[320px_1fr] min-h-[480px]">

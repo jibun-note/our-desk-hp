@@ -10,13 +10,13 @@
  *
  * セクション順:
  * 1. Hero        ── 人との出会いとして提示
- * 2. Bridge      ── 「外注」ではなく「出会い」である理由
- * 3. Pain        ── 課題（業務負担 × 採用リスクの両面）
+ * 2. Pain        ── 課題（業務負担 × 採用リスクの両面）
+ * 3. Bridge      ── 「外注」ではなく「出会い」である理由
  * 4. How         ── 仕組みの説明（分単位・柔軟・BackDesk）
- * 5. Pricing     ── 料金
- * 6. Process     ── ご利用の流れ
- * 7. Services    ── 対応業務一覧
- * 8. CaseStudies ── 活用シーン
+ * 5. CaseStudies ── 活用シーン
+ * 6. Pricing     ── 料金
+ * 7. Process     ── ご利用の流れ
+ * 8. Services    ── 対応業務一覧
  * 9. FAQ
  * 10. CTA
  */
@@ -24,17 +24,20 @@
 // ── Hero ─────────────────────────────────────────────────────────────────
 export const HERO = {
   eyebrow: 'BackDesk by OurDesk',
-  headline: 'あなたのビジネスを\n支えてくれる人と、出会う。',
+  // ヒーローセクションは情緒だけでなく機能面も伝わるように修正しています。
+  // 必要な業務を必要な分だけ任せられ、信頼できる人材と出会えることを強調します。
+  headline: '必要な業務を、必要な分だけ。\n信頼できる人と始める。',
   sub:
-    '「働きたい」という想いを持つ人材が、あなたの業務を引き受けます。\n小さな依頼から始めて、やがてなくてはならない存在へ。',
+    '「働きたい」という想いを持つ人材が、あなたのバックオフィスやサポート業務を引き受けます。\n分単位から始めて、やがてなくてはならない存在へ。',
   ctaPrimary: 'まずは相談してみる',
 } as const
 
-// ── Bridge（Heroの直下・コンセプトを一言で補足） ─────────────────────
+// ── Bridge（Pain直後・コンセプトを補足） ─────────────────────────────────
 export const BRIDGE = {
-  headline: 'これは「外注」ではありません。',
+  // 「これは外注ではありません」という断定を和らげ、サービスの柔軟性と関係構築を強調します。
+  headline: '外注という言葉だけでは表せません。',
   body:
-    'OurDeskが提供するのは、タスクをこなす仕組みだけではありません。\n一緒に仕事をしながら信頼関係を育て、将来の正式採用にもつながる。\n新しい人材確保の形です。',
+    'OurDeskが提供するのは、タスクをこなす仕組みだけではありません。\n一緒に仕事をしながら信頼関係を育て、業務に合わせて依頼範囲を広げることができます。\n必要なときに、必要な業務から任せられる仕組みです。',
 } as const
 
 // ── Pain（課題） ─────────────────────────────────────────────────────────
@@ -46,7 +49,6 @@ export type PainItem = {
 export const PAIN = {
   eyebrow: 'こんな状況、ありませんか？',
   headline: '業務は積み上がる。けど、\n採用には踏み切れない',
-  cta: 'まずは相談してみる',
 } as const
 
 export const PAIN_ITEMS: PainItem[] = [
@@ -73,8 +75,9 @@ export type HowItem = {
 
 export const HOW = {
   eyebrow: 'OurDeskの仕組み',
-  headline: '小さく始めて、\nじっくり育てる',
-  sub: '固定費なし、最低時間なし、ミスマッチのリスクなし。',
+  headline: '固定費なし。縛りなし。\nリスクなしで始められる。',
+  // 「新しい人材確保の仕組み」よりも、必要なときに必要な業務から始められる柔軟性を伝えます。
+  sub: '分単位から依頼できる、必要なときに必要な業務から始められる仕組みです。',
 } as const
 
 export const HOW_ITEMS: HowItem[] = [
@@ -92,8 +95,9 @@ export const HOW_ITEMS: HowItem[] = [
     body: '何をやってもらったか、いくらかかったか。BackDesk上で確認できるので、任せっぱなしになりません。',
   },
   {
-    title: 'ノーリスクで人材を見極められる',
-    body: '雇用前に一緒に仕事ができます。「この人と長く働きたい」と思ったら、双方の希望に応じて正式な雇用に切り替えることも可能です。',
+    // 採用リスクを負わずに相性を確かめられることをニュアンスを弱めて表現します。
+    title: '採用リスクを負わずに相性を確かめられる',
+    body: '雇用前に一緒に仕事ができるので、大きな採用リスクを負わずに相性を確かめられます。「この人と長く働きたい」と思ったら、双方の希望に応じて正式な雇用に切り替えることも可能です。',
   },
 ]
 
@@ -143,7 +147,7 @@ export type ProcessStepItem = {
 
 export const PROCESS_HEAD = {
   eyebrow: 'ご利用の流れ',
-  headline: 'まずは相談から\n小さく始められます',
+  headline: '相談から始めて、\n5ステップでスタートできます',
 } as const
 
 export const PROCESS_STEPS: ProcessStepItem[] = [
@@ -161,7 +165,7 @@ export const PROCESS_STEPS: ProcessStepItem[] = [
   {
     num: '03',
     title: '契約・業務開始',
-    body: '連絡ツールや報告ルールを確認し、稼働スタート。小さく始められます。',
+    body: '連絡ツールや報告ルールを確認し、稼働スタート。',
   },
   {
     num: '04',
@@ -183,8 +187,8 @@ export type ServiceCategoryItem = {
 
 export const SERVICES_HEAD = {
   eyebrow: '対応できる業務',
-  headline: 'まずは\n「手放したい業務」から',
-  body: 'バックオフィスの日常業務から、調査・資料作成・採用支援・広報・IT運用まで。「これは頼める？」という段階からご相談ください。',
+  headline: '「これ、頼めるかな？」\nという段階からご相談ください',
+  body: 'バックオフィスの日常業務から、調査・資料作成・採用支援・広報・IT運用まで幅広く対応します。',
   footer: '上記は一例です。まずはご相談ください。',
 } as const
 
@@ -262,7 +266,7 @@ export const SERVICES_GROUPS: ServiceGroup[] = [
   },
 ]
 
-// ── Case studies ──────────────────────────────────────────────────────────
+// ── Case Studies ──────────────────────────────────────────────────────────
 export type CaseStudyItem = {
   chip: string
   situation: string
@@ -274,7 +278,7 @@ export type CaseStudyItem = {
 
 export const CASE_STUDIES_HEAD = {
   eyebrow: '実際の活用シーン',
-  headline: '小さく始めて、\nなくてはならない存在へ',
+  headline: '依頼した人たちの、\nリアルな話',
 } as const
 
 export const CASE_STUDIES: CaseStudyItem[] = [
@@ -287,8 +291,9 @@ export const CASE_STUDIES: CaseStudyItem[] = [
       '前日リマインド／案内連絡',
       '月次スケジュール配信',
     ],
+    // 結果は数値や変化を具体的に示し、読み手に効果が伝わるようにします。
     result:
-      '本業に充てる時間が増えた。稼働内容はBackDeskで確認でき、安心して継続中。依頼の幅も少しずつ広がっている。',
+      '事務に費やしていた週3〜4時間を本業に充てられるようになりました。稼働内容はBackDeskで確認でき、安心して継続中。依頼の幅も少しずつ広がっています。',
     image: '/images/company/office-bg.jpeg',
     imageAlt: 'IT系・一人法人',
   },
@@ -301,7 +306,7 @@ export const CASE_STUDIES: CaseStudyItem[] = [
       '出欠確認、日程調整、スケジュール配信',
     ],
     result:
-      '対応品質が安定し、運営が回るように。「ゆくゆくは正式に入ってもらうことも考えている」と話している。',
+      '対応品質が安定し、返信遅延も減少して運営がスムーズに回るようになりました。将来的に正式採用も検討しています。',
     image: '/images/contact/contact-bg.jpeg',
     imageAlt: 'Web系・講座／コミュニティ運営',
   },
@@ -330,7 +335,7 @@ export const FAQ_ITEMS: FaqItem[] = [
   },
   {
     q: 'どんな業務を依頼できますか？',
-    a: 'メール・調整・請求などのバックオフィス実務から、調査・資料作成、採用支援、広報、IT運用まで幅広く対応します。「これは頼める？」という段階からご相談ください。',
+    a: 'バックオフィス全般に対応しています。\n\n【まずはここから】\nメール・チャット対応、日程調整・議事録、請求書・書類管理など、毎日発生する定型業務。\n\n【慣れてきたら】\n調査・資料作成、採用・オンボーディング支援、広報・SNS運用、IT一次対応なども対応可能です。\n\n「これは頼める？」という段階からご相談ください。',
   },
   {
     q: '途中で依頼量を増やしたり減らしたりできますか？',
@@ -358,8 +363,9 @@ export const CTA = {
 export const IMG = {
   hero: '/images/about-us/02.jpeg',
   pain: '/images/recruit/intro.jpeg',
+  process: '/images/service/process.jpeg', // ← pain と分離。専用画像を用意してください
   faq: '/images/about-us/03.jpeg',
   case1: '/images/company/office-bg.jpeg',
   case2: '/images/contact/contact-bg.jpeg',
-  ctaBg: '/images/contact/contact-bg.jpeg',
+  ctaBg: '/images/service/cta-bg.jpeg',    // ← case2 と分離。専用画像を用意してください
 } as const

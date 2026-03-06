@@ -108,12 +108,12 @@ function DiagonalThreads() {
 export default function ServiceBridgeSection({ headline, body }: Props) {
   return (
     <section
-      className="relative bg-white py-28 overflow-hidden"
+      className="relative bg-white py-36 md:py-48 overflow-hidden"
       aria-label={headline}
     >
       <DiagonalThreads />
 
-      <div className="relative z-10 max-w-xl mx-auto px-8 text-center">
+      <div className="relative z-10 max-w-5xl mx-auto px-8 md:px-12 text-center">
         <p
           className="text-[10px] tracking-[0.28em] text-gray-300 uppercase mb-6"
           aria-hidden
@@ -121,7 +121,7 @@ export default function ServiceBridgeSection({ headline, body }: Props) {
           BackDesk — OurDesk
         </p>
         <h2
-          className="text-4xl md:text-6xl font-bold leading-[1.15] text-gray-900 whitespace-pre-line mb-5"
+          className="text-3xl md:text-5xl font-bold leading-[1.15] text-gray-900 whitespace-pre-line mb-5"
           style={{
             fontFamily: "'Hiragino Mincho ProN', 'Yu Mincho', serif",
           }}

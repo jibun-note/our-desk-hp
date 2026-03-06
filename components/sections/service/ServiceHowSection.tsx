@@ -1,3 +1,6 @@
+'use client'
+
+import { useEffect, useRef } from 'react'
 import type { HowItem } from '@/lib/data/service'
 import { cn } from '@/lib/utils'
 
@@ -14,16 +17,41 @@ type Props = {
 
 export default function ServiceHowSection({ head, items }: Props) {
   const [accentItem, ...restItems] = items
+  const howRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const el = howRef.current
+    if (!el) return
+    const onScroll = () => {
+      const rect = el.getBoundingClientRect()
+      const winH = window.innerHeight
+      const progress = Math.min(1, Math.max(0, (winH - rect.top) / (winH * 0.8)))
+      const ease = 1 - Math.pow(1 - progress, 3)
+      el.style.transform = `translateY(${140 * (1 - ease)}px)`
+      el.style.opacity = String(Math.min(1, progress * 2))
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    onScroll()
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
 
   return (
     <section aria-label={head.eyebrow}>
+      <div
+        ref={howRef}
+        style={{
+          willChange: 'transform, opacity',
+          transform: 'translateY(140px)',
+          opacity: 0,
+        }}
+      >
 
       {/* ① ダーク帯 */}
       {accentItem && (
         <div className="bg-[#1a1209] pt-0 pb-0 relative overflow-hidden">
 
-          {/* 上端：アーチ型（ベージュ→ダークの境界） */}
-          <div className="w-full bg-[#fffdf5] leading-[0]">
+          {/* 上端：アーチ型（白→ダークの境界） */}
+          <div className="w-full leading-[0]" style={{ background: '#ffffff' }}>
             <svg
               viewBox="0 0 1440 72"
               preserveAspectRatio="none"
@@ -111,8 +139,9 @@ export default function ServiceHowSection({ head, items }: Props) {
         </div>
       )}
 
-      {/* ③ テキスト列 */}
-      <div className="grid grid-cols-1 md:grid-cols-3 max-w-4xl mx-auto px-4 md:px-0 bg-white">
+      {/* ③ テキスト列（この部分だけ白背景） */}
+      <div className="w-full bg-white">
+        <div className="grid grid-cols-1 md:grid-cols-3 max-w-4xl mx-auto px-4 md:px-0">
         {restItems.map((item, i) => (
           <div
             key={i}
@@ -138,8 +167,10 @@ export default function ServiceHowSection({ head, items }: Props) {
             </p>
           </div>
         ))}
+        </div>
       </div>
 
+      </div>
     </section>
   )
 }

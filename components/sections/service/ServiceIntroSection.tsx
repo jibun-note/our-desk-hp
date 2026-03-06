@@ -45,7 +45,7 @@ export default function ServiceIntroSection({
     <section
       className="service-intro-section relative flex-1 overflow-hidden grid place-items-center py-3 md:py-6"
       style={{
-        background: 'linear-gradient(to right, #fffdf5 42%, transparent 100%)',
+        background: 'linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0.95) 35%, transparent 70%)',
       }}
       aria-label="BackDesk サービス"
     >
