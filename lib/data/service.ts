@@ -183,7 +183,7 @@ export type ServiceCategoryItem = {
 
 export const SERVICES_HEAD = {
   eyebrow: '対応できる業務',
-  headline: 'まずは「手放したい業務」から',
+  headline: 'まずは\n「手放したい業務」から',
   body: 'バックオフィスの日常業務から、調査・資料作成・採用支援・広報・IT運用まで。「これは頼める？」という段階からご相談ください。',
   footer: '上記は一例です。まずはご相談ください。',
 } as const

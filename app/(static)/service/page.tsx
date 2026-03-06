@@ -46,8 +46,8 @@ export default function ServicePage() {
       <BreadcrumbJsonLdServer path="/service/" name="Service" />
       <main className="min-h-screen bg-white relative">
 
-        {/* 1. Hero + Intro ── クリーム背景で一体化 */}
-        <div className="relative z-[1] bg-[#fffdf5]">
+        {/* 1. Hero + Intro ── 白背景で一体化 */}
+        <div className="relative z-[1] bg-white">
           <div className="relative min-h-[80vh] flex flex-col overflow-hidden">
             <div
               className="absolute top-0 right-[-5%] bottom-0 w-[58%] z-0 pointer-events-none"
@@ -67,7 +67,7 @@ export default function ServicePage() {
                 className="absolute inset-0 pointer-events-none"
                 style={{
                   background:
-                    'linear-gradient(to bottom, #fffdf5 0%, transparent 25%), linear-gradient(to right, #fffdf5 0%, rgba(255,253,245,0.3) 40%, transparent 70%)',
+                    'linear-gradient(to bottom, #ffffff 0%, transparent 25%), linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0.3) 40%, transparent 70%)',
                 }}
               />
             </div>
@@ -86,7 +86,7 @@ export default function ServicePage() {
           </div>
         </div>
 
-        <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
+        <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
 
         {/* 2. Bridge ── 「外注ではない」宣言 */}
         <ServiceBridgeSection
@@ -106,22 +106,18 @@ export default function ServicePage() {
           ctaLabel={PAIN.cta}
         />
 
-        <WaveDivider bgColor="#fffdf5" fillColor="#1a1209" flip />
-
-        {/* 4. How ── 仕組みの説明 */}
+        {/* 4. How ── 仕組みの説明（上端はアーチ型で ServiceHowSection 内で描画） */}
         <ServiceHowSection head={HOW} items={HOW_ITEMS} />
-
-        <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
         {/* 5. Pricing ── 料金 */}
         <ServicePricingSection head={PRICING_HEAD} items={PRICING_ITEMS} />
 
-        <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" flip />
+        <WaveDivider bgColor="#fffdf5" fillColor="#f5f0e6" flip />
 
         {/* 6. Process ── ご利用の流れ */}
-        <ServiceProcessSection head={PROCESS_HEAD} steps={PROCESS_STEPS} />
+        <ServiceProcessSection head={PROCESS_HEAD} steps={PROCESS_STEPS} imageSrc={IMG.pain} />
 
-        <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+        <WaveDivider bgColor="#f5f0e6" fillColor="#fffdf5" />
 
         {/* 7. Services ── 対応業務一覧 */}
         <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />

@@ -35,9 +35,9 @@ export default function RecruitPage() {
         <>
             <BreadcrumbJsonLdServer path="/recruit/" name="採用情報" />
             <RecruitPageScrollToTop />
-            <main className="min-h-screen bg-white relative">
+            <main className="min-h-screen bg-white relative overflow-x-clip">
                 {/* 1+2+3 統合ラッパー: ヒーローからクリーム背景で一体感を持たせる */}
-                <div className="relative z-[1] bg-[#fffdf5]">
+                <div className="relative z-[1] bg-[#fffdf5] overflow-x-clip">
                     {/* Blob装飾: ラベンダー雲（ヒーロー〜特徴にかけて自然に流れる） */}
                     <BlobDecoration
                         shape="H"

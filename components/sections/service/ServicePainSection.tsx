@@ -3,7 +3,6 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import BlobDecoration from '@/components/ui/BlobDecoration'
 import type { PainItem } from '@/lib/data/service'
 import { cn } from '@/lib/utils'
 
@@ -68,12 +67,6 @@ export default function ServicePainSection({
 }: Props) {
   return (
     <section className="bg-[#fffdf5] py-20 md:py-32 relative overflow-visible" aria-label="こんな悩みありませんか">
-      <BlobDecoration
-        shape="H"
-        drift="float-b"
-        fill="rgba(235,180,178,0.18)"
-        className="bottom-[-50px] left-[-70px] w-[320px] h-[320px] hidden md:block pointer-events-none"
-      />
       <div className="container mx-auto max-w-5xl px-4 md:px-8 relative z-10">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-12 md:gap-16 items-start">
           <div className="relative">

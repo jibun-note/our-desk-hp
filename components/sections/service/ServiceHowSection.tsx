@@ -20,7 +20,20 @@ export default function ServiceHowSection({ head, items }: Props) {
 
       {/* ① ダーク帯 */}
       {accentItem && (
-        <div className="bg-[#1a1209] pt-20 md:pt-28 pb-0 relative overflow-hidden">
+        <div className="bg-[#1a1209] pt-0 pb-0 relative overflow-hidden">
+
+          {/* 上端：アーチ型（ベージュ→ダークの境界） */}
+          <div className="w-full bg-[#fffdf5] leading-[0]">
+            <svg
+              viewBox="0 0 1440 72"
+              preserveAspectRatio="none"
+              xmlns="http://www.w3.org/2000/svg"
+              className="block w-full"
+              aria-hidden
+            >
+              <path d="M0,72 C360,0 1080,0 1440,72 L1440,72 L0,72 Z" fill="#1a1209" />
+            </svg>
+          </div>
 
           {/* 背景グロー */}
           <div
@@ -94,19 +107,6 @@ export default function ServiceHowSection({ head, items }: Props) {
                 </div>
               ))}
             </div>
-          </div>
-
-          {/* ② 波：ダーク→白 */}
-          <div className="w-full bg-[#1a1209] leading-[0]">
-            <svg
-              viewBox="0 0 1440 72"
-              preserveAspectRatio="none"
-              xmlns="http://www.w3.org/2000/svg"
-              className="block w-full"
-              aria-hidden
-            >
-              <path d="M0,0 C360,72 1080,72 1440,0 L1440,72 L0,72 Z" fill="white" />
-            </svg>
           </div>
         </div>
       )}

@@ -30,9 +30,12 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
               <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
                 {head.eyebrow}
               </p>
-              <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line">
+              <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line mb-2">
                 {head.headline}
               </h2>
+              <div className="mb-10">
+                <HandwrittenLine variant={2} color="rgba(240,131,0,0.65)" width={120} align="left" />
+              </div>
               <p className="text-sm text-[#666] max-w-[280px] mt-4 text-pretty">{head.body}</p>
             </div>
           </div>
