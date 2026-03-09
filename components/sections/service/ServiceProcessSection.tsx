@@ -3,7 +3,13 @@
 import Image from 'next/image'
 import { useRef, useEffect } from 'react'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { ProcessStepItem } from '@/lib/data/service'
+
+export type ProcessStepItem = {
+  num: string
+  title: string
+  body: string
+  active?: boolean
+}
 
 const WAVE_MASK_SVG = `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100' preserveAspectRatio='none'%3E%3Cpath d='M0,0 L92,0 C96,12 88,25 94,37 C100,50 88,62 94,75 C98,85 90,92 92,100 L0,100 Z' fill='black'/%3E%3C/svg%3E")`
 const FADE_GRADIENT = `linear-gradient(to bottom, transparent 0%, rgba(0,0,0,.4) 8%, black 22%, black 78%, rgba(0,0,0,.4) 92%, transparent 100%)`
@@ -65,12 +71,12 @@ export default function ServiceProcessSection({
     <section
       ref={sectionRef}
       className="overflow-hidden"
-      style={{ background: '#fffdf5' }}
+      style={{ background: '#ffffff' }}
       aria-label={head.eyebrow}
     >
       <div className="container mx-auto max-w-5xl grid grid-cols-1 md:grid-cols-[320px_1fr] min-h-[480px]">
         {/* 写真エリア */}
-        <div className="relative w-full h-48 md:h-auto md:min-h-[480px]">
+        <div className="hidden md:block relative w-full h-48 md:h-auto md:min-h-[480px]">
           <div
             className="absolute inset-0 origin-left scale-x-0 transition-transform duration-[1000ms] ease-[cubic-bezier(.16,1,.3,1)] [.is-section-visible_&]:scale-x-100"
             style={{

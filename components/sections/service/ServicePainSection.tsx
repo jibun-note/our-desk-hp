@@ -1,4 +1,7 @@
-import type { PainItem } from '@/lib/data/service'
+export type PainItem = {
+  title: string
+  body: string
+}
 
 const ROW_BGS = ['#ffffff', '#ffffff', '#ffffff'] as const
 
@@ -46,7 +49,7 @@ export default function ServicePainSection({
         {/* 3行のrow */}
         {items.slice(0, 3).map((item, index) => (
           <div
-            key={index}
+            key={item.title}
             style={{ background: ROW_BGS[index] }}
             className="border-t border-[#E5E0D7] relative"
           >

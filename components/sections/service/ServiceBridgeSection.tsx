@@ -1,10 +1,13 @@
 'use client'
 
 import { useEffect, useRef } from 'react'
+import Link from 'next/link'
 
 type Props = {
   headline: string
   body: string
+  ctaLabel?: string
+  ctaHref?: string
 }
 
 /** 対角スレッド背景（右上→左下）を描画する canvas */
@@ -105,7 +108,12 @@ function DiagonalThreads() {
   )
 }
 
-export default function ServiceBridgeSection({ headline, body }: Props) {
+export default function ServiceBridgeSection({
+  headline,
+  body,
+  ctaLabel,
+  ctaHref = '#contact',
+}: Props) {
   return (
     <section
       className="relative bg-white py-36 md:py-48 overflow-hidden"
@@ -126,20 +134,21 @@ export default function ServiceBridgeSection({ headline, body }: Props) {
             fontFamily: "'Hiragino Mincho ProN', 'Yu Mincho', serif",
           }}
         >
-          {headline.split('「外注」').map((part, i) =>
-            i === 0 ? (
-              <span key={i}>
-                {part}
-                <span className="text-[#F08300]">「外注」</span>
-              </span>
-            ) : (
-              <span key={i}>{part}</span>
-            )
-          )}
+          {headline}
         </h2>
-        <p className="text-sm text-gray-400 leading-loose whitespace-pre-line">
+        <p className="text-sm text-gray-400 leading-loose whitespace-pre-line mb-8">
           {body}
         </p>
+        {ctaLabel && (
+          <div className="flex justify-center">
+            <Link
+              href={ctaHref}
+              className="inline-block text-sm md:text-base font-medium text-gray-900 bg-gradient-to-r from-[#FDD000] to-[#F08300] py-3 md:py-3.5 px-8 md:px-10 rounded-full hover:opacity-90 hover:-translate-y-0.5 transition-all duration-200"
+            >
+              {ctaLabel}
+            </Link>
+          </div>
+        )}
       </div>
     </section>
   )

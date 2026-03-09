@@ -2,7 +2,16 @@
 
 import { useRef, useEffect } from 'react'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { ServiceCategoryItem, ServiceGroup } from '@/lib/data/service'
+
+export type ServiceCategoryItem = {
+  title: string
+  lines: string[]
+}
+
+export type ServiceGroup = {
+  label: string
+  cards: ServiceCategoryItem[]
+}
 
 type ServiceHead = {
   eyebrow: string
@@ -109,7 +118,7 @@ export default function ServiceServicesSection({
               <HandwrittenLine variant={5} color="#F08300" width={120} align="left" />
             </div>
           </div>
-          <div>
+          <div className="md:pt-9">
             <p
               className="text-sm md:text-base text-[#666] leading-relaxed opacity-0 blur-sm translate-y-2 transition-[opacity,filter,transform] duration-700 ease-[cubic-bezier(.16,1,.3,1)] [&.is-visible]:opacity-100 [&.is-visible]:blur-0 [&.is-visible]:translate-y-0"
               data-anim

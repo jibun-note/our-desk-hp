@@ -2,7 +2,15 @@
 
 import Image from 'next/image'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { CaseStudyItem } from '@/lib/data/service'
+
+export type CaseStudyItem = {
+  chip: string
+  situation: string
+  tasks: string[]
+  result: string
+  image: string
+  imageAlt: string
+}
 
 type Props = {
   head: { eyebrow: string; headline: string }
@@ -27,7 +35,7 @@ export default function ServiceCaseStudiesSection({ head, cases: caseList }: Pro
           {caseList.map((item, i) => (
             <article
               key={i}
-              className="border border-[#ece8de] overflow-hidden rounded transition-shadow duration-200 hover:shadow-lg hover:shadow-black/7"
+              className="bg-white border border-[#ece8de] overflow-hidden rounded transition-shadow duration-200 hover:shadow-lg hover:shadow-black/7"
             >
               <div className="h-60 overflow-hidden">
                 <Image

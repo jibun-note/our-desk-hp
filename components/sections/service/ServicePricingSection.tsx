@@ -2,7 +2,13 @@
 
 import { useRef, useEffect } from 'react'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { PricingItem } from '@/lib/data/service'
+
+export type PricingItem = {
+  rank: string
+  price: string
+  description: string
+  examples: string[]
+}
 
 type Head = {
   eyebrow: string
@@ -107,7 +113,7 @@ export default function ServicePricingSection({ head, items }: Props) {
                 <div className="grid grid-cols-[1fr_auto] md:grid-cols-[96px_1fr_auto] gap-4 items-start">
                   {/* RANK列 md以上 */}
                   <div className="hidden md:block">
-                    <span className="font-serif text-xl md:text-2xl font-semibold text-[#1a1209]">
+                    <span className="font-serif text-5xl md:text-7xl font-semibold text-[#1a1209]">
                       {rankChar}
                     </span>
                   </div>

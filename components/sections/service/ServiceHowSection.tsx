@@ -1,13 +1,20 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
-import type { HowItem } from '@/lib/data/service'
+import { useEffect, useRef, useState } from 'react'
+import HandwrittenLine from '@/components/ui/HandwrittenLine'
 import { cn } from '@/lib/utils'
+
+export type HowItem = {
+  title: string
+  body: string
+}
+
+const LINE_ANIM_DURATION_MS = 900
 
 type Head = {
   eyebrow: string
   headline: string
-  sub: string
+  sub?: string
 }
 
 type Props = {
@@ -18,6 +25,32 @@ type Props = {
 export default function ServiceHowSection({ head, items }: Props) {
   const [accentItem, ...restItems] = items
   const howRef = useRef<HTMLDivElement>(null)
+  const linesWrapRef = useRef<HTMLDivElement>(null)
+  const sectionContentRef = useRef<HTMLDivElement>(null)
+  const [lineVisible, setLineVisible] = useState<[boolean, boolean, boolean]>([false, false, false])
+
+  useEffect(() => {
+    const wrap = sectionContentRef.current
+    if (!wrap) return
+    let t2: ReturnType<typeof setTimeout> | null = null
+    let t3: ReturnType<typeof setTimeout> | null = null
+    const obs = new IntersectionObserver(
+      ([e]) => {
+        if (!e?.isIntersecting) return
+        obs.disconnect()
+        setLineVisible((prev) => [true, prev[1], prev[2]])
+        t2 = setTimeout(() => setLineVisible((prev) => [prev[0], true, prev[2]]), LINE_ANIM_DURATION_MS)
+        t3 = setTimeout(() => setLineVisible((prev) => [prev[0], prev[1], true]), LINE_ANIM_DURATION_MS * 2)
+      },
+      { threshold: 0.1 }
+    )
+    obs.observe(wrap)
+    return () => {
+      obs.disconnect()
+      if (t2 != null) clearTimeout(t2)
+      if (t3 != null) clearTimeout(t3)
+    }
+  }, [])
 
   useEffect(() => {
     const el = howRef.current
@@ -25,10 +58,9 @@ export default function ServiceHowSection({ head, items }: Props) {
     const onScroll = () => {
       const rect = el.getBoundingClientRect()
       const winH = window.innerHeight
-      const progress = Math.min(1, Math.max(0, (winH - rect.top) / (winH * 0.8)))
-      const ease = 1 - Math.pow(1 - progress, 3)
-      el.style.transform = `translateY(${140 * (1 - ease)}px)`
-      el.style.opacity = String(Math.min(1, progress * 2))
+      const progress = Math.min(1, Math.max(0, (winH - rect.top) / (winH * 0.75)))
+      const ease = 1 - Math.pow(1 - progress, 4)
+      el.style.transform = `translateY(${200 * (1 - ease)}px)`
     }
     window.addEventListener('scroll', onScroll, { passive: true })
     onScroll()
@@ -37,26 +69,25 @@ export default function ServiceHowSection({ head, items }: Props) {
 
   return (
     <section aria-label={head.eyebrow}>
-      <div
-        ref={howRef}
-        style={{
-          willChange: 'transform, opacity',
-          transform: 'translateY(140px)',
-          opacity: 0,
-        }}
-      >
-
+      <div style={{ overflow: 'hidden', background: '#ffffff', paddingBottom: 1 }}>
+        <div
+          ref={howRef}
+          style={{
+            willChange: 'transform',
+            transform: 'translateY(200px)',
+          }}
+        >
       {/* ① ダーク帯 */}
       {accentItem && (
         <div className="bg-[#1a1209] pt-0 pb-0 relative overflow-hidden">
 
           {/* 上端：アーチ型（白→ダークの境界） */}
-          <div className="w-full leading-[0]" style={{ background: '#ffffff' }}>
+          <div className="w-full leading-[0]" style={{ background: '#ffffff', marginBottom: -3 }}>
             <svg
               viewBox="0 0 1440 72"
               preserveAspectRatio="none"
               xmlns="http://www.w3.org/2000/svg"
-              className="block w-full"
+              className="block w-full translate-y-px"
               aria-hidden
             >
               <path d="M0,72 C360,0 1080,0 1440,72 L1440,72 L0,72 Z" fill="#1a1209" />
@@ -74,41 +105,37 @@ export default function ServiceHowSection({ head, items }: Props) {
             }}
           />
 
-          <div className="relative z-10 max-w-2xl mx-auto px-6 md:px-8 text-center pb-14 md:pb-20">
+          <div ref={sectionContentRef} className="relative z-10 max-w-2xl mx-auto px-6 md:px-8 text-center pb-14 md:pb-20">
 
             {/* ヘッド */}
             <p className="text-[11px] tracking-[0.22em] text-[#F08300] font-bold mb-4">
               {head.eyebrow}
             </p>
-            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white leading-relaxed whitespace-pre-line mb-4">
-              {head.headline}
+            <h2 className="font-serif text-3xl md:text-4xl font-bold text-white leading-relaxed whitespace-pre-line mb-4 text-right md:text-center">
+              <span className="md:hidden flex flex-col items-end gap-0 [&>div]:leading-none">
+                <div className="flex flex-col items-end">
+                  <span>固定費なし</span>
+                  <HandwrittenLine variant={2} color="#F08300" width={72} align="right" visible={lineVisible[0]} />
+                </div>
+                <div className="flex flex-col items-end">
+                  <span>縛りなし</span>
+                  <HandwrittenLine variant={4} color="#F08300" width={72} align="right" visible={lineVisible[1]} />
+                </div>
+                <div className="flex flex-col items-end">
+                  <span>リスクなし</span>
+                  <HandwrittenLine variant={5} color="#F08300" width={72} align="right" visible={lineVisible[2]} />
+                </div>
+              </span>
+              <span className="hidden md:inline">{head.headline}</span>
             </h2>
-            <p className="text-sm md:text-base text-white/60 leading-relaxed mb-10">
-              {head.sub}
-            </p>
-
-            {/* 区切り */}
-            <div className="w-full h-px bg-white/10 mb-10" />
-
-            {/* 01 ラベル */}
-            <div className="flex items-center justify-center gap-2 text-[11px] tracking-[0.22em] text-[#F08300] font-bold mb-6">
-              <span className="block w-5 h-px bg-[#F08300]/40" />
-              01
-              <span className="block w-5 h-px bg-[#F08300]/40" />
+            <div ref={linesWrapRef} className="hidden md:flex mb-8 justify-center items-center gap-3 md:gap-10">
+              <HandwrittenLine variant={2} color="#F08300" width={80} align="center" visible={lineVisible[0]} />
+              <HandwrittenLine variant={4} color="#F08300" width={80} align="center" visible={lineVisible[1]} />
+              <HandwrittenLine variant={5} color="#F08300" width={80} align="center" visible={lineVisible[2]} />
             </div>
 
-            {/* タイトル */}
-            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white leading-relaxed mb-5">
-              {accentItem.title}
-            </h3>
-
-            {/* 本文 */}
-            <p className="text-base md:text-lg text-white/75 leading-[2] mb-12">
-              {accentItem.body}
-            </p>
-
             {/* 数値 */}
-            <div className="flex justify-center border-t border-white/10 pt-9">
+            <div className="flex justify-center border-t border-white/10 pt-9 mb-8">
               {(
                 [
                   { num: '0', unit: '円', label: '初期費用' },
@@ -135,6 +162,26 @@ export default function ServiceHowSection({ head, items }: Props) {
                 </div>
               ))}
             </div>
+
+            {/* 区切り */}
+            <div className="w-full h-px bg-white/10 mb-10" />
+
+            {/* 01 ラベル */}
+            <div className="flex items-center justify-center gap-2 text-[11px] tracking-[0.22em] text-[#F08300] font-bold mb-2">
+              <span className="block w-5 h-px bg-[#F08300]/40" />
+              01
+              <span className="block w-5 h-px bg-[#F08300]/40" />
+            </div>
+
+            {/* タイトル */}
+            <h3 className="font-serif text-2xl md:text-3xl font-bold text-white leading-relaxed mb-5">
+              {accentItem.title}
+            </h3>
+
+            {/* 本文 */}
+            <p className="text-base md:text-lg text-white/75 leading-[2] mb-8">
+              {accentItem.body}
+            </p>
           </div>
         </div>
       )}
@@ -170,6 +217,7 @@ export default function ServiceHowSection({ head, items }: Props) {
         </div>
       </div>
 
+      </div>
       </div>
     </section>
   )

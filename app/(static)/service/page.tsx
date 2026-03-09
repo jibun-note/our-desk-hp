@@ -1,8 +1,6 @@
-import Image from 'next/image'
 import BreadcrumbJsonLdServer from '@/components/seo/BreadcrumbJsonLdServer'
 import WaveDivider from '@/components/ui/WaveDivider'
-import HeroSection from '@/components/sections/HeroSection'
-import ServiceIntroSection from '@/components/sections/service/ServiceIntroSection'
+import ServiceHeroBlockSection from '@/components/sections/service/ServiceHeroBlockSection'
 import ServiceBridgeSection from '@/components/sections/service/ServiceBridgeSection'
 import ServicePainSection from '@/components/sections/service/ServicePainSection'
 import ServiceHowSection from '@/components/sections/service/ServiceHowSection'
@@ -47,48 +45,20 @@ export default function ServicePage() {
             <main className="min-h-screen bg-white relative">
 
                 {/* 1. Hero ── ファーストビュー */}
-                <div className="relative z-[1] bg-white">
-                    <div className="relative min-h-[80vh] flex flex-col overflow-hidden">
-                        <div
-                            className="absolute top-0 right-[-5%] bottom-0 w-[58%] z-0 pointer-events-none"
-                            style={{ clipPath: 'polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-                        >
-                            <Image
-                                src={IMG.hero}
-                                alt=""
-                                width={1400}
-                                height={900}
-                                className="w-full h-full object-cover object-[60%_20%] block"
-                                priority
-                                sizes="58vw"
-                                aria-hidden
-                            />
-                            <div
-                                className="absolute inset-0 pointer-events-none"
-                                style={{
-                                    background:
-                                        'linear-gradient(to bottom, #ffffff 0%, transparent 25%), linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0.3) 40%, transparent 70%)',
-                                }}
-                            />
-                        </div>
-                        <HeroSection
-                            title="Service"
-                            description="OurDeskのバックオフィス支援"
-                            activeIndex={0}
-                            className="relative z-10 flex-shrink-0 flex flex-col justify-center"
-                        />
-                        <ServiceIntroSection
-                            eyebrow={HERO.eyebrow}
-                            headline={HERO.headline}
-                            sub={HERO.sub}
-                            ctaPrimary={HERO.ctaPrimary}
-                        />
-                    </div>
-                </div>
+                <ServiceHeroBlockSection
+                    heroImageSrc={IMG.hero}
+                    heroTitle="Service"
+                    heroDescription="OurDeskのバックオフィス支援"
+                    activeIndex={0}
+                    introEyebrow={HERO.eyebrow}
+                    introHeadline={HERO.headline}
+                    introSub={HERO.sub}
+                    introCtaPrimary={HERO.ctaPrimary}
+                />
 
                 <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
 
-                {/* 2. Pain + How ── 背景すべて白 */}
+                {/* 2. Pain */}
                 <div style={{ background: '#ffffff' }}>
                     <ServicePainSection
                         imageSrc={IMG.pain}
@@ -97,39 +67,54 @@ export default function ServicePage() {
                         headline={PAIN.headline}
                         items={PAIN_ITEMS}
                     />
-                    <ServiceHowSection head={HOW} items={HOW_ITEMS} />
                 </div>
 
                 <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
 
-                {/* 3. Bridge ── 課題・仕組みを見せた後に「だから外注じゃない」が刺さる */}
+                {/* 3. Bridge */}
                 <ServiceBridgeSection
                     headline={BRIDGE.headline}
                     body={BRIDGE.body}
+                    ctaLabel={BRIDGE.ctaLabel}
+                    ctaHref={BRIDGE.ctaHref}
                 />
+
+                <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
+
+                {/* 4. How */}
+                <div style={{ background: '#ffffff' }}>
+                    <ServiceHowSection head={HOW} items={HOW_ITEMS} />
+                </div>
 
                 <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
-                {/* 4. Case Studies ── 「実際どう使うの？」に先に答える */}
+                {/* 4. Services */}
+                <div style={{ background: '#fffdf5' }}>
+                    <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />
+                </div>
+
+                <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
+
+                {/* 5. Pricing */}
+                <ServicePricingSection head={PRICING_HEAD} items={PRICING_ITEMS} />
+
+                <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+
+                {/* 6. Case Studies */}
                 <div style={{ background: '#fffdf5' }}>
                     <ServiceCaseStudiesSection head={CASE_STUDIES_HEAD} cases={CASE_STUDIES} />
                 </div>
 
                 <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
 
-                {/* 5. Pricing ── 納得した上で料金を見る */}
-                <ServicePricingSection head={PRICING_HEAD} items={PRICING_ITEMS} />
-
-                <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
-
-                {/* 6. Process ── 「じゃあどうすれば始められる？」 */}
-                <div style={{ background: '#fffdf5' }}>
+                {/* 7. Process */}
+                <div style={{ background: '#ffffff' }}>
                     <ServiceProcessSection head={PROCESS_HEAD} steps={PROCESS_STEPS} imageSrc={IMG.process} />
                 </div>
 
-                <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
+                <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
-                {/* 7. FAQ */}
+                {/* 8. FAQ */}
                 <ServiceFaqSection
                     imageSrc={IMG.faq}
                     imageAlt=""
@@ -137,7 +122,7 @@ export default function ServicePage() {
                     items={FAQ_ITEMS}
                 />
 
-                {/* 8. CTA */}
+                {/* 9. CTA */}
                 <ServiceCtaSection
                     headline={CTA.headline}
                     headlineGrad={CTA.headlineGrad}

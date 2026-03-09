@@ -4,12 +4,16 @@ import { useState } from 'react'
 import Image from 'next/image'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
 import { cn } from '@/lib/utils'
-import type { FaqItem } from '@/lib/data/service'
+
+export type FaqItem = {
+  q: string
+  a: string
+}
 
 type Props = {
   imageSrc: string
   imageAlt: string
-  head: { eyebrow: string; headline: string; body: string }
+  head: { headline: string; eyebrow?: string; body?: string }
   items: readonly FaqItem[]
 }
 
@@ -17,10 +21,10 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
   const [openIndex, setOpenIndex] = useState<number | null>(null)
 
   return (
-    <section id="faq" className="py-20 md:py-32" style={{ background: '#ffffff' }} aria-label="よくある質問">
+    <section id="faq" className="py-20 md:py-32" style={{ background: '#fffdf5' }} aria-label="よくある質問">
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
         <div className="grid grid-cols-1 md:grid-cols-[1fr_40%] gap-12 md:gap-16 items-start">
-          <div className="space-y-0 border-t border-[#ece8de] md:order-1">
+          <div className="space-y-0 border-t border-[#ece8de] order-2 md:order-1">
             {items.map((item, i) => {
               const isOpen = openIndex === i
               return (
@@ -76,7 +80,7 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
             })}
           </div>
 
-          <div className="md:sticky md:top-24 md:order-2">
+          <div className="md:sticky md:top-24 order-1 md:order-2">
             <div className="w-full h-64 md:h-[340px] overflow-hidden rounded-none rounded-bl-[3rem] md:rounded-bl-[5rem]">
               <Image
                 src={imageSrc}
@@ -87,16 +91,20 @@ export default function ServiceFaqSection({ imageSrc, imageAlt, head, items }: P
               />
             </div>
             <div className="mt-8 md:mt-10">
-              <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
-                {head.eyebrow}
-              </p>
+              {head.eyebrow != null && (
+                <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium mb-2">
+                  {head.eyebrow}
+                </p>
+              )}
               <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line mb-2">
                 {head.headline}
               </h2>
-              <div className="mb-10">
+              <div className="mb-4 md:mb-10">
                 <HandwrittenLine variant={2} color="rgba(240,131,0,0.65)" width={120} align="left" />
               </div>
-              <p className="text-sm text-[#666] max-w-[280px] mt-4 text-pretty">{head.body}</p>
+              {head.body != null && (
+                <p className="text-sm text-[#666] max-w-[280px] mt-4 text-pretty">{head.body}</p>
+              )}
             </div>
           </div>
         </div>
