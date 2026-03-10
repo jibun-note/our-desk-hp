@@ -1,111 +1,187 @@
 /**
  * Service (BackDesk) ページ用データ
- * 企業担当者が読みやすく、BackDeskの管理体制・機能を強調した構成
+ *
+ * コンセプト：
+ * 「タスクを処理してくれる外注先」ではなく
+ * 「自分のビジネスを本当に支えてくれる人と出会える場所」として見せる。
+ *
+ * サイト全体のトーン（「働きたい人材が、あなたのビジネスを支える仕組み」）と
+ * 一貫した軸で構成する。
+ *
+ * セクション順:
+ * 1. Hero        ── ファーストビュー
+ * 2. Pain        ── 課題（業務負担 × 採用リスク）
+ * 3. Bridge      ── コンセプト補足
+ * 4. How         ── 仕組みの説明
+ * 5. Services    ── 対応業務一覧
+ * 6. Pricing     ── 料金
+ * 7. CaseStudies ── 活用シーン
+ * 8. Process     ── ご利用の流れ
+ * 9. FAQ
+ * 10. CTA
  */
+
+import type { PainItem } from '@/components/sections/service/ServicePainSection'
+import type { HowItem } from '@/components/sections/service/ServiceHowSection'
+import type { PricingItem } from '@/components/sections/service/ServicePricingSection'
+import type { ProcessStepItem } from '@/components/sections/service/ServiceProcessSection'
+import type { ServiceCategoryItem, ServiceGroup } from '@/components/sections/service/ServiceServicesSection'
+import type { CaseStudyItem } from '@/components/sections/service/ServiceCaseStudiesSection'
+import type { FaqItem } from '@/components/sections/service/ServiceFaqSection'
 
 // ── Hero ─────────────────────────────────────────────────────────────────
 export const HERO = {
   eyebrow: 'BackDesk by OurDesk',
-  headline: '本業に集中\nできていますか？',
+  headline: '「頼んでよかった」が\n続く仕組み',
   sub:
-    'メール対応、日程調整、請求処理。\n「やらなきゃいけないけど、あなたがやる必要はない業務」を、OurDeskが引き受けます。',
-  backDeskIntro:
-    'OurDeskは、独自の業務管理システム 「BackDesk」 を活用し、依頼・稼働・報告・請求を"見える化"して運用しています。任せっぱなしにしない、管理できる外部サポートです。',
+    '請求・日程調整・書類管理・顧客対応などのバックオフィス業務を、分単位から依頼できます。\n小さく始めて、信頼できる人材と長く働ける関係を育てていけます。',
   ctaPrimary: 'まずは相談してみる',
 } as const
 
-// ── Anchor (3 columns) ───────────────────────────────────────────────────
-export type AnchorItem = {
-  label: string
-  value: string
-  valueSuffix?: string
-  description: string
-}
-
-export const ANCHOR_ITEMS: AnchorItem[] = [
-  {
-    label: '自分で抱え続けると…',
-    value: '週3〜4',
-    valueSuffix: '時間',
-    description: 'メール・書類・調整などの事務作業で消える時間の目安です。',
-  },
-  {
-    label: '年間に換算すると',
-    value: '約150〜200',
-    valueSuffix: '時間',
-    description: '本業・企画・顧客対応に充てられる可能性がある時間です。',
-  },
-  {
-    label: 'それでも、',
-    value: '正社員を雇うほどではない',
-    valueSuffix: undefined,
-    description:
-      '採用・教育・固定費をかけるほどではない。でも、確実に業務は積み上がっていく。BackDeskは、必要な分だけ柔軟に依頼できます。数分の単発タスクから、定常運用・プロジェクト単位まで対応可能です。',
-  },
-]
-
-// ── BackDeskが選ばれる理由 ─────────────────────────────────────────────
-export const BACKDESK_REASONS = {
-  eyebrow: 'BackDeskが選ばれる理由',
-  headline: 'すべて見える\nだから任せられる',
-  items: [
-    '稼働はすべてシステムに記録：実施内容・時間・履歴が残り、口頭ベースになりません。',
-    '確認フローで品質を整える：依頼・報告・作業の粒度を揃え、抜け漏れを防ぎます。',
-    '稼働と請求が連動：「何に対する請求か」が分かる状態で管理できます。',
-    'いつでも状況を確認できる：業務の進捗・実施内容・稼働時間を把握できます。',
-    '権限分離で情報管理：閲覧範囲を分け、必要な情報だけにアクセスを制御します。',
-  ],
+// ── Bridge ───────────────────────────────────────────────────────────────
+export const BRIDGE = {
+  headline: 'ちょうどいい人が、\nちょうどいい形で関わる',
+  body:
+    'BackDeskは、単にタスクを外注するための仕組みではありません。\nOurDeskが間に入り、業務内容の整理や進め方のすり合わせを行いながら、業務に合う人材と継続しやすい形を整えます。\n小さく始めて、信頼関係が育ったら依頼範囲を広げることもできます。',
+  ctaLabel: 'まずは相談してみる',
+  ctaHref: '#contact',
 } as const
 
-// ── Pain (よくある課題・3つに絞る) ─────────────────────────────────────
-export type PainItem = {
-  title: string
-  body: string
-}
-
+// ── Pain（課題） ─────────────────────────────────────────────────────────
 export const PAIN = {
-  eyebrow: 'よくある課題',
-  headline: 'こんなお悩みは\nありませんか？',
-  cta: 'まずは相談してみる',
+  eyebrow: 'こんな状況、ありませんか？',
+  headline: '任せたい仕事はある。けど、\n採用にはまだ踏み切れない',
 } as const
 
 export const PAIN_ITEMS: PainItem[] = [
   {
-    title: '連絡・調整が意外と時間を奪う',
-    body: 'メールやチャットの返信、案内連絡、リマインド。気づくと夕方。',
+    title: '代表やコアメンバーが、事務作業まで抱えている',
+    body:
+      '請求、日程調整、書類管理、案内連絡。やるべきことは増えていくのに、本来集中したい業務に時間を使えなくなっている。',
   },
   {
-    title: '請求や契約書など、毎月の管理がじわじわ負担',
-    body: '請求書作成・送付、格納、未払い対応、契約更新。',
+    title: '誰かに任せたいが、正社員採用はまだ重い',
+    body:
+      '任せたい仕事はあるものの、採用コストや教育コスト、ミスマッチのリスクを考えると、今すぐ雇用には踏み切りにくい。',
   },
   {
-    title: '社内の"やる人"が固定されて属人化している',
-    body: '引き継げない／止まる／品質がブレる。外注しても管理が不安。',
+    title: '単発の外注ではなく、継続的に理解してくれる人がほしい',
+    body:
+      'その場しのぎではなく、少しずつ業務を理解し、継続的に支えてくれる存在がいると助かる。そんな悩みを抱える企業は少なくありません。',
   },
 ]
 
-// ── Services（8カテゴリ） ─────────────────────────────────────────────────
-export type ServiceCategoryItem = {
-  title: string
-  lines: string[]
-}
-
-export const SERVICES_HEAD = {
-  eyebrow: '対応できる業務',
-  headline: '「秘書業務」だけではありません',
-  body: 'BackDeskは、バックオフィスの実務から、調査・資料作成・採用運用・広報支援・IT運用まで幅広くサポートします。',
-  footer:
-    '上記は一例です。「この業務は頼める？」という段階から、一緒に整理できます。',
+// ── How（仕組みの説明） ───────────────────────────────────────────────────
+export const HOW = {
+  eyebrow: 'BackDeskの使い方',
+  headline: '固定費なし・縛りなし・リスクなし',
 } as const
 
-export type ServiceGroup = {
-  label: string
-  cards: ServiceCategoryItem[]
-}
+export const HOW_ITEMS: HowItem[] = [
+  {
+    title: '請求書1通から、気軽に試せる',
+    body:
+      '「請求書を送ってほしい」「日程調整だけ任せたい」そんな小さな依頼から始められます。固定費を増やさず、必要な業務を必要な分だけ頼めます。',
+  },
+  {
+    title: '定型業務から始めて、少しずつ任せる範囲を広げられる',
+    body:
+      'まずは毎日・毎週発生する定型業務からスタートし、慣れてきたら資料作成や採用支援などへ広げることもできます。',
+  },
+  {
+    title: 'OurDeskが間に入り、進めやすい形を整える',
+    body:
+      '業務内容の整理、進め方のすり合わせ、必要に応じたスタッフ提案まで、OurDeskが伴走しながら進行します。丸投げにならず、安心して任せられます。',
+  },
+  {
+    title: '相性を見ながら、将来的な正式採用も相談できる',
+    body:
+      '実際の仕事を通して業務理解や信頼関係を育てられるため、採用前に相性を確かめやすいのも特徴です。双方の希望が合えば、正式な雇用もご相談いただけます。',
+  },
+]
+
+// ── Pricing ───────────────────────────────────────────────────────────────
+export const PRICING_HEAD = {
+  eyebrow: '料金',
+  headline: '業務の種類に合わせた\nシンプルな時間単価',
+  sub:
+    'サービスは分単位でご利用可能。最低利用時間の縛りはありません。ご相談時に、依頼内容に応じたランクと想定稼働時間の目安をご案内します。',
+  note:
+    '※ 秘書の指名・時間指定のオプションには追加料金が必要です。\n※ 価格は税別表示です。',
+} as const
+
+export const PRICING_ITEMS: PricingItem[] = [
+  {
+    rank: 'ランクA',
+    price: '2,500',
+    description: '高度な判断・専門性が求められる業務',
+    examples: ['調査・資料作成', '企画書・提案書の作成', 'プロジェクト管理'],
+  },
+  {
+    rank: 'ランクB',
+    price: '2,300',
+    description: '進行管理・社内調整などの業務',
+    examples: ['採用・オンボーディング支援', '広報・SNS運用', 'IT一次対応'],
+  },
+  {
+    rank: 'ランクC',
+    price: '2,200',
+    description: '手順に沿って進める定型業務',
+    examples: ['メール・チャット対応', '請求書・書類管理', '日程調整・議事録'],
+  },
+]
+
+// ── Process ───────────────────────────────────────────────────────────────
+export const PROCESS_HEAD = {
+  eyebrow: 'ご利用の流れ',
+  headline: '相談から始まる、5つのステップ',
+} as const
+
+export const PROCESS_STEPS: ProcessStepItem[] = [
+  {
+    num: '01',
+    title: '無料相談・ヒアリング',
+    body:
+      '何を任せられるかわからない方も大歓迎。現状の業務やお困りごとを伺い、どこから任せられそうかを一緒に整理します。',
+    active: true,
+  },
+  {
+    num: '02',
+    title: 'スタッフのご提案',
+    body:
+      '業務内容に合ったスタッフをご提案します。必要に応じて事前面談やプロフィール共有も可能です。',
+  },
+  {
+    num: '03',
+    title: '契約・業務開始',
+    body:
+      '基本契約や必要に応じたNDA、連絡ツール、報告ルールを確認したうえで、稼働を開始します。',
+  },
+  {
+    num: '04',
+    title: '稼働・確認',
+    body:
+      '実施内容・稼働時間・請求はBackDesk上でいつでも確認できます。任せっぱなしにならず、状況を見ながら進められます。',
+  },
+  {
+    num: '05',
+    title: '継続・スケールアップ',
+    body:
+      '信頼関係や業務理解が深まったら、依頼範囲を広げることも可能です。相性が合えば、将来的な正式採用もご相談いただけます。',
+  },
+]
+
+// ── Services ──────────────────────────────────────────────────────────────
+export const SERVICES_HEAD = {
+  eyebrow: '対応できる業務',
+  headline: '「これ、頼めるかな？」から始める',
+  body: 'バックオフィスの日常業務から、調査・資料作成・採用支援・広報・IT運用まで幅広く対応します。',
+  footer: '上記は一例です。まずはご相談ください。',
+} as const
 
 export const SERVICES_GROUPS: ServiceGroup[] = [
   {
-    label: 'よく依頼される業務（まずはここから）',
+    label: 'まずはここから',
     cards: [
       {
         title: 'コミュニケーション・調整',
@@ -134,230 +210,149 @@ export const SERVICES_GROUPS: ServiceGroup[] = [
     ],
   },
   {
-    label: 'さらに任せられる業務（業務が回り始めたら）',
+    label: '慣れてきたら、さらに任せられる',
     cards: [
       {
         title: '調査・資料作成／企画支援',
         lines: [
           '業界トレンド・競合調査、リサーチ取りまとめ',
           '提案書・企画書・社内外向け資料作成',
-          'KPI／データ集計、レポート作成、グラフ作成',
+          'KPI／データ集計、レポート作成',
         ],
       },
       {
         title: '採用・人事・オンボーディング支援',
         lines: [
-          '面接日程調整、面接対応の補助、結果連絡文の整備',
+          '面接日程調整、結果連絡文の整備',
           '応募者データ管理、採用プロセス運用',
-          '新人研修／オンボーディング資料整備、進捗管理',
+          'オンボーディング資料整備、進捗管理',
         ],
       },
       {
         title: '広報・マーケ・顧客対応支援',
         lines: [
-          'SNS運用、ニュースレター作成、配信管理',
-          'プレスリリースの作成・校正、PR施策の補助',
-          'カスタマーサポート一次対応、予約・問い合わせ対応',
+          'SNS運用、ニュースレター作成・配信',
+          'プレスリリースの作成・校正',
+          'カスタマーサポート一次対応',
         ],
       },
       {
-        title: 'IT・運用サポート／プロジェクト運用',
+        title: 'IT・運用サポート',
         lines: [
           '社内IT問い合わせ一次対応、IT資産管理',
           '運用レポート作成、マニュアル化',
-          '障害一次対応（状況整理・連絡・記録）、タスク進行管理',
+          'タスク進行管理、障害一次対応',
         ],
       },
     ],
   },
 ]
 
-// ── Staff（スタッフ紹介・バッジ・稼働・説明） ─────────────────────────
-export type StaffItem = {
-  badge: string
-  hours: string
-  description: string
-}
-
-export const STAFF_HEAD = {
-  eyebrow: 'BackDeskのスタッフ',
-  headline: '経験豊富な\nスタッフがサポート',
-  body: 'バックオフィス業務に精通したスタッフが、依頼内容に合わせて対応します。',
-} as const
-
-export const STAFF_ITEMS: StaffItem[] = [
-  {
-    badge: '事務・調整',
-    hours: '月〜金 9:00〜18:00',
-    description: 'メール対応、日程調整、請求処理など日常のバックオフィス業務を担当。',
-  },
-  {
-    badge: '調査・資料',
-    hours: '依頼に応じて',
-    description: 'リサーチ、提案書・資料作成、データ集計など、プロジェクト単位で対応。',
-  },
-  {
-    badge: '広報・採用',
-    hours: '依頼に応じて',
-    description: 'SNS運用、採用プロセス支援、オンボーディング資料整備など。',
-  },
-]
-
-// ── Process (4〜5ステップ・1行でまとめる) ─────────────────────────────
-export type ProcessStepItem = {
-  num: string
-  title: string
-  body: string
-  active?: boolean
-}
-
-export const PROCESS_HEAD = {
-  eyebrow: 'ご利用の流れ',
-  headline: 'カンタン3ステップで開始',
-} as const
-
-export const PROCESS_STEPS: ProcessStepItem[] = [
-  {
-    num: '01',
-    title: '無料相談・ヒアリング',
-    body: '何を任せられるかわからない方も大歓迎。お気軽にご相談ください。',
-    active: true,
-  },
-  {
-    num: '02',
-    title: 'スタッフのご提案',
-    body: '業務に合ったスタッフをご提案。必要に応じて面談も実施します。',
-    active: false,
-  },
-  {
-    num: '03',
-    title: '契約・業務開始',
-    body: '連絡ツールや報告ルールを確認し、稼働スタート。',
-    active: false,
-  },
-  {
-    num: '04',
-    title: '稼働の確認・請求',
-    body: '実施内容・稼働時間・請求はBackDesk上でいつでも確認できます。',
-    active: false,
-  },
-  {
-    num: '05',
-    title: '継続・スケールアップ',
-    body: '業務量に合わせて稼働時間を柔軟に調整できます。',
-    active: false,
-  },
-]
-
-// ── Case studies ────────────────────────────────────────────────────────
-export type CaseStudyItem = {
-  chip: string
-  situation: string
-  tasks: string[]
-  result: string
-  image: string
-  imageAlt: string
-}
-
+// ── Case Studies ──────────────────────────────────────────────────────────
 export const CASE_STUDIES_HEAD = {
   eyebrow: '実際の活用シーン',
-  headline: '任せてよかった、の声',
+  headline: '依頼した人たちの、\nリアルな変化',
 } as const
 
 export const CASE_STUDIES: CaseStudyItem[] = [
   {
     chip: 'IT系・一人法人',
     situation:
-      '請求処理とリマインド・案内を自分で担当し、事務だけで週3〜4時間消えていた。',
+      '請求処理や案内連絡を代表自身が抱えており、事務作業だけで週3〜4時間かかっていた。正社員を採用するほどではないが、誰かに任せたい状態だった。',
     tasks: [
       '請求書の作成・送付・格納',
       '前日リマインド／案内連絡',
       '月次スケジュール配信',
     ],
     result:
-      '本業に充てる時間が増え、実施内容はBackDeskで確認できるため安心して継続。',
+      '定型的な事務作業を移管できたことで、本業に集中する時間を確保。稼働内容もBackDesk上で確認でき、安心して継続利用につながっている。',
     image: '/images/company/office-bg.jpeg',
     imageAlt: 'IT系・一人法人',
   },
   {
     chip: 'Web系・講座／コミュニティ運営',
     situation:
-      'メール・LINE・チャット対応が追いつかず、問い合わせ対応に時間を取られていた。',
+      'メールやLINE対応が追いつかず、案内や返信の遅れが発生。採用はまだ早いが、このままでは運営が回らないという課題があった。',
     tasks: [
       '返信対応、案内文作成、投稿代行',
       '出欠確認、日程調整、スケジュール配信',
     ],
     result:
-      '対応品質が安定し、運営が回るように。必要な範囲から依頼して調整中。',
+      '対応品質が安定し、返信遅延も減少。まずは一部業務から任せ、運営が整ったことで、将来的な採用も視野に入れられるようになった。',
     image: '/images/contact/contact-bg.jpeg',
     imageAlt: 'Web系・講座／コミュニティ運営',
   },
 ]
 
-// ── Stats band ───────────────────────────────────────────────────────────
-export type StatItem = {
-  num: string
-  label: string
-  note?: string
-}
-
-export const STATS: StatItem[] = [
-  { num: '95%', label: 'スタッフ定着率', note: '（NEUGATEグループ実績）' },
-  { num: 'タスク単位で依頼可能', label: '' },
-  { num: '迅速に対応', label: '' },
-]
-
-export const STATS_HEAD = {
-  eyebrow: '',
-  headline: '参考指標（任せやすさの目安）',
-} as const
-
-// ── FAQ（必要な数だけ・簡潔に） ───────────────────────────────────────
-export type FaqItem = {
-  q: string
-  a: string
-}
-
+// ── FAQ ───────────────────────────────────────────────────────────────────
 export const FAQ_HEAD = {
-  eyebrow: 'よくある質問',
-  headline: '気になることは\nなんでも聞いてください',
-  body: '相談だけでもOKです。',
+  headline: 'よくある質問',
 } as const
 
 export const FAQ_ITEMS: FaqItem[] = [
   {
-    q: 'どんな業務を依頼できますか？',
-    a: '連絡・調整・請求などのバックオフィス実務に加え、調査・資料作成、採用運用、広報支援、IT運用まで幅広く対応します。まずは「今いちばん手放したい業務」からご相談ください。',
-  },
-  {
     q: '最低利用時間はありますか？',
-    a: 'ありません。数分の単発タスクから、定常運用まで柔軟に対応します。',
+    a:
+      'ありません。サービスは分単位でご利用可能です。「請求書を1通送ってほしい」といった小さな依頼から始めていただけます。',
   },
   {
-    q: '依頼してからどれくらいで対応してもらえますか？',
-    a: 'ご相談後、体制が整い次第すぐに開始できます。急ぎのタスクがある場合も含めてご相談ください。',
+    q: '料金はどのように決まりますか？',
+    a:
+      '業務の種類によってランクA（2,500円/h）・ランクB（2,300円/h）・ランクC（2,200円/h）の3段階です。ご相談時に、依頼内容に応じたランクと想定稼働時間の目安をご案内します。',
+  },
+  {
+    q: 'どんな業務を依頼できますか？',
+    a:
+      'バックオフィス全般に対応しています。\n\n【まずはここから】\nメール・チャット対応、日程調整、議事録、請求書・書類管理など、日常的に発生する定型業務。\n\n【慣れてきたら】\n調査・資料作成、採用・オンボーディング支援、広報・SNS運用、IT一次対応なども対応可能です。\n\n「これは頼める？」という段階からご相談ください。',
+  },
+  {
+    q: '途中で依頼量を増やしたり減らしたりできますか？',
+    a:
+      'できます。最低利用時間の縛りがないため、業務量に合わせて柔軟に調整できます。小さく始めて、慣れてきたら範囲を広げる使い方も可能です。',
+  },
+  {
+    q: '将来的に正式採用することはできますか？',
+    a:
+      'はい。一緒に仕事をする中で双方の希望が合えば、正式な雇用に切り替えることも可能です。実際の仕事を通して相性を確かめられる点も特徴です。',
   },
   {
     q: '業務の進捗や請求は確認できますか？',
-    a: 'はい。BackDesk上で実施内容・稼働時間・請求の状況を確認できます。稼働と請求を紐づけて管理できるため、内容が曖昧になりません。',
+    a:
+      'はい。BackDesk上で実施内容・稼働時間・請求の状況をいつでも確認できます。任せっぱなしになりません。',
+  },
+  {
+    q: '機密情報を含む業務も依頼できますか？',
+    a:
+      '業務内容に応じて、契約や取り扱いルールを整理したうえで進めます。まずはご相談ください。',
+  },
+  {
+    q: 'マニュアルがなくても依頼できますか？',
+    a:
+      'はい。現状のやり方をヒアリングしながら、必要に応じて整理して進めます。最初から完璧なマニュアルがなくても問題ありません。',
+  },
+  {
+    q: 'どのような連絡ツールに対応していますか？',
+    a:
+      'チャットツールやオンラインミーティングを中心に、運用しやすい方法をご相談のうえ決定します。',
   },
 ]
 
-// ── CTA（統一：「まずは相談してみる」） ─────────────────────────────────
+// ── CTA ───────────────────────────────────────────────────────────────────
 export const CTA = {
-  headline: '「何を任せればいいか」から一緒に考えます',
+  headline: '「何を任せればいいか」\n一緒に考えます',
   headlineGrad: '一緒に考えます',
-  sub: 'まだ具体的でなくても大丈夫です。まずは状況を聞かせてください。',
+  sub:
+    'まだ具体的でなくても大丈夫です。現状をお聞きしながら、BackDeskでお手伝いできることをご提案します。',
   button: 'まずは相談してみる',
 } as const
 
-// ── Images ─────────────────────────────────────────────────────────────
+// ── Images ────────────────────────────────────────────────────────────────
 export const IMG = {
   hero: '/images/about-us/02.jpeg',
   pain: '/images/recruit/intro.jpeg',
+  process: '/images/service/process.jpeg',
   faq: '/images/about-us/03.jpeg',
   case1: '/images/company/office-bg.jpeg',
   case2: '/images/contact/contact-bg.jpeg',
-  /** CTA セクション背景（Recruit と同様の WaveClipLayer 用） */
-  ctaBg: '/images/contact/contact-bg.jpeg',
+  ctaBg: '/images/service/cta-bg.jpeg',
 } as const

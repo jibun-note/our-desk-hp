@@ -90,6 +90,8 @@ type Props = {
     style?: CSSProperties
     /** 視界に入ってから発火まで待つミリ秒（例: HeroSection のアニメ終了後に発火させたいとき 2000 など） */
     delayWhenInViewMs?: number
+    /** 親が表示を制御する場合。true のとき即 is-visible を付け、自前の IntersectionObserver は使わない */
+    visible?: boolean
 }
 
 export default function HandwrittenLine({
@@ -100,6 +102,7 @@ export default function HandwrittenLine({
     className,
     style,
     delayWhenInViewMs,
+    visible: controlledVisible,
 }: Props) {
     const ref = useRef<HTMLDivElement>(null);
     const data = LINE_DATA[variant];
@@ -109,7 +112,17 @@ export default function HandwrittenLine({
     const marginX =
         align === 'center' ? '0 auto' : align === 'right' ? '0 0 0 auto' : '0';
 
+    // 親が visible を渡しているときはその値で is-visible を制御（ref で class を付与）
     useEffect(() => {
+        if (controlledVisible === undefined) return;
+        const el = ref.current;
+        if (!el) return;
+        if (controlledVisible) el.classList.add('is-visible');
+        else el.classList.remove('is-visible');
+    }, [controlledVisible]);
+
+    useEffect(() => {
+        if (controlledVisible !== undefined) return; // 親制御のときは自前の observer は使わない
         const el = ref.current;
         if (!el) return;
 
@@ -184,7 +197,7 @@ export default function HandwrittenLine({
             if (delayTimer != null) clearTimeout(delayTimer);
             if (pollId != null) clearInterval(pollId);
         };
-    }, [delayWhenInViewMs]);
+    }, [delayWhenInViewMs, controlledVisible]);
 
     return (
         <div

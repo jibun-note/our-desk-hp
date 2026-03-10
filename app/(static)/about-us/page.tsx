@@ -20,14 +20,32 @@ export default function AboutUsPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/about-us/" name="About Us" />
-            <main className="min-h-screen bg-white relative">
-                {/* ① HeroSection + 直下セクション: 白背景とグラデーションぼかしで一体化 */}
-                <div className="relative z-[1] bg-white overflow-hidden">
-                    {/* ヒーロー〜MVV導入にかけてのグラデーションぼかし */}
-                    <div className="absolute inset-0 z-0 opacity-30 pointer-events-none" aria-hidden>
-                        <div className="absolute top-0 right-0 w-96 h-96 bg-gradient-to-br from-orange-200 to-yellow-100 rounded-full blur-3xl" />
-                        <div className="absolute bottom-0 left-0 w-96 h-96 bg-gradient-to-tr from-orange-100 to-yellow-50 rounded-full blur-3xl" />
-                    </div>
+            <main className="min-h-screen bg-white relative overflow-x-clip">
+                {/* ① HeroSection + MVV導入: クリーム背景。右 blob はラッパー内でセクションをまたいで表示 */}
+                <div className="relative z-[1] bg-[#fffdf5] overflow-visible">
+                    {/* ヒーロー用 blob: 右 */}
+                    <div
+                        className="absolute pointer-events-none z-0 about-us-blob-1"
+                        style={{
+                            top: '-520px', right: '-120px',
+                            width: '480px', height: '85vh',
+                            minHeight: '600px',
+                            borderRadius: '52% 48% 50% 50% / 50% 50% 48% 52%',
+                            background: 'linear-gradient(135deg, rgba(253,208,0,0.18), rgba(240,131,0,0.10))',
+                        }}
+                        aria-hidden
+                    />
+                    {/* 下の方のセクション用 blob: 左 */}
+                    <div
+                        className="absolute pointer-events-none z-0 about-us-blob-2"
+                        style={{
+                            top: '200px', left: '-100px',
+                            width: '280px', height: '280px',
+                            borderRadius: '52% 48% 50% 50% / 50% 50% 48% 52%',
+                            background: 'linear-gradient(135deg, rgba(240,131,0,0.08), rgba(253,208,0,0.06))',
+                        }}
+                        aria-hidden
+                    />
                     <HeroSection title="About Us" description="OurDeskについて" activeIndex={1} />
                     <AboutUsIntroSection />
                 </div>

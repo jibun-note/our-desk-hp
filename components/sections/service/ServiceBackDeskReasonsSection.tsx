@@ -1,75 +1,444 @@
 'use client'
 
+import { useRef, useEffect, useState } from 'react'
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
 
 type Props = {
-  eyebrow: string
-  headline: string
-  items: readonly string[]
+    eyebrow: string
+    headline?: string
+    sub?: string
+    items?: readonly string[]
 }
 
-function CheckIcon() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="2"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      className="w-5 h-5 text-[#F08300] flex-shrink-0 mt-0.5"
-    >
-      <polyline points="20 6 9 17 4 12" />
-    </svg>
-  )
+const ITEMS = [
+    {
+        title: '稼働はすべてシステムに記録',
+        body: '実施内容・時間・履歴が残り、口頭ベースになりません。',
+        num: '01',
+    },
+    {
+        title: '稼働と請求が連動',
+        body: '「何に対する請求か」が分かる状態で管理できます。',
+        num: '02',
+    },
+    {
+        title: 'いつでも状況を確認できる',
+        body: '実施内容・稼働時間・履歴をいつでも確認できます。',
+        num: '03',
+    },
+    {
+        title: '権限分離で情報管理',
+        body: '閲覧範囲を分け、必要な情報だけにアクセスを制御します。',
+        num: '04',
+    },
+] as const
+
+const LEDGER_STYLES = {
+    wrap: {
+        background: '#faf7f0',
+        border: '1px solid #e0d8c8',
+        borderRadius: 8,
+        overflow: 'hidden',
+        fontFamily: "'Courier New', monospace",
+    } as React.CSSProperties,
+    header: {
+        background: '#f0ead8',
+        padding: '8px 12px',
+        fontSize: 10,
+        display: 'flex',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+    } as React.CSSProperties,
+    rowBorder: '1px dashed #ede5d0',
 }
 
-/**
- * BackDeskが選ばれる理由：業務管理システムの強みを箇条書きで紹介するセクション
- */
-export default function ServiceBackDeskReasonsSection({
-  eyebrow,
-  headline,
-  items,
-}: Props) {
-  return (
-    <section
-      className="bg-white py-20 md:py-28 relative"
-      aria-label="BackDeskが選ばれる理由"
-    >
-      <div className="container mx-auto max-w-5xl px-4 md:px-8">
-        <div className="text-center max-w-[560px] mx-auto mb-12 md:mb-16">
-          <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center justify-center gap-3 mb-2">
-            <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
-            {eyebrow}
-          </p>
-          <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line">
-            {headline}
-          </h2>
-          <div className="mt-3 flex justify-center">
-            <HandwrittenLine
-              variant={5}
-              color="rgba(240,131,0,0.6)"
-              width={120}
-              align="center"
-            />
-          </div>
+function useSectionReveal(count: number) {
+    const ref = useRef<HTMLDivElement>(null)
+    const [revealed, setRevealed] = useState<boolean[]>(Array(count).fill(false))
+
+    useEffect(() => {
+        const el = ref.current
+        let timers: ReturnType<typeof setTimeout>[] = []
+        const obs = new IntersectionObserver(
+            ([e]) => {
+                if (!e?.isIntersecting) return
+                timers = Array.from({ length: count }, (_, i) =>
+                    setTimeout(() => {
+                        setRevealed((prev) => {
+                            const n = [...prev]
+                            n[i] = true
+                            return n
+                        })
+                    }, i * 120)
+                )
+                obs.disconnect()
+            },
+            { threshold: 0.1 }
+        )
+        if (el) obs.observe(el)
+        return () => {
+            obs.disconnect()
+            timers.forEach(clearTimeout)
+        }
+    }, [count])
+
+    return [ref, revealed] as const
+}
+
+/** カード01: 業務実績 — テーブル（日付 / 業務内容 / 作業時間 / ステータス） */
+function LedgerBusinessLog() {
+    const rows = [
+        { date: '06/02', task: 'メール対応', time: '0.5h', status: 'approved' as const },
+        { date: '06/05', task: '資料整理', time: '1.0h', status: 'approved' as const },
+        { date: '06/10', task: '請求処理', time: '0.8h', status: 'remand' as const },
+        { date: '06/12', task: '日程調整', time: '0.3h', status: 'approved' as const },
+    ]
+    return (
+        <div style={LEDGER_STYLES.wrap}>
+            <div style={LEDGER_STYLES.header}>
+                <span>業務実績 — 2025.06</span>
+                <span style={{ color: '#666' }}>山田</span>
+            </div>
+            <div style={{ padding: '0 12px', fontSize: 9 }}>
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: '52px 1fr 44px 72px',
+                        gap: 8,
+                        padding: '6px 0',
+                        borderBottom: LEDGER_STYLES.rowBorder,
+                        color: '#888',
+                    }}
+                >
+                    <span>日付</span>
+                    <span>業務内容</span>
+                    <span>作業時間</span>
+                    <span>ステータス</span>
+                </div>
+                {rows.map((r, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: '52px 1fr 44px 72px',
+                            gap: 8,
+                            padding: '6px 0',
+                            borderBottom: i < rows.length - 1 ? LEDGER_STYLES.rowBorder : 'none',
+                            color: '#333',
+                        }}
+                    >
+                        <span>{r.date}</span>
+                        <span>{r.task}</span>
+                        <span>{r.time}</span>
+                        <span
+                            style={{
+                                color: r.status === 'approved' ? '#16a34a' : '#dc2626',
+                            }}
+                        >
+                            {r.status === 'approved' ? '✓ 承認済' : '✕ 差戻し'}
+                        </span>
+                    </div>
+                ))}
+            </div>
         </div>
+    )
+}
 
-        <ul className="space-y-4 max-w-2xl mx-auto">
-          {items.map((item, i) => (
-            <li
-              key={i}
-              className="flex gap-4 items-start text-left bg-[#fffdf5] border border-[#ece8de] rounded-lg px-5 py-4"
+/** カード02: 顧客請求 — 請求書断片（業務＋金額、合計オレンジ） */
+function LedgerInvoice() {
+    const lines = [
+        { label: 'メール対応・資料整理', amount: '¥8,000' },
+        { label: '請求処理', amount: '¥6,400' },
+        { label: '日程調整', amount: '¥2,400' },
+    ]
+    return (
+        <div style={LEDGER_STYLES.wrap}>
+            <div style={LEDGER_STYLES.header}>
+                <span>顧客請求 — 2025.06</span>
+                <span style={{ background: '#16a34a', color: '#fff', padding: '2px 6px', borderRadius: 4, fontSize: 9 }}>
+                    入金済
+                </span>
+            </div>
+            <div style={{ padding: '8px 12px', fontSize: 9 }}>
+                {lines.map((l, i) => (
+                    <div
+                        key={i}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            padding: '4px 0',
+                            borderBottom: i < lines.length - 1 ? LEDGER_STYLES.rowBorder : 'none',
+                            color: '#333',
+                        }}
+                    >
+                        <span>{l.label}</span>
+                        <span>{l.amount}</span>
+                    </div>
+                ))}
+                <div
+                    style={{
+                        display: 'flex',
+                        justifyContent: 'space-between',
+                        padding: '6px 0 0',
+                        marginTop: 4,
+                        fontWeight: 700,
+                        color: '#F08300',
+                    }}
+                >
+                    <span>合計</span>
+                    <span>¥16,800</span>
+                </div>
+            </div>
+        </div>
+    )
+}
+
+/** カード03: 稼働状況 / アサイン確認 */
+function LedgerStatus() {
+    const items = [
+        { label: '今月の稼働時間', value: '12.4h' },
+        { label: '実施件数', value: '28件' },
+        { label: '請求ステータス', value: '請求済' },
+        { label: '入金ステータス', value: '入金済' },
+    ]
+    return (
+        <div style={LEDGER_STYLES.wrap}>
+            <div style={LEDGER_STYLES.header}>
+                <span>稼働状況 / アサイン確認</span>
+            </div>
+            <div style={{ padding: '8px 12px', fontSize: 9 }}>
+                {items.map((item, i) => (
+                    <div
+                        key={item.label}
+                        style={{
+                            display: 'flex',
+                            justifyContent: 'space-between',
+                            padding: '5px 0',
+                            borderBottom: i < items.length - 1 ? LEDGER_STYLES.rowBorder : 'none',
+                            color: '#333',
+                        }}
+                    >
+                        <span>{item.label}</span>
+                        <span>{item.value}</span>
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+/** カード04: ACCESS MATRIX（ロール × 権限） */
+function LedgerAccessMatrix() {
+    const roles: { name: string; color: string; 稼働: string; 承認: string; 請求: string; アカウント: string }[] = [
+        { name: '全権ユーザ', color: '#2563eb', 稼働: '◯', 承認: '◯', 請求: '◯', アカウント: '◯' },
+        { name: '秘書', color: '#F08300', 稼働: '申請', 承認: '閲覧', 請求: '閲覧', アカウント: '—' },
+        { name: '顧客', color: '#16a34a', 稼働: '閲覧', 承認: '—', 請求: '閲覧', アカウント: '—' },
+    ]
+    const cols = ['稼働', '承認', '請求', 'アカウント'] as const
+    return (
+        <div style={LEDGER_STYLES.wrap}>
+            <div style={LEDGER_STYLES.header}>
+                <span>ACCESS MATRIX</span>
+            </div>
+            <div style={{ padding: '8px 12px', fontSize: 9 }}>
+                <div
+                    style={{
+                        display: 'grid',
+                        gridTemplateColumns: '72px repeat(4, 1fr)',
+                        gap: 6,
+                        padding: '4px 0',
+                        borderBottom: LEDGER_STYLES.rowBorder,
+                        color: '#888',
+                    }}
+                >
+                    <span></span>
+                    {cols.map((c) => (
+                        <span key={c}>{c}</span>
+                    ))}
+                </div>
+                {roles.map((r, i) => (
+                    <div
+                        key={r.name}
+                        style={{
+                            display: 'grid',
+                            gridTemplateColumns: '72px repeat(4, 1fr)',
+                            gap: 6,
+                            padding: '5px 0',
+                            borderBottom: i < roles.length - 1 ? LEDGER_STYLES.rowBorder : 'none',
+                            color: '#333',
+                        }}
+                    >
+                        <span style={{ fontWeight: 600, color: r.color }}>{r.name}</span>
+                        {cols.map((col) => {
+                            const val = r[col]
+                            const isO = val === '◯'
+                            const isGray = val === '閲覧' || val === '申請'
+                            const isDash = val === '—'
+                            return (
+                                <span
+                                    key={col}
+                                    style={{
+                                        color: isO ? '#16a34a' : isGray ? '#666' : isDash ? '#bbb' : '#333',
+                                    }}
+                                >
+                                    {val}
+                                </span>
+                            )
+                        })}
+                    </div>
+                ))}
+            </div>
+        </div>
+    )
+}
+
+const LEDGER_VISUALS = [LedgerBusinessLog, LedgerInvoice, LedgerStatus, LedgerAccessMatrix] as const
+
+const EASE = 'cubic-bezier(.16,1,.3,1)'
+const BLUR_DELAY_AFTER_HEADING_ANIM = 1
+
+export default function ServiceBackDeskReasonsSection({
+    eyebrow,
+}: Props) {
+    const [ref, revealed] = useSectionReveal(4)
+
+    const cardBase = (i: number) => ({
+        background: '#fff',
+        borderRadius: 16,
+        boxShadow: revealed[i]
+            ? '0 2px 24px rgba(0,0,0,0.06), 0 1px 4px rgba(0,0,0,0.04)'
+            : 'none',
+        filter: revealed[i] ? 'blur(0)' : 'blur(14px)',
+        opacity: revealed[i] ? 1 : 0.2,
+        transform: revealed[i] ? 'translateY(0)' : 'translateY(12px)',
+        transition: `
+      filter     2.2s ${EASE} ${BLUR_DELAY_AFTER_HEADING_ANIM + i * 0.18}s,
+      opacity    1.2s ${EASE} ${i * 0.18}s,
+      transform  1.0s ${EASE} ${i * 0.18}s,
+      box-shadow 0.8s ${i * 0.18 + 0.4}s
+    `.trim(),
+    })
+
+    return (
+        <>
+            <style
+                dangerouslySetInnerHTML={{
+                    __html: `
+.bd-section { padding: 96px 40px; }
+.bd-heading { display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: auto auto; gap: 0 40px; row-gap: 16px; margin-bottom: 56px; }
+.bd-heading-eyebrow { grid-column: 1; grid-row: 1; }
+.bd-heading-main { grid-column: 1; grid-row: 2; }
+.bd-heading-sub-wrap { grid-column: 2; grid-row: 2; align-self: start; }
+.bd-heading-sub { line-height: 1.9; }
+.bd-card-hero-inner { display: grid; grid-template-columns: 1fr 1.4fr; gap: 40px; align-items: center; padding: 36px 32px; }
+.bd-grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+.bd-card-small { padding: 28px 24px; }
+
+@media (max-width: 768px) {
+  .bd-section { padding: 72px 24px; }
+  .bd-heading { grid-template-columns: 1fr; gap: 16px; margin-bottom: 40px; }
+  .bd-heading-eyebrow { grid-row: 1; }
+  .bd-heading-main { grid-row: 2; }
+  .bd-heading-sub-wrap { grid-column: 1; grid-row: 3; display: none; }
+  .bd-heading-sub { display: none; }
+  .bd-card-hero-inner { grid-template-columns: 1fr; gap: 24px; padding: 24px 20px; }
+  .bd-grid-3 { grid-template-columns: 1fr 1fr; gap: 12px; }
+  .bd-card-small { padding: 22px 18px; }
+}
+
+@media (max-width: 480px) {
+  .bd-section { padding: 56px 16px; }
+  .bd-card-hero-inner { padding: 20px 16px; }
+  .bd-grid-3 { grid-template-columns: 1fr; }
+  .bd-card-small { padding: 20px 16px; }
+          `.trim(),
+                }}
+            />
+            <section
+                className="bd-section"
+                style={{ background: '#f7f5ef' }}
+                aria-label="OurDeskが選ばれる理由"
             >
-              <CheckIcon />
-              <span className="text-sm md:text-[0.9rem] leading-relaxed text-gray-700 text-pretty">
-                {item}
-              </span>
-            </li>
-          ))}
-        </ul>
-      </div>
-    </section>
-  )
+                <div style={{ maxWidth: 1080, margin: '0 auto' }} ref={ref}>
+                    <div className="bd-heading">
+                        <p className="bd-heading-eyebrow text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+                            <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
+                            {eyebrow}
+                        </p>
+                        <div className="bd-heading-main">
+                            <h2 className="text-2xl md:text-4xl font-bold text-gray-900 text-balance leading-tight whitespace-pre-line mb-2">
+                                すべて見える
+                                <br />
+                                だから任せられる
+                            </h2>
+                            <div className="mb-4">
+                                <HandwrittenLine variant={3} color="rgba(240,131,0,0.65)" width={140} align="left" visible={revealed[0]} />
+                            </div>
+                        </div>
+                        <div className="bd-heading-sub-wrap">
+                            <p className="bd-heading-sub text-sm md:text-base text-gray-600 leading-relaxed text-pretty">
+                                OurDeskは、独自の業務管理システム 「BackDesk」 を活用し、稼働・報告・請求を&quot;見える化&quot;して運用しています。任せっぱなしにしない、管理できる外部サポートです。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div>
+                        {/* カード01: 横2カラム（左テキスト・右ビジュアル） */}
+                        <div
+                            style={{
+                                ...cardBase(0),
+                                marginBottom: 16,
+                            }}
+                        >
+                            <div className="bd-card-hero-inner">
+                                <div>
+                                    <span className="text-xs font-bold text-[#F08300] tracking-[0.15em] block mb-4">
+                                        {ITEMS[0].num}
+                                    </span>
+                                    <h3 className="text-lg md:text-xl font-bold text-gray-900 mb-3 leading-tight">
+                                        {ITEMS[0].title}
+                                    </h3>
+                                    <p className="text-sm text-gray-500 leading-relaxed">
+                                        {ITEMS[0].body}
+                                    </p>
+                                </div>
+                                <div>
+                                    <LedgerBusinessLog />
+                                </div>
+                            </div>
+                        </div>
+
+                        {/* カード02〜04: 3カラムグリッド */}
+                        <div className="bd-grid-3">
+                            {ITEMS.slice(1).map((item, i) => {
+                                const idx = i + 1
+                                const LedgerVisual = LEDGER_VISUALS[idx]
+                                return (
+                                    <div
+                                        key={item.num}
+                                        className="bd-card-small"
+                                        style={cardBase(idx)}
+                                    >
+                                        <div style={{ marginBottom: 20 }}>
+                                            <LedgerVisual />
+                                        </div>
+                                        <span className="text-xs font-bold text-[#F08300] block mb-2.5">
+                                            {item.num}
+                                        </span>
+                                        <h3 className="text-base font-bold mb-2 leading-snug text-gray-900">
+                                            {item.title}
+                                        </h3>
+                                        <p className="text-sm text-gray-500 leading-relaxed">
+                                            {item.body}
+                                        </p>
+                                    </div>
+                                )
+                            })}
+                        </div>
+                    </div>
+
+                </div>
+            </section>
+        </>
+    )
 }
