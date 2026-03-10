@@ -66,7 +66,7 @@ export default function AboutUsVisionSection() {
                     </div>
                     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-orange-100 to-yellow-100">
                         <Image
-                            src="/images/about-us/02.jpeg"
+                            src="/images/about-us/04.jpeg"
                             alt="OurDeskが目指す未来"
                             fill
                             className="object-cover"
