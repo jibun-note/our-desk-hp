@@ -518,7 +518,7 @@ export default function ApplicationForm() {
                                                     aria-describedby={errors.privacy ? 'err-privacy' : undefined}
                                                 />
                                                 <label htmlFor="app-privacy" className="text-sm text-gray-600 leading-[1.7] cursor-pointer text-pretty">
-                                                    <Link href="/privacy/" target="_blank" rel="noopener noreferrer" className="text-gray-800 font-medium border-b border-gray-800 hover:no-underline">
+                                                    <Link href="/privacy/#handling" target="_blank" rel="noopener noreferrer" className="text-gray-800 font-medium border-b border-gray-800 hover:no-underline">
                                                         個人情報の取り扱い
                                                     </Link>
                                                     に同意の上、送信してください。

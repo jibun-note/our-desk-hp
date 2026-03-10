@@ -20,6 +20,11 @@ body {
 	scroll-margin-top: 5rem;
 }
 
+/* プライバシーページ「個人情報の取扱いについて」: アンカーで少し行き過ぎるのを防ぐ */
+#handling {
+	scroll-margin-top: 5rem;
+}
+
 /* ヒーロー用テキストグラデーション (#FDD000 → #F08300) */
 /* GSAP SplitText で .split-char / .split-word に分割されるため、子要素にグラデーションを適用 */
 .text-gradient-hero,
@@ -270,13 +275,38 @@ body {
 	66%      { transform: translate(3vw, -5vw) scale(0.97) rotate(-1deg); }
 }
 
+/* About Us: Soft Organic blob 装飾 */
+.about-us-blob-1 {
+	animation: blobDrift1 14s ease-in-out infinite;
+}
+@keyframes blobDrift1 {
+	0%, 100% {
+		transform: translate(0, 0) scale(1);
+		border-radius: 52% 48% 50% 50% / 50% 50% 48% 52%;
+	}
+	50% {
+		transform: translate(-16px, 12px) scale(1.04);
+		border-radius: 48% 52% 52% 48% / 52% 48% 50% 50%;
+	}
+}
+
+.about-us-blob-2 {
+	animation: blobDrift2 18s ease-in-out infinite;
+}
+@keyframes blobDrift2 {
+	0%, 100% { transform: translate(0, 0) scale(1); }
+	50% { transform: translate(12px, -18px) scale(1.05); }
+}
+
 @media (prefers-reduced-motion: reduce) {
 	.blob-drift-float-a,
 	.blob-drift-float-b,
 	.blob-drift-float-c,
 	.blob-drift-float-d,
 	.blob-drift-float-e,
-	.blob-drift-float-f {
+	.blob-drift-float-f,
+	.about-us-blob-1,
+	.about-us-blob-2 {
 		animation: none;
 	}
 }
@@ -364,7 +394,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 50px;
-	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,80 C200,0 400,120 600,80 C800,0 1000,120 1200,80 L1200,0 L0,0 Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
 	background-size: cover;
 	pointer-events: none;
 	transform: scaleY(-1);
@@ -376,7 +406,7 @@ body {
 	left: 0;
 	width: 100%;
 	height: 50px;
-	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
+	background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 120' preserveAspectRatio='none'%3E%3Cpath d='M0,80 C200,0 400,120 600,80 C800,0 1000,120 1200,80 L1200,0 L0,0 Z' fill='%23ffffff'%3E%3C/path%3E%3C/svg%3E") no-repeat;
 	background-size: cover;
 	pointer-events: none;
 	z-index: 1;
@@ -494,5 +524,25 @@ input.checkbox-contact:checked {
 @media (prefers-reduced-motion: reduce) {
 	.blob-btn::before {
 		transition: none;
+	}
+}
+
+/* サービスイントロ: ビューポートが低いときコンテンツを縮小してスクロールなしで全表示 */
+@media (max-height: 700px) {
+	.service-intro-section .service-intro-content {
+		transform: scale(0.85);
+		transform-origin: center top;
+	}
+}
+@media (max-height: 560px) {
+	.service-intro-section .service-intro-content {
+		transform: scale(0.70);
+		transform-origin: center top;
+	}
+}
+@media (max-height: 450px) {
+	.service-intro-section .service-intro-content {
+		transform: scale(0.58);
+		transform-origin: center top;
 	}
 }

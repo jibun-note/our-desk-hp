@@ -1,7 +1,13 @@
 'use client'
 
 import HandwrittenLine from '@/components/ui/HandwrittenLine'
-import type { StaffItem } from '@/lib/data/service'
+
+/** service.ts から削除されたため、当コンポーネント用にローカル定義（他ページで未使用） */
+type StaffItem = {
+  badge: string
+  hours: string
+  description: string
+}
 
 function AvatarPlaceholder() {
   return (
@@ -31,7 +37,7 @@ export default function ServiceStaffSection({ head, staff }: Props) {
     <section className="bg-[#fffdf5] py-20 md:py-28" aria-label="スタッフ紹介">
       <div className="container mx-auto max-w-5xl px-4 md:px-8">
         <div className="max-w-[500px] mb-12 md:mb-14">
-          <p className="text-[0.68rem] tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
+          <p className="text-sm tracking-[0.2em] text-[#F08300] font-medium flex items-center gap-3 mb-2">
             <span className="w-5 h-px bg-[#F08300] flex-shrink-0" />
             {head.eyebrow}
           </p>
@@ -54,17 +60,17 @@ export default function ServiceStaffSection({ head, staff }: Props) {
                   <AvatarPlaceholder />
                 </div>
                 <div>
-                  <span className="inline-block text-[0.62rem] tracking-widest text-[#F08300] border border-[#F08300]/25 px-2.5 py-1 rounded-full mb-1">
+                  <span className="inline-block text-xs tracking-widest text-[#F08300] border border-[#F08300]/25 px-2.5 py-1 rounded-full mb-1">
                     {person.badge}
                   </span>
-                  <div className="text-[0.68rem] text-[#999]">{person.hours}</div>
+                  <div className="text-xs text-[#999]">{person.hours}</div>
                 </div>
               </div>
               <div
                 className="w-7 h-[3px] rounded-sm bg-gradient-to-r from-[#FDD000] to-[#F08300] my-4"
                 aria-hidden
               />
-              <p className="text-sm md:text-[0.8rem] leading-relaxed text-[#666] text-pretty">
+              <p className="text-sm md:text-base leading-relaxed text-[#666] text-pretty">
                 {person.description}
               </p>
             </div>

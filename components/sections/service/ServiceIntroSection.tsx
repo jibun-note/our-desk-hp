@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { Shippori_Mincho_B1 } from 'next/font/google'
 import SplitText from '@/components/ui/SplitText'
@@ -26,13 +25,9 @@ const INTRO_SPLIT_PROPS = {
 }
 
 type Props = {
-  imageSrc: string
-  imageAlt: string
   eyebrow: string
   headline: string
   sub: string
-  /** BackDeskの立ち位置（OurDeskのシステムとして一言紹介）。省略可 */
-  backDeskIntro?: string
   ctaPrimary: string
 }
 
@@ -41,53 +36,30 @@ type Props = {
  * 斜め写真・見出し「本業に集中できていますか？」・手書きライン・CTA を表示。
  */
 export default function ServiceIntroSection({
-  imageSrc,
-  imageAlt,
   eyebrow,
   headline,
   sub,
-  backDeskIntro,
   ctaPrimary,
 }: Props) {
   return (
     <section
-      className="relative min-h-[80vh] overflow-hidden bg-[#fffdf5] grid place-items-center py-16 md:py-24"
+      className="service-intro-section relative flex-1 overflow-hidden grid place-items-center py-3 md:py-6"
+      style={{
+        background: 'linear-gradient(to right, #ffffff 0%, rgba(255,255,255,0.95) 35%, transparent 70%)',
+      }}
       aria-label="BackDesk サービス"
     >
-      {/* 斜めクリップの写真（右下に流れ込む） */}
-      <div
-        className="absolute top-0 right-[-5%] bottom-0 w-[58%] z-0"
-        style={{ clipPath: 'polygon(18% 0%, 100% 0%, 100% 100%, 0% 100%)' }}
-      >
-        <Image
-          src={imageSrc}
-          alt={imageAlt}
-          width={1400}
-          height={900}
-          className="w-full h-full object-cover object-[60%_20%] block"
-          priority
-          sizes="58vw"
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'linear-gradient(to right, #fffdf5 0%, rgba(255,253,245,0.3) 40%, transparent 70%)',
-          }}
-        />
-      </div>
-
-      {/* 中央テキストゾーン */}
-      <div className="relative z-10 w-full max-w-6xl px-6 md:px-12 py-12 flex flex-col items-center text-center">
-        <p className="text-[0.7rem] tracking-[0.18em] text-[#F08300] font-medium flex items-center gap-3 mb-8">
-          <span className="w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
+      {/* 中央テキストゾーン（スクロールなしで全表示・高さに合わせてコンパクトに） */}
+      <div className="service-intro-content relative z-10 w-full max-w-6xl px-4 md:px-12 py-0 flex flex-col items-center text-center min-h-0">
+        <p className="text-xs md:text-sm tracking-[0.18em] text-[#F08300] font-medium flex items-center justify-center gap-2 md:gap-3 mb-2 md:mb-5 flex-shrink-0">
+          <span className="w-6 md:w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
           {eyebrow}
-          <span className="w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
+          <span className="w-6 md:w-8 h-px bg-[#F08300] flex-shrink-0" aria-hidden />
         </p>
 
         <h2
           className={cn(
-            'text-[2.5rem] md:text-5xl lg:text-6xl xl:text-7xl font-medium leading-[1.1] text-gray-900 text-balance mb-3 max-w-4xl',
+            'text-lg sm:text-xl md:text-4xl lg:text-5xl xl:text-6xl font-medium leading-[1.15] text-gray-900 text-balance mb-1.5 md:mb-2 max-w-4xl flex-shrink-0',
             shipporiMincho.className
           )}
         >
@@ -104,17 +76,17 @@ export default function ServiceIntroSection({
           ))}
         </h2>
 
-        <div className="mb-8 flex justify-center w-full">
+        <div className="mb-2 md:mb-5 flex justify-center w-full flex-shrink-0">
           <HandwrittenLine
             variant={1}
             color="#FDD000"
-            width={280}
+            width={240}
             align="center"
-            delayWhenInViewMs={1800}
+            delayWhenInViewMs={2000}
           />
         </div>
 
-        <p className="text-sm md:text-base leading-relaxed text-[#666] max-w-[480px] mb-4 text-pretty">
+        <p className="text-xs md:text-sm leading-relaxed text-[#666] max-w-[480px] mb-2 md:mb-5 text-pretty flex-shrink-0">
           {sub.split('\n').map((line, i) => (
             <span key={i}>
               {i > 0 && <br />}
@@ -123,17 +95,10 @@ export default function ServiceIntroSection({
           ))}
         </p>
 
-        {backDeskIntro && (
-          <p className="text-xs md:text-sm leading-relaxed text-[#888] max-w-[480px] mb-10 text-pretty">
-            {backDeskIntro}
-          </p>
-        )}
-        {!backDeskIntro && <div className="mb-10" />}
-
-        <div className="flex flex-wrap gap-4 justify-center items-center">
+        <div className="flex flex-wrap gap-3 justify-center items-center flex-shrink-0">
           <Link
             href="#contact"
-            className="inline-block text-sm font-medium text-gray-900 bg-gradient-to-r from-[#FDD000] to-[#F08300] py-3.5 px-8 rounded-full hover:opacity-90 hover:-translate-y-0.5 transition-all duration-200"
+            className="inline-block text-xs md:text-sm font-medium text-gray-900 bg-gradient-to-r from-[#FDD000] to-[#F08300] py-2.5 md:py-3 px-6 md:px-8 rounded-full hover:opacity-90 hover:-translate-y-0.5 transition-all duration-200"
           >
             {ctaPrimary}
           </Link>
