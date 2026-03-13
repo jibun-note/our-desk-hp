@@ -42,8 +42,9 @@ export default function ServicePage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/service/" name="Service" />
-            <main className="min-h-screen bg-white relative">
-
+            <div className="min-h-screen bg-white relative">
+                {/* 横スクロール防止 */}
+                <div className="overflow-x-hidden">
                 {/* 1. Hero ── ファーストビュー */}
                 <ServiceHeroBlockSection
                     heroImageSrc={IMG.hero}
@@ -130,8 +131,9 @@ export default function ServicePage() {
                     buttonLabel={CTA.button}
                     ctaBgImage={IMG.ctaBg}
                 />
+                </div>
 
-            </main>
+            </div>
         </>
     )
 }
