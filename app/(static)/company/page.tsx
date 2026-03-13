@@ -5,8 +5,17 @@
 import BlobDecoration from '@/components/ui/BlobDecoration'
 import HeadingLine from '@/components/ui/HeadingLine'
 import HeroSection from '@/components/sections/HeroSection'
-import WaveClipLayer from '@/components/sections/WaveClipLayer'
+import WaveClipLayer, { type WaveClipPathSet } from '@/components/sections/WaveClipLayer'
 import { createPageMetadata } from '@/lib/seo'
+
+/**
+ * Companyページ用の波クリップ（objectBoundingBox 0〜1）。
+ * 深くする: Q の真ん中の数値を大きく（例 0.05→0.08）。浅くする: 小さく（例 0.08→0.03）。
+ */
+const COMPANY_WAVE_PATHS: WaveClipPathSet = {
+    mobile: { d: 'M0 0.01 Q 0.4 0.03 1 0.01 L 1 1 L 0 1 Z' },
+    desktop: { d: 'M0 0 Q 0.4 0.06 1 0 L 1 1 L 0 1 Z' },
+}
 import { executives, ACCESS_LOCATIONS } from '@/lib/data/company'
 import Image from 'next/image'
 
@@ -83,7 +92,7 @@ export default function CompanyPage() {
 
             {/* 会社概要エリア：上端が波型に切れたオフィス写真 → その下に会社概要・アクセス */}
             <div className="relative min-h-[40rem] bg-[#fffdf5]">
-                <WaveClipLayer idPrefix="company">
+                <WaveClipLayer idPrefix="company" clipPaths={COMPANY_WAVE_PATHS}>
                     <div
                         className="absolute inset-0 bg-cover bg-center bg-no-repeat"
                         style={{ backgroundImage: 'url(/images/company/office-bg.jpeg)' }}
