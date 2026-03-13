@@ -44,93 +44,93 @@ export default function ServicePage() {
             <BreadcrumbJsonLdServer path="/service/" name="Service" />
             <div className="min-h-screen bg-white relative">
                 {/* 横スクロール防止 */}
-                <div className="overflow-x-hidden">
-                {/* 1. Hero ── ファーストビュー */}
-                <ServiceHeroBlockSection
-                    heroImageSrc={IMG.hero}
-                    heroTitle="Service"
-                    heroDescription="OurDeskのバックオフィス支援"
-                    activeIndex={0}
-                    introEyebrow={HERO.eyebrow}
-                    introHeadline={HERO.headline}
-                    introSub={HERO.sub}
-                    introCtaPrimary={HERO.ctaPrimary}
-                />
-
-                <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
-
-                {/* 2. Pain */}
-                <div style={{ background: '#ffffff' }}>
-                    <ServicePainSection
-                        imageSrc={IMG.pain}
-                        imageAlt="バックオフィス業務"
-                        eyebrow={PAIN.eyebrow}
-                        headline={PAIN.headline}
-                        items={PAIN_ITEMS}
+                <div className="overflow-x-clip">
+                    {/* 1. Hero ── ファーストビュー */}
+                    <ServiceHeroBlockSection
+                        heroImageSrc={IMG.hero}
+                        heroTitle="Service"
+                        heroDescription="OurDeskのバックオフィス支援"
+                        activeIndex={0}
+                        introEyebrow={HERO.eyebrow}
+                        introHeadline={HERO.headline}
+                        introSub={HERO.sub}
+                        introCtaPrimary={HERO.ctaPrimary}
                     />
-                </div>
 
-                <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
+                    <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
 
-                {/* 3. Bridge */}
-                <ServiceBridgeSection
-                    headline={BRIDGE.headline}
-                    body={BRIDGE.body}
-                    ctaLabel={BRIDGE.ctaLabel}
-                    ctaHref={BRIDGE.ctaHref}
-                />
+                    {/* 2. Pain */}
+                    <div style={{ background: '#ffffff' }}>
+                        <ServicePainSection
+                            imageSrc={IMG.pain}
+                            imageAlt="バックオフィス業務"
+                            eyebrow={PAIN.eyebrow}
+                            headline={PAIN.headline}
+                            items={PAIN_ITEMS}
+                        />
+                    </div>
 
-                <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
+                    <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
 
-                {/* 4. How */}
-                <div style={{ background: '#ffffff' }}>
-                    <ServiceHowSection head={HOW} items={HOW_ITEMS} />
-                </div>
+                    {/* 3. Bridge */}
+                    <ServiceBridgeSection
+                        headline={BRIDGE.headline}
+                        body={BRIDGE.body}
+                        ctaLabel={BRIDGE.ctaLabel}
+                        ctaHref={BRIDGE.ctaHref}
+                    />
 
-                <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+                    <WaveDivider bgColor="#ffffff" fillColor="#ffffff" />
 
-                {/* 4. Services */}
-                <div style={{ background: '#fffdf5' }}>
-                    <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />
-                </div>
+                    {/* 4. How */}
+                    <div style={{ background: '#ffffff' }}>
+                        <ServiceHowSection head={HOW} items={HOW_ITEMS} />
+                    </div>
 
-                <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
+                    <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
-                {/* 5. Pricing */}
-                <ServicePricingSection head={PRICING_HEAD} items={PRICING_ITEMS} />
+                    {/* 4. Services */}
+                    <div style={{ background: '#fffdf5' }}>
+                        <ServiceServicesSection head={SERVICES_HEAD} groups={SERVICES_GROUPS} />
+                    </div>
 
-                <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+                    <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
 
-                {/* 6. Case Studies */}
-                <div style={{ background: '#fffdf5' }}>
-                    <ServiceCaseStudiesSection head={CASE_STUDIES_HEAD} cases={CASE_STUDIES} />
-                </div>
+                    {/* 5. Pricing */}
+                    <ServicePricingSection head={PRICING_HEAD} items={PRICING_ITEMS} />
 
-                <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
+                    <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
 
-                {/* 7. Process */}
-                <div style={{ background: '#ffffff' }}>
-                    <ServiceProcessSection head={PROCESS_HEAD} steps={PROCESS_STEPS} imageSrc={IMG.process} />
-                </div>
+                    {/* 6. Case Studies */}
+                    <div style={{ background: '#fffdf5' }}>
+                        <ServiceCaseStudiesSection head={CASE_STUDIES_HEAD} cases={CASE_STUDIES} />
+                    </div>
 
-                <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+                    <WaveDivider bgColor="#fffdf5" fillColor="#ffffff" />
 
-                {/* 8. FAQ */}
-                <ServiceFaqSection
-                    imageSrc={IMG.faq}
-                    imageAlt=""
-                    head={FAQ_HEAD}
-                    items={FAQ_ITEMS}
-                />
+                    {/* 7. Process */}
+                    <div style={{ background: '#ffffff' }}>
+                        <ServiceProcessSection head={PROCESS_HEAD} steps={PROCESS_STEPS} imageSrc={IMG.process} />
+                    </div>
 
-                {/* 9. CTA */}
-                <ServiceCtaSection
-                    headline={CTA.headline}
-                    headlineGrad={CTA.headlineGrad}
-                    sub={CTA.sub}
-                    buttonLabel={CTA.button}
-                    ctaBgImage={IMG.ctaBg}
-                />
+                    <WaveDivider bgColor="#ffffff" fillColor="#fffdf5" />
+
+                    {/* 8. FAQ */}
+                    <ServiceFaqSection
+                        imageSrc={IMG.faq}
+                        imageAlt=""
+                        head={FAQ_HEAD}
+                        items={FAQ_ITEMS}
+                    />
+
+                    {/* 9. CTA */}
+                    <ServiceCtaSection
+                        headline={CTA.headline}
+                        headlineGrad={CTA.headlineGrad}
+                        sub={CTA.sub}
+                        buttonLabel={CTA.button}
+                        ctaBgImage={IMG.ctaBg}
+                    />
                 </div>
 
             </div>
