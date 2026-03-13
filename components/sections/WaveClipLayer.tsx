@@ -1,7 +1,12 @@
 'use client'
 
-import { WAVE_CLIP_PATHS } from '@/lib/data/waveClipLayer'
 import type { ReactNode } from 'react'
+
+/** デフォルトの波クリップパス（objectBoundingBox 0〜1）。ハイドレーション一致のためコンポーネント内で定義。 */
+const DEFAULT_WAVE_PATHS: { mobile: { d: string }; desktop: { d: string } } = {
+    mobile: { d: 'M0 0.01 Q 0.5 0.08 1 0.01 L 1 1 L 0 1 Z' },
+    desktop: { d: 'M0 0.03 Q 0.5 0.14 1 0.03 L 1 1 L 0 1 Z' },
+}
 
 const WAVE_VARIANTS = [
     { key: 'mobile' as const, className: 'absolute inset-0 md:hidden' },
@@ -22,11 +27,11 @@ export default function WaveClipLayer({
     children,
 }: {
     idPrefix?: string
-    /** 未指定時は共通の WAVE_CLIP_PATHS を使用 */
+    /** 未指定時は共通の DEFAULT_WAVE_PATHS を使用 */
     clipPaths?: WaveClipPathSet
     children: ReactNode
 }) {
-    const paths = clipPaths ?? WAVE_CLIP_PATHS
+    const paths = clipPaths ?? DEFAULT_WAVE_PATHS
     return (
         <>
             <svg width={0} height={0} aria-hidden>
