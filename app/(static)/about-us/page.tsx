@@ -20,7 +20,7 @@ export default function AboutUsPage() {
     return (
         <>
             <BreadcrumbJsonLdServer path="/about-us/" name="About Us" />
-            <main className="min-h-screen bg-white relative overflow-x-clip">
+            <div className="min-h-screen bg-white relative overflow-x-clip">
                 {/* ① HeroSection + MVV導入: クリーム背景。右 blob はラッパー内でセクションをまたいで表示 */}
                 <div className="relative z-[1] bg-[#fffdf5] overflow-visible">
                     {/* ヒーロー用 blob: 右 */}
@@ -73,7 +73,7 @@ export default function AboutUsPage() {
 
                 {/* ④ 締めくくり（ArchClip）。直前に WaveDivider を置かない */}
                 <AboutUsClosingSection />
-            </main>
+            </div>
         </>
     )
 }
