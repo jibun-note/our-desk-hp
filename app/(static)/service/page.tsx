@@ -129,7 +129,6 @@ export default function ServicePage() {
                         headlineGrad={CTA.headlineGrad}
                         sub={CTA.sub}
                         buttonLabel={CTA.button}
-                        ctaBgImage={IMG.ctaBg}
                     />
                 </div>
 
