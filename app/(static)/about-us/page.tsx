@@ -12,8 +12,8 @@ import { ABOUT_US_VALUE_ITEMS } from '@/lib/data/aboutUs'
 
 export const metadata = createPageMetadata(
     '/about-us/',
-    'About Us | OurDesk株式会社',
-    'OurDesk株式会社の代表メッセージとMVV（Mission、Vision、Value）をご紹介します。'
+    'About Us | Our Desk株式会社',
+    'Our Desk株式会社の代表メッセージとMVV（Mission、Vision、Value）をご紹介します。'
 )
 
 export default function AboutUsPage() {
@@ -46,7 +46,7 @@ export default function AboutUsPage() {
                         }}
                         aria-hidden
                     />
-                    <HeroSection title="About Us" description="OurDeskについて" activeIndex={1} />
+                    <HeroSection title="About Us" description="Our Deskについて" activeIndex={1} />
                     <AboutUsIntroSection />
                 </div>
 

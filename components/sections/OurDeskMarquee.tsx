@@ -2,7 +2,7 @@
 
 /**
  * OurDeskMarquee
- * 「OurDesk」が一定速度で流れるマーキー。スクロール非依存。
+ * 「Our Desk」が一定速度で流れるマーキー。スクロール非依存。
  * fixed=true のときビューポート中央に固定、false のときセクション内で absolute（スクロールに連動）。
  * ビューポート外ではアニメーションを一時停止して負荷を軽減する。
  */
@@ -11,7 +11,7 @@ import { Outfit } from 'next/font/google'
 
 const outfit = Outfit({ subsets: ['latin'], weight: ['700', '800'], display: 'swap' })
 
-const TEXT = 'OurDesk '
+const TEXT = 'Our Desk '
 const REPEAT = 24
 const ROW_CONTENT = TEXT.repeat(REPEAT)
 

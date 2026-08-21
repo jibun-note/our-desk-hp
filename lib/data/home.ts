@@ -4,9 +4,9 @@ import { contentWithLineBreaks } from "@/lib/contentHighlight";
 
 export const stackCards: StackCardItem[] = [
   {
-    title: "OurDeskの人材育成方針",
+    title: "Our Deskの人材育成方針",
     content: contentWithLineBreaks(
-      "私たちが大切にしているのは、\n働きたい！ \n人の力になりたい！ \n誰かを支える仕事がしたい！ \nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも\n大切に育てています。"
+      "私たちが大切にしているのは、\n働きたい！ \n人の力になりたい！ \n誰かを支える仕事がしたい！ \nそんな想いを持つ人たちです。\nスキルだけでなく、「働く姿勢」や想いも\n大切に育てています。",
     ),
     imageOrder: "right",
     imageSrc: "/images/stack-cards/01.png",
@@ -14,30 +14,30 @@ export const stackCards: StackCardItem[] = [
     numberLabel: "/ HUMAN RESOURCE DEVELOPMENT",
   },
   {
-    title: "OurDeskを支える基盤",
+    title: "Our Deskを支える基盤",
     content: contentWithLineBreaks(
-      "OurDeskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名、定着率は常に90%以上\n人事支援・キャリア支援の実績多数！ \n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、OurDeskでもスタッフの育成とキャリア支援を行っています。"
+      "Our Deskの仕組みの土台には、\n NEUGATEグループの人材育成ノウハウがあります。\nグループ従業員 約100名、定着率は常に90%以上\n人事支援・キャリア支援の実績多数！ \n長く働ける環境づくりを続けてきたNEUGATEの仕組みを活かし、Our Deskでもスタッフの育成とキャリア支援を行っています。",
     ),
     imageOrder: "left",
     imageSrc: "/images/stack-cards/02.png",
-    imageAlt: "OurDeskを支えるNEUGATEグループ",
-    numberLabel: "/ THE FOUNDATION OF OurDesk",
+    imageAlt: "Our Deskを支えるNEUGATEグループ",
+    numberLabel: "/ THE FOUNDATION OF Our Desk",
   },
   {
-    title: "OurDeskのミッション",
+    title: "Our Deskのミッション",
     content: contentWithLineBreaks(
-      "私たちは、「働きたい」という気持ちが、\n 仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、\n自分らしい働き方を選びながら、\n誰かの役に立てる。\nそんなキャリアの形を、\n一人ひとりと一緒につくっていく会社です。"
+      "私たちは、「働きたい」という気持ちが、\n 仕事につながる社会をつくりたいと考えています。\n家庭やライフステージに左右されず、\n自分らしい働き方を選びながら、\n誰かの役に立てる。\nそんなキャリアの形を、\n一人ひとりと一緒につくっていく会社です。",
     ),
     imageOrder: "right",
     imageSrc: "/images/stack-cards/03.png",
     imageAlt: "ライフステージに合わせた働き方",
-    numberLabel: "/ OurDesk's MISSION",
+    numberLabel: "/ Our Desk's MISSION",
   },
   {
     title: "女性のキャリア支援",
     titleClass: "text-xl md:text-4xl",
     content: contentWithLineBreaks(
-      "出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOurDeskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。"
+      "出産や育児、家庭との両立など、女性のキャリアには多くの分岐点があります。\n「働きたい気持ちはあるのに、選択肢が限られてしまう」\n そんな声を、私たちはたくさん聞いてきました。\nだからOur Deskは、女性が自分らしく働き続けられる仕組みづくりに本気で取り組んでいます。",
     ),
     imageOrder: "left",
     imageSrc: "/images/stack-cards/04.png",
@@ -69,7 +69,7 @@ export const strengthCards: StrengthCardItem[] = [
     step: 3,
     title: "仕事につなげる",
     description:
-      'その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。OurDeskは、女性のキャリアの"通過点"の一つです。',
+      'その先には、秘書業務や事務業務へのアサイン、職業紹介という選択肢もあります。Our Deskは、女性のキャリアの"通過点"の一つです。',
     imagePath: "/images/strength-cards/03.jpeg",
     imagePosition: "left",
     imageAlt: "仕事につなげるサポートの様子",

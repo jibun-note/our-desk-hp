@@ -4,7 +4,7 @@ export default function HomeIntroSection() {
     return (
         <section
             className="relative pt-24 pb-24 px-4 md:pt-40 md:pb-40 md:px-6"
-            aria-label="OurDeskの想い"
+            aria-label="Our Deskの想い"
         >
             <div className="absolute inset-0 z-25 pointer-events-none" aria-hidden>
                 <div className="absolute inset-0 w-full h-full">
@@ -20,7 +20,7 @@ export default function HomeIntroSection() {
                 <p className="text-base md:text-lg text-gray-700 leading-relaxed text-pretty text-center">
                     「働きたい」想いは、自然に生まれるものではありません。
                     <br />
-                    OurDeskはその気持ちを育て、仕事につなげる仕組みを作っています。
+                    Our Deskはその気持ちを育て、仕事につなげる仕組みを作っています。
                 </p>
             </div>
         </section>

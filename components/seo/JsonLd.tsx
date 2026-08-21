@@ -3,10 +3,10 @@ import { BASE_URL } from '@/lib/seo'
 const organizationJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'Organization',
-    name: 'OurDesk株式会社',
+    name: 'Our Desk株式会社',
     url: BASE_URL,
     logo: `${BASE_URL}/images/shared/our-desk-logo.png`,
-    description: 'OurDesk株式会社の公式ホームページ',
+    description: 'Our Desk株式会社の公式ホームページ',
     address: {
         '@type': 'PostalAddress',
         addressCountry: 'JP',
@@ -25,9 +25,9 @@ const organizationJsonLd = {
 const websiteJsonLd = {
     '@context': 'https://schema.org',
     '@type': 'WebSite',
-    name: 'OurDesk株式会社',
+    name: 'Our Desk株式会社',
     url: BASE_URL,
-    description: 'OurDesk株式会社の公式ホームページ',
+    description: 'Our Desk株式会社の公式ホームページ',
 }
 
 export default function JsonLd() {

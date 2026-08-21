@@ -38,7 +38,7 @@ export default function HomeHeroSection() {
                                 className="text-md md:text-3xl font-bold text-right text-balance text-white/95 md:text-gray-50/90 [text-shadow:0_0_1px_rgba(0,0,0,0.6),0_1px_2px_rgba(0,0,0,0.4)] md:[text-shadow:none] md:drop-shadow-md"
                             >
                                 <div className="block">
-                                    <SplitText text="OurDeskが提供するのは、" {...SPLIT_TEXT_PROPS} startDelay={0} />
+                                    <SplitText text="Our Deskが提供するのは、" {...SPLIT_TEXT_PROPS} startDelay={0} />
                                 </div>
                                 <div className="block">
                                     <SplitText text="業務に追われる会社を、" {...SPLIT_TEXT_PROPS} startDelay={0.5} />

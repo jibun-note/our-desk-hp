@@ -26,8 +26,8 @@ import {
 
 export const metadata = createPageMetadata(
     '/recruit/',
-    '採用情報 | OurDesk株式会社',
-    'OurDeskの採用情報。「働きたい」という気持ちを育てる。スキルや経歴よりも、「誰かの役に立ちたい」という想いを大切にします。'
+    '採用情報 | Our Desk株式会社',
+    'Our Deskの採用情報。「働きたい」という気持ちを育てる。スキルや経歴よりも、「誰かの役に立ちたい」という想いを大切にします。'
 )
 
 export default function RecruitPage() {

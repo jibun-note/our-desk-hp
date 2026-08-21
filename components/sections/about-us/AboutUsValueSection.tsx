@@ -19,7 +19,7 @@ export default function AboutUsValueSection({ items }: Props) {
     return (
         <section
             className="relative z-[7] bg-white py-20 md:py-32 px-4 md:px-6"
-            aria-label="OurDeskが大切にする価値観"
+            aria-label="Our Deskが大切にする価値観"
         >
             <div className="container mx-auto max-w-6xl">
                 <div className="text-center mb-12 md:mb-20">
@@ -27,7 +27,7 @@ export default function AboutUsValueSection({ items }: Props) {
                         Value
                     </p>
                     <h3 className="text-2xl md:text-4xl font-bold text-gray-800 mb-1 text-balance">
-                        OurDeskが大切にする価値観
+                        Our Deskが大切にする価値観
                     </h3>
                     <div className="flex justify-center mb-6">
                         <HandwrittenLine

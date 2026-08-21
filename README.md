@@ -1,4 +1,4 @@
-# OurDesk株式会社 ホームページ
+# Our Desk株式会社 ホームページ
 
 Next.js 16、TypeScript、Tailwind CSSを使用したSSG（Static Site Generation）対応の会社ホームページです。
 
@@ -73,20 +73,20 @@ npx serve@latest out
 
 1. **ビルドの実行**
 
-    ```bash
-    npm run build
-    ```
+   ```bash
+   npm run build
+   ```
 
 2. **FTPでアップロード**
-    - `out`ディレクトリ内の**すべてのファイルとフォルダ**を選択
-    - ロリポップの`public_html`ディレクトリにアップロード
-    - 既存のファイルがある場合は、事前にバックアップを取ることを推奨
+   - `out`ディレクトリ内の**すべてのファイルとフォルダ**を選択
+   - ロリポップの`public_html`ディレクトリにアップロード
+   - 既存のファイルがある場合は、事前にバックアップを取ることを推奨
 
 3. **アップロード後の確認**
-    - トップページ（`/`）が正しく表示されるか確認
-    - 各ページ（`/about-us/`、`/company/`、`/service/`、`/recruit/`、`/contact/`、`/privacy/`）が正しく表示されるか確認
-    - 画像やCSSが正しく読み込まれているか確認
-    - 動画ファイルが正しく読み込まれているか確認
+   - トップページ（`/`）が正しく表示されるか確認
+   - 各ページ（`/about-us/`、`/company/`、`/service/`、`/recruit/`、`/contact/`、`/privacy/`）が正しく表示されるか確認
+   - 画像やCSSが正しく読み込まれているか確認
+   - 動画ファイルが正しく読み込まれているか確認
 
 #### デプロイチェックリスト
 
@@ -219,4 +219,4 @@ GSAPを使用したアニメーションが実装されています。`component
 
 ## ライセンス
 
-© 2026 OurDesk株式会社. All rights reserved.
+© 2026 Our Desk株式会社. All rights reserved.
