@@ -10,7 +10,7 @@ export default function AboutUsClosingSection() {
     return (
         <section
             className="relative z-[14] min-h-[320px] md:min-h-[380px] flex items-center bg-[#fefcf7]"
-            aria-label="OurDeskの想い"
+            aria-label="Our Deskの想い"
         >
             {/* ArchClip 逆アーチでクリップされる暗い背景レイヤー */}
             <ArchClip idPrefix="about-closing" variant="bottom">
@@ -30,7 +30,7 @@ export default function AboutUsClosingSection() {
             {/* コンテンツ（クリップレイヤーの上に表示） */}
             <div className="w-full container mx-auto max-w-4xl relative z-10 px-4 md:px-6 text-center text-white">
                 <p className="text-xl md:text-3xl font-bold leading-relaxed mb-8 text-balance">
-                    OurDeskは、<br className="md:hidden" />
+                    Our Deskは、<br className="md:hidden" />
                     <span className="text-gradient-hero">「働きたい」</span>という想いを<br />
                     大切に育て、仕事につなげていく会社です。
                 </p>

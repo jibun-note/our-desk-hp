@@ -16,7 +16,7 @@ type Props = {
 
 export default function RecruitIntroSection({ heroImage }: Props) {
     return (
-        <section className="relative flex items-center pt-12 pb-20 md:py-32" aria-label="OurDeskの想い">
+        <section className="relative flex items-center pt-12 pb-20 md:py-32" aria-label="Our Deskの想い">
             {/* Blob装飾: 右側 */}
             <BlobDecoration
                 shape="M"

@@ -6,7 +6,7 @@ const DEFAULT_OG_IMAGE = {
     url: "/images/shared/our-desk-logo.png",
     width: 1200,
     height: 630,
-    alt: "OurDesk株式会社",
+    alt: "Our Desk株式会社",
 } as const;
 
 /**
@@ -33,7 +33,7 @@ export function createPageMetadata(
             url: canonicalUrl,
             type: "website",
             locale: "ja_JP",
-            siteName: "OurDesk株式会社",
+            siteName: "Our Desk株式会社",
             images: [DEFAULT_OG_IMAGE],
         },
         twitter: {

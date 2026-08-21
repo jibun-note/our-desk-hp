@@ -5,8 +5,8 @@ import { createPageMetadata } from '@/lib/seo'
 
 export const metadata = createPageMetadata(
     '/contact/',
-    'Contact | OurDesk株式会社',
-    'OurDesk株式会社へのお問い合わせはこちらから。'
+    'Contact | Our Desk株式会社',
+    'Our Desk株式会社へのお問い合わせはこちらから。'
 )
 
 export default function ContactPage() {

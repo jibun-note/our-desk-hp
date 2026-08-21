@@ -41,7 +41,7 @@ export const CAREER_PATHS: CareerPathItem[] = [
         title: 'オフィスワーク未経験の方',
         current: ['デスクワーク以外の仕事をしている', '将来、結婚や出産も視野に入れている'],
         steps: [
-            'OurDeskと契約',
+            'Our Deskと契約',
             '月数時間からスタート',
             '研修',
             'メインに切り替え',

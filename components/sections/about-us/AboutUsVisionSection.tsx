@@ -10,7 +10,7 @@ export default function AboutUsVisionSection() {
     return (
         <section
             className="relative z-[5] bg-[#fffdf5] py-20 md:py-32 px-4 md:px-6"
-            aria-label="OurDeskが目指す未来"
+            aria-label="Our Deskが目指す未来"
         >
             <BlobDecoration
                 shape="T"
@@ -27,7 +27,7 @@ export default function AboutUsVisionSection() {
                             </p>
                             <div className="inline-block w-fit">
                                 <h3 className="text-2xl md:text-4xl font-bold text-gray-800 mb-0 leading-tight text-balance inline-block">
-                                    OurDeskが目指す未来
+                                    Our Deskが目指す未来
                                 </h3>
                                 <div className="-mt-0.5 mb-6 flex justify-end">
                                     <span className="inline-block scale-[0.65] origin-right md:scale-100">
@@ -67,7 +67,7 @@ export default function AboutUsVisionSection() {
                     <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-2xl bg-gradient-to-br from-orange-100 to-yellow-100">
                         <Image
                             src="/images/about-us/04.jpeg"
-                            alt="OurDeskが目指す未来"
+                            alt="Our Deskが目指す未来"
                             fill
                             className="object-cover"
                             sizes="(max-width: 768px) 100vw, 50vw"

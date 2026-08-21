@@ -1,4 +1,4 @@
-# OurDesk株式会社 ホームページ
+# Our Desk株式会社 ホームページ
 
 Next.js 16、TypeScript、Tailwind CSSを使用したSSG（Static Site Generation）対応の会社ホームページです。
 
@@ -219,4 +219,4 @@ GSAPを使用したアニメーションが実装されています。`component
 
 ## ライセンス
 
-© 2026 OurDesk株式会社. All rights reserved.
+© 2026 Our Desk株式会社. All rights reserved.

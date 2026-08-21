@@ -23,14 +23,14 @@ isProject: false
 **対象**: [app/layout.tsx](app/layout.tsx)
 
 - **metadataBase**: 本番ドメイン `**https://our-desk.co.jp**` を設定。Canonical と OG 画像の絶対 URL に使用。
-- **title**: `default` と `template: '%s | OurDesk株式会社'` を設定し、子ページは「ページ名 | OurDesk 株式会社」に統一。
+- **title**: `default` と `template: '%s | Our Desk株式会社'` を設定し、子ページは「ページ名 | Our Desk 株式会社」に統一。
 - **description**: 現状の文言を維持または少し拡張。
 - **openGraph**: `title`, `description`, `type: 'website'`, `locale: 'ja_JP'`, `siteName`。`metadataBase` があれば OG 画像（例: `/OurDesk_logo.png`）を絶対 URL で指定。
 - **twitter**: `card: 'summary_large_image'`, `title`, `description`。
 - **robots**: `index, follow`（必要に応じて後で変更）。
 - **alternates.canonical**: ルートでは不要（各ページで設定するため）。
 
-トップページ ([app/page.tsx](app/page.tsx)) で `metadata` を export し、`title: 'OurDesk株式会社'`（テンプレートを使わない場合のトップ用）と `description` を明示すると、一貫したタイトル・説明文になる。
+トップページ ([app/page.tsx](app/page.tsx)) で `metadata` を export し、`title: 'Our Desk株式会社'`（テンプレートを使わない場合のトップ用）と `description` を明示すると、一貫したタイトル・説明文になる。
 
 ---
 
@@ -81,7 +81,7 @@ isProject: false
 ## 6. その他の確認・推奨
 
 - **404**: [app/not-found.tsx](app/not-found.tsx) はメタデータを export できないため、今回の対象外でよい。
-- **画像**: [components/Header.tsx](components/Header.tsx) と [components/Footer.tsx](components/Footer.tsx) の `Image` にはすでに `alt="OurDesk株式会社"` が付いているため、そのまま利用可能。
+- **画像**: [components/Header.tsx](components/Header.tsx) と [components/Footer.tsx](components/Footer.tsx) の `Image` にはすでに `alt="Our Desk株式会社"` が付いているため、そのまま利用可能。
 - **言語**: ルートの `<html lang="ja">` は設定済み。
 - **本番 URL**: サイトマップ・robots・Canonical・OG のベース URL は `**https://our-desk.co.jp**` で統一する。
 
