@@ -9,13 +9,13 @@ type Props = {
 
 export default function HomeStrengthSection({ cards }: Props) {
     return (
-        <section className="relative pb-6 md:pb-20 md:mb-20" aria-label="OurDeskの強み">
+        <section className="relative pb-6 md:pb-20 md:mb-20" aria-label="Our Deskの強み">
             {/* デスクトップ用見出し（768px以上で表示・CSSのみ） */}
             <div className="hidden md:block container mx-auto max-w-6xl relative z-10 mb-12 md:mb-16 text-center px-4 md:px-6">
-                <h2 className="text-2xl md:text-4xl font-bold mb-1 text-gray-800">OurDeskの強み</h2>
+                <h2 className="text-2xl md:text-4xl font-bold mb-1 text-gray-800">Our Deskの強み</h2>
                 <HeadingLine variant={6} className="mx-auto mb-4" />
                 <p className="text-base md:text-lg text-gray-700 max-w-3xl mx-auto leading-relaxed">
-                    OurDeskは、伴走型キャリア支援という仕組みを通して、
+                    Our Deskは、伴走型キャリア支援という仕組みを通して、
                     <br />
                     女性の<span className="text-gradient-hero">「働きたい」</span>を育てています。
                 </p>
@@ -40,7 +40,7 @@ export default function HomeStrengthSection({ cards }: Props) {
                             textShadow: 'none',
                         }}
                     >
-                        OurDesk
+                        Our Desk
                         <br />
                         の強み
                     </h2>

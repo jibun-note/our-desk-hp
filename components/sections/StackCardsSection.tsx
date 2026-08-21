@@ -117,14 +117,14 @@ type Props = {
     lastCardRef?: React.RefObject<HTMLElement | null>
 }
 
-export default function StackCardsSection({ cards, sectionLabel = 'OurDeskの取り組み', background, marqueeSticky = false, firstCardRef, lastCardRef }: Props) {
+export default function StackCardsSection({ cards, sectionLabel = 'Our Deskの取り組み', background, marqueeSticky = false, firstCardRef, lastCardRef }: Props) {
     return (
         <section className="relative z-20 py-12 md:py-20 md:bg-gradient-to-b from-[#FFF8E7] to-[#FFE8CC]" aria-label={sectionLabel}>
             {/* 背景画像（Next.js Image で最適化・プリロード） */}
             <div className="absolute inset-0 z-0 rounded-3xl overflow-hidden bg-[#FFF8E7] md:hidden">
                 <Image
                     src="/images/stack-cards/00.jpeg"
-                    alt="OurDeskの取り組みセクションの背景"
+                    alt="Our Deskの取り組みセクションの背景"
                     fill
                     className="object-cover object-center"
                     sizes="100vw"

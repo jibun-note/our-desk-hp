@@ -19,13 +19,13 @@ export default function Footer() {
                         >
                             <Image
                                 src="/images/shared/our-desk-logo.png"
-                                alt="OurDesk株式会社"
+                                alt="Our Desk株式会社"
                                 fill
                                 className="object-contain"
                             />
                         </motion.div>
                         <h3 className="text-gray-800 text-base md:text-lg font-semibold mb-2 text-balance">
-                            OurDesk株式会社
+                            Our Desk株式会社
                         </h3>
                         <p className="text-sm md:text-base text-gray-600 mb-4">
                             東京都港区南青山1-15-27  YMビル1階
@@ -163,7 +163,7 @@ export default function Footer() {
             {/* コピーライト */}
             <div className="border-t border-gray-200 py-6">
                 <div className="container mx-auto px-4 text-center text-sm md:text-base text-gray-600">
-                    <p>&copy; {new Date().getFullYear()} OurDesk株式会社. All rights reserved.</p>
+                    <p>&copy; {new Date().getFullYear()} Our Desk株式会社. All rights reserved.</p>
                 </div>
             </div>
         </footer>

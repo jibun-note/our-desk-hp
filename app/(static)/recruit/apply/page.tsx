@@ -5,8 +5,8 @@ import { createPageMetadata } from '@/lib/seo'
 
 export const metadata = createPageMetadata(
     '/recruit/apply/',
-    '採用フォーム | OurDesk株式会社',
-    'OurDesk株式会社へのご応募はこちらから。希望雇用形態・経歴などをご記入の上、お送りください。'
+    '採用フォーム | Our Desk株式会社',
+    'Our Desk株式会社へのご応募はこちらから。希望雇用形態・経歴などをご記入の上、お送りください。'
 )
 
 export default function RecruitApplyPage() {

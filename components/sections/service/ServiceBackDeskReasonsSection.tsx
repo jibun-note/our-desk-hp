@@ -357,7 +357,7 @@ export default function ServiceBackDeskReasonsSection({
             <section
                 className="bd-section"
                 style={{ background: '#f7f5ef' }}
-                aria-label="OurDeskが選ばれる理由"
+                aria-label="Our Deskが選ばれる理由"
             >
                 <div style={{ maxWidth: 1080, margin: '0 auto' }} ref={ref}>
                     <div className="bd-heading">
@@ -377,7 +377,7 @@ export default function ServiceBackDeskReasonsSection({
                         </div>
                         <div className="bd-heading-sub-wrap">
                             <p className="bd-heading-sub text-sm md:text-base text-gray-600 leading-relaxed text-pretty">
-                                OurDeskは、独自の業務管理システム 「BackDesk」 を活用し、稼働・報告・請求を&quot;見える化&quot;して運用しています。任せっぱなしにしない、管理できる外部サポートです。
+                                Our Deskは、独自の業務管理システム 「BackDesk」 を活用し、稼働・報告・請求を&quot;見える化&quot;して運用しています。任せっぱなしにしない、管理できる外部サポートです。
                             </p>
                         </div>
                     </div>

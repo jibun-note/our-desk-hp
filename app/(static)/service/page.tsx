@@ -34,7 +34,7 @@ import {
 
 export const metadata = createPageMetadata(
     '/service/',
-    'BackDesk（サービス） | OurDesk株式会社',
+    'BackDesk（サービス） | Our Desk株式会社',
     '「働きたい」人材があなたのバックオフィスを支えます。分単位から依頼可能。将来の正式採用にもつながる、新しい人材確保の仕組みです。'
 )
 
@@ -49,7 +49,7 @@ export default function ServicePage() {
                     <ServiceHeroBlockSection
                         heroImageSrc={IMG.hero}
                         heroTitle="Service"
-                        heroDescription="OurDeskのバックオフィス支援"
+                        heroDescription="Our Deskのバックオフィス支援"
                         activeIndex={0}
                         introEyebrow={HERO.eyebrow}
                         introHeadline={HERO.headline}

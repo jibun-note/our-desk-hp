@@ -126,7 +126,7 @@ export default function ServiceBridgeSection({
           className="text-[10px] tracking-[0.28em] text-gray-300 uppercase mb-6"
           aria-hidden
         >
-          BackDesk — OurDesk
+          BackDesk — Our Desk
         </p>
         <h2
           className="text-3xl md:text-5xl font-bold leading-[1.15] text-gray-900 whitespace-pre-line mb-5"

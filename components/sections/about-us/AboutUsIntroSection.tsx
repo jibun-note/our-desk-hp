@@ -44,7 +44,7 @@ export default function AboutUsIntroSection() {
           </div>
           <p className="text-base md:text-lg leading-relaxed max-w-3xl mx-auto text-pretty" style={{ color: '#8a7460' }}>
             私たちの使命、目指す未来、大切にする価値観。<br />
-            OurDeskが何を信じ、どこへ向かっているのか。<br className="hidden md:block" />
+            Our Deskが何を信じ、どこへ向かっているのか。<br className="hidden md:block" />
             <br className="md:hidden" />
             その想いをお伝えします。
           </p>

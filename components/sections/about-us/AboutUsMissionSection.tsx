@@ -9,7 +9,7 @@ export default function AboutUsMissionSection() {
     return (
         <section
             className="relative z-[3] bg-white py-20 md:py-32 px-4 md:px-6"
-            aria-label="OurDeskの使命"
+            aria-label="Our Deskの使命"
         >
             <div className="container mx-auto max-w-6xl">
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-16 items-center">
@@ -31,7 +31,7 @@ export default function AboutUsMissionSection() {
                             </p>
                             <div className="inline-block w-fit">
                                 <h3 className="text-2xl md:text-4xl font-bold text-gray-800 mb-0 leading-tight text-balance inline-block">
-                                    OurDeskの使命
+                                    Our Deskの使命
                                 </h3>
                                 <div className="-mt-0.5 mb-6 flex justify-end">
                                     <span className="inline-block scale-[0.65] origin-right md:scale-100">
@@ -58,7 +58,7 @@ export default function AboutUsMissionSection() {
                             </p>
                             <p>その想いを、埋もれさせたくない。諦めさせたくない。</p>
                             <p className="font-semibold">
-                                OurDeskは、一人ひとりの人生に寄り添いながら、自分らしい働き方を一緒につくっていく会社です。
+                                Our Deskは、一人ひとりの人生に寄り添いながら、自分らしい働き方を一緒につくっていく会社です。
                             </p>
                         </div>
                     </div>

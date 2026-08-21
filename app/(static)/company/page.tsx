@@ -22,8 +22,8 @@ import Image from 'next/image'
 /** ページのSEOメタデータ（title / description 等） */
 export const metadata = createPageMetadata(
     '/company/',
-    'Company | OurDesk株式会社',
-    'OurDesk株式会社の役員紹介、グループ体制、会社概要、アクセス情報をご紹介します。'
+    'Company | Our Desk株式会社',
+    'Our Desk株式会社の役員紹介、グループ体制、会社概要、アクセス情報をご紹介します。'
 )
 
 export default function CompanyPage() {
@@ -79,7 +79,7 @@ export default function CompanyPage() {
                             <div className="flex justify-center">
                                 <Image
                                     src="/images/company/グループ体制図.png"
-                                    alt="OurDeskグループ体制図"
+                                    alt="Our Deskグループ体制図"
                                     width={800}
                                     height={600}
                                     className="w-full max-w-3xl rounded-lg"
@@ -112,7 +112,7 @@ export default function CompanyPage() {
                                         <th className="py-4 pr-6 font-semibold align-top w-28 md:w-36">
                                             <span className="text-primary-400">社名</span>
                                         </th>
-                                        <td className="py-4 text-white">OurDesk株式会社</td>
+                                        <td className="py-4 text-white">Our Desk株式会社</td>
                                     </tr>
                                     <tr>
                                         <th className="py-4 pr-6 font-semibold align-top">

@@ -7,7 +7,7 @@ type Props = {
 
 export default function HomeInitiativeSection({ cards }: Props) {
     return (
-        <section className="relative pt-8 pb-12 md:py-20 md:mb-20 md:bg-gradient-to-b md:from-[#FFF8E7] md:to-[#FFE8CC]" aria-label="OurDeskの強み">
+        <section className="relative pt-8 pb-12 md:py-20 md:mb-20 md:bg-gradient-to-b md:from-[#FFF8E7] md:to-[#FFE8CC]" aria-label="Our Deskの強み">
             <StackCardsWithFixedMarquee cards={cards} />
         </section>
     )

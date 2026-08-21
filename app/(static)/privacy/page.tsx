@@ -4,13 +4,13 @@ import { createPageMetadata } from '@/lib/seo'
 
 export const metadata = createPageMetadata(
     '/privacy/',
-    'Privacy Policy | OurDesk株式会社',
-    'OurDesk株式会社のプライバシーポリシー・個人情報保護方針'
+    'Privacy Policy | Our Desk株式会社',
+    'Our Desk株式会社のプライバシーポリシー・個人情報保護方針'
 )
 
 const CONTACT = {
     address: '〒107-0062 東京都港区南青山1-15-27 YMビル1階',
-    company: 'OurDesk株式会社 個人情報に関するお問い合わせ窓口',
+    company: 'Our Desk株式会社 個人情報に関するお問い合わせ窓口',
     tel: '03-5545-5204',
 }
 
@@ -43,7 +43,7 @@ export default function PrivacyPage() {
                     {/* 個人情報保護方針 */}
                     <Section title="個人情報保護方針">
                         <p>
-                            OurDesk株式会社（以下、「当社」という。）はバックオフィスサポート・BPO事業を行っており、企業担当者様、お客様、および従業者の個人情報保護が重大な責務であると認識しております。そこで個人情報保護理念と自ら定めた行動規範に基づき、社会的使命を十分に認識し、本人の権利の保護、個人情報に関する法規制等を遵守致します。
+                            Our Desk株式会社（以下、「当社」という。）はバックオフィスサポート・BPO事業を行っており、企業担当者様、お客様、および従業者の個人情報保護が重大な責務であると認識しております。そこで個人情報保護理念と自ら定めた行動規範に基づき、社会的使命を十分に認識し、本人の権利の保護、個人情報に関する法規制等を遵守致します。
                         </p>
                         <p>
                             また、以下に示す方針を具現化するための個人情報保護マネジメントシステムを構築し、最新のIT技術の動向、社会的要請の変化、経営環境の変動等を常に認識しながら、その継続的改善に、全社を挙げて取り組むことをここに宣言致します。
@@ -61,7 +61,7 @@ export default function PrivacyPage() {
                         <p className="justify-end text-right mt-6 text-sm text-gray-600">
                             制定日 2025年12月1日<br />
                             最終改正日 2026年2月1日<br />
-                            OurDesk株式会社 代表取締役 小宮山陽大
+                            Our Desk株式会社 代表取締役 小宮山陽大
                         </p>
                         <div className="pt-8 w-fit mx-auto">
                             <p className="text-sm font-medium border border-gray-200 p-3 text-left leading-relaxed">
@@ -89,7 +89,7 @@ export default function PrivacyPage() {
                     <Section id="disclosure" title="保有個人データ及び第三者提供記録に関する事項の周知について">
                         <p>当社では、保有個人データの開示等（利用目的の通知、開示、内容の訂正、追加又は削除、利用の停止、消去及び第三者への提供の停止）の請求及び第三者提供記録の開示に関する請求について、以下の事項を周知致します。</p>
                         <ol className="list-decimal pl-6 space-y-3 mt-4">
-                            <li><strong>当社の名称及び住所、代表者の氏名</strong><br />名称：OurDesk株式会社／住所：{CONTACT.address}／代表者：小宮山陽大</li>
+                            <li><strong>当社の名称及び住所、代表者の氏名</strong><br />名称：Our Desk株式会社／住所：{CONTACT.address}／代表者：小宮山陽大</li>
                             <li><strong>個人情報保護管理者</strong><br />役職名：管理部門責任者／連絡先：TEL {CONTACT.tel}</li>
                             <li>
                                 <strong>保有個人データの利用目的</strong>
@@ -168,7 +168,7 @@ export default function PrivacyPage() {
                     <Section id="handling" title="個人情報の取扱いについて">
                         <p>当社は、JIS Q 15001:2023のA.7（A.6のうち本人から直接書面によって取得する場合の措置）に従い、個人情報を収集・保管いたします。この入力フォームで取得する個人情報の取り扱いは下記利用目的のためであり、この目的の範囲を超えて利用することはございません。</p>
                         <ol className="list-decimal pl-6 space-y-2 mt-4">
-                            <li><strong>組織の名称</strong><br />OurDesk株式会社</li>
+                            <li><strong>組織の名称</strong><br />Our Desk株式会社</li>
                             <li><strong>個人情報に関する管理者の氏名、所属及び連絡先</strong><br />個人情報保護管理者：管理部門責任者／連絡先：TEL {CONTACT.tel}</li>
                             <li><strong>個人情報の利用目的</strong><br />当社の各事業に関するお問い合わせの方の個人情報はお問い合わせにお答えするため。当社の採用応募の方の個人情報は採用業務で使用するため。</li>
                             <li><strong>個人情報取扱いの委託</strong><br />当社は、業務の一部を外部に委託しており、委託先に個人情報を預けることがあります。この場合、適切に取り扱っていると認められる委託先を選定し、契約等において個人情報の適正管理・機密保持等を取決め、適切な管理を実施させます。</li>
